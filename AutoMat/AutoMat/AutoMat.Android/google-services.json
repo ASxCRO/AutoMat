@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "915728342891",
+    "firebase_url": "https://automat-29cec.firebaseio.com",
+    "project_id": "automat-29cec",
+    "storage_bucket": "automat-29cec.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:915728342891:android:91b24806f952256379f62e",
+        "android_client_info": {
+          "package_name": "com.supan.automat"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "915728342891-plejpl2p9uu1pkrhhsiagtmesd7kr7mn.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAg4riVkvSMtWwKZ6_UssK28-2K6xOndrg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "915728342891-plejpl2p9uu1pkrhhsiagtmesd7kr7mn.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

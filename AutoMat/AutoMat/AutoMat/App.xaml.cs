@@ -1,0 +1,33 @@
+﻿using AutoMat.Core.Services;
+using AutoMat.Core.Views;
+using System;
+using Xamarin.Forms;
+using Xamarin.Forms.Xaml;
+
+namespace AutoMat
+{
+    public partial class App : Application
+    {
+        IFirebaseAuthentication auth;
+        public App()
+        {
+            InitializeComponent();
+
+            MainPage = new NavigationPage(new LoginPage());
+
+
+        }
+
+        protected override void OnStart()
+        {
+        }
+
+        protected override void OnSleep()
+        {
+        }
+
+        protected override void OnResume()
+        {
+        }
+    }
+}

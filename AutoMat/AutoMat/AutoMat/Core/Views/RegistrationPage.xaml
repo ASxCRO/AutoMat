@@ -1,0 +1,13 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="AutoMat.Core.Views.RegistrationPage">
+    <ContentPage.Content>
+        <StackLayout Margin="20" VerticalOptions="CenterAndExpand" Spacing="20" Orientation="Vertical">
+            <Entry Placeholder="Ime i prezime"  x:Name="UserName"></Entry>
+            <Entry Placeholder="E-mail"  x:Name="UserNewEmail"></Entry>
+            <Entry Placeholder="Lozinka"  x:Name="UserNewPassword"></Entry>
+            <Button BackgroundColor="Black" TextColor="White" Text="Signup" Clicked="signupbutton_Clicked" x:Name="signupbutton"/>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

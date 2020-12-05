@@ -1,0 +1,80 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="AutoMat.Core.Views.UserPage"
+             BackgroundColor="White">
+    <RelativeLayout>
+        <StackLayout
+            BackgroundColor="White"
+            Orientation="Horizontal"
+            x:Name="buttons"
+            RelativeLayout.XConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width, Factor=0}"
+            RelativeLayout.YConstraint="{ConstraintExpression Type=RelativeToParent, Property=Height, Factor=0}"
+            RelativeLayout.WidthConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width, Factor=1}"
+            RelativeLayout.HeightConstraint="{ConstraintExpression Type=RelativeToParent, Property=Height, Factor=0.15}"
+            >
+            <Button 
+                    Text="Prijava" 
+                    x:Name="prijavaTabButton"
+                    BackgroundColor="White"
+                    VerticalOptions="FillAndExpand"
+                    HorizontalOptions="FillAndExpand"
+                    Clicked="loginButton_Clicked"
+                />
+            <Button 
+                    Text="Registracija"
+                    x:Name="regaTabButton"
+                    BackgroundColor="White"
+                    VerticalOptions="FillAndExpand"
+                    HorizontalOptions="FillAndExpand"
+                    Clicked="registrationButton_Clicked"
+                />
+        </StackLayout>
+        <FlexLayout 
+            BackgroundColor="White"
+            Direction="Row"
+            JustifyContent="SpaceBetween"
+            x:Name="lines"
+            RelativeLayout.XConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width, Factor=0}"
+            RelativeLayout.YConstraint="{ConstraintExpression Type=RelativeToParent, Property=Height, Factor=0.15}"
+            RelativeLayout.WidthConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width, Factor=1}"
+            RelativeLayout.HeightConstraint="{ConstraintExpression Type=RelativeToParent, Property=Height, Factor=0.05}"
+            >
+            <BoxView Color="Black" WidthRequest="150" HeightRequest="3" x:Name="loginline"/>
+            <BoxView Color="Black" WidthRequest="150" HeightRequest="3" x:Name="registerline"/>
+        </FlexLayout>
+        <StackLayout VerticalOptions="CenterAndExpand" Orientation="Vertical"
+            Spacing="20"
+            x:Name="loginPageTab"
+            BackgroundColor="White"
+            Padding="20"
+            RelativeLayout.XConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width, Factor=0}"
+            RelativeLayout.YConstraint="{ConstraintExpression Type=RelativeToParent, Property=Height , Factor=0.20}"
+            RelativeLayout.WidthConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width, Factor=1}"
+            RelativeLayout.HeightConstraint="{ConstraintExpression Type=RelativeToParent, Property=Height, Factor=0.80}"
+            >
+            <Image Source="ic_supervised_user_circle.png" />
+            <StackLayout VerticalOptions="CenterAndExpand" Spacing="20" Orientation="Vertical">
+                <Entry Placeholder="E-mail"  x:Name="UserLoginEmail" TextColor="#000"></Entry>
+                <Entry Placeholder="Lozinka"  x:Name="UserLoginPassword" TextColor="#000" IsPassword="true" ></Entry>
+                <Button BackgroundColor="Black"  TextColor="White" Text="Prijava" x:Name="loginbutton" Clicked="loginbutton_Clicked"/>
+                <Button BackgroundColor="#071b5e" TextColor="White" Text="Google prijava" x:Name="loginoAuthbutton" Clicked="loginbuttonOAuth_Clicked"/>
+            </StackLayout>
+        </StackLayout>
+        <StackLayout VerticalOptions="CenterAndExpand" Orientation="Vertical"
+            x:Name="registrationPageTab"
+            BackgroundColor="White"
+            IsVisible="false"
+            Padding="20"
+            RelativeLayout.XConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width, Factor=0}"
+            RelativeLayout.YConstraint="{ConstraintExpression Type=RelativeToParent, Property=Height , Factor=0.20}"
+            RelativeLayout.WidthConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width, Factor=1}"
+            RelativeLayout.HeightConstraint="{ConstraintExpression Type=RelativeToParent, Property=Height, Factor=0.80}">
+            <Image Source="ic_supervised_user_circle.png" />
+            <Entry Placeholder="Ime i prezime"  x:Name="UserName"></Entry>
+            <Entry Placeholder="E-mail"  x:Name="UserNewEmail"></Entry>
+            <Entry Placeholder="Lozinka"  x:Name="UserNewPassword" IsPassword="True"></Entry>
+            <Button BackgroundColor="Black" TextColor="White" Text="Registriraj me" x:Name="signupbutton" Clicked="signupbutton_Clicked"/>
+        </StackLayout>
+    </RelativeLayout>
+</ContentPage>

@@ -7,7 +7,7 @@ using Xamarin.Forms;
 
 namespace AutoMat
 {
-    public partial class MainPage : ContentPage
+    public partial class MainPage : BottomBar.XamarinForms.BottomBarPage
     {
 
         public MainPage()
@@ -15,14 +15,5 @@ namespace AutoMat
             InitializeComponent();
         }
 
-        async void signupPage_Clicked(System.Object sender, System.EventArgs e)
-        {
-            await Navigation.PushAsync(new RegistrationPage());
-        }
-
-        async void loginPage_Clicked(System.Object sender, System.EventArgs e)
-        {
-            await Navigation.PushAsync(new LoginPage());
-        }
     }
 }

@@ -1,4 +1,5 @@
-﻿using Firebase.Auth;
+﻿using AutoMat.Core.Constants;
+using Firebase.Auth;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,8 +14,6 @@ namespace AutoMat.Core.Views
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class RegistrationPage : ContentPage
     {
-        public string WebAPIkey = "AIzaSyAg4riVkvSMtWwKZ6_UssK28-2K6xOndrg";
-
         public RegistrationPage()
         {
             InitializeComponent();
@@ -24,7 +23,7 @@ namespace AutoMat.Core.Views
         {
             try
             {
-                var authProvider = new FirebaseAuthProvider(new FirebaseConfig(WebAPIkey));
+                var authProvider = new FirebaseAuthProvider(new FirebaseConfig(AppConstants.WebAPIkey));
                 var auth = await authProvider.CreateUserWithEmailAndPasswordAsync(UserNewEmail.Text, UserNewPassword.Text, UserName.Text, true);
                 var user = await authProvider.GetUserAsync(auth.FirebaseToken);
                 if (!user.IsEmailVerified)

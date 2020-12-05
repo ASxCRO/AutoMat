@@ -19,22 +19,57 @@ namespace AutoMat.Core.Views
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class LoginPage : ContentPage
     {
-        public string WebAPIkey = "AIzaSyAg4riVkvSMtWwKZ6_UssK28-2K6xOndrg";
 		Account account;
 		AccountStore store;
+		ViewModels.User user = null;
 
-        public object AppConstant { get; private set; }
+		public object AppConstant { get; private set; }
 
         public LoginPage()
         {
             InitializeComponent();
 			store = AccountStore.Create();
+		}
 
+		protected async override void OnAppearing()
+        {
+			this.IsVisible = false;
+
+			base.OnAppearing();
+			if (!string.IsNullOrEmpty(Preferences.Get("UserToken", "")))
+			{
+				var request = new OAuth2Request("GET", new Uri(AppConstants.UserInfoUrl), null, Account.Deserialize(Preferences.Get("UserToken", "")));
+				var response = await request.GetResponseAsync();
+				if (response != null)
+				{
+					string userJson = await response.GetResponseTextAsync();
+					user = JsonConvert.DeserializeObject<ViewModels.User>(userJson);
+				}
+				if (user != null)
+				{
+					App.Current.MainPage = new NavigationPage(new MyDashboardPage(user));
+				}
+				else
+				{
+					this.IsVisible = true;
+				}
+			}
+			else
+			{
+				if (!string.IsNullOrEmpty(Preferences.Get("MyFirebaseRefreshToken", "")))
+				{
+					App.Current.MainPage = new NavigationPage(new MyDashboardPage());
+				}
+				else
+				{
+					this.IsVisible = true;
+				}
+			}
 		}
 
 		async void loginbutton_Clicked(System.Object sender, System.EventArgs e)
         {
-            var authProvider = new FirebaseAuthProvider(new FirebaseConfig(WebAPIkey));
+            var authProvider = new FirebaseAuthProvider(new FirebaseConfig("AIzaSyAg4riVkvSMtWwKZ6_UssK28-2K6xOndrg"));
             try
             {
                 var auth = await authProvider.SignInWithEmailAndPasswordAsync(UserLoginEmail.Text, UserLoginPassword.Text);
@@ -48,17 +83,17 @@ namespace AutoMat.Core.Views
                     var content = await auth.GetFreshAuthAsync();
                     var serializedcontnet = JsonConvert.SerializeObject(content);
                     Preferences.Set("MyFirebaseRefreshToken", serializedcontnet);
-                   // await Navigation.PushAsync(new MyDashboardPage(user));
-                    await App.Current.MainPage.DisplayAlert("Successfull", $"Hi {user.DisplayName}, you have successfully logged into the App!", "OK");
+					await App.Current.MainPage.DisplayAlert("Successfull", $"Hi {user.DisplayName}, you have successfully logged into the App!", "OK");
+					await Navigation.PushModalAsync(new MyDashboardPage());
                 }
             }
             catch (Exception ex)
             {
-                await App.Current.MainPage.DisplayAlert("Alert", "Invalid useremail or password", "OK");
+                await App.Current.MainPage.DisplayAlert("Alert", $"Invalid useremail or password: {ex.Message}", "OK");
             }
         }
 
-        async void loginbuttonOAuth_Clicked(System.Object sender, System.EventArgs e)
+        void loginbuttonOAuth_Clicked(System.Object sender, System.EventArgs e)
         {
 			string clientId = null;
 			string redirectUri = null;
@@ -101,28 +136,22 @@ namespace AutoMat.Core.Views
 				authenticator.Error -= OnAuthError;
 			}
 
-			AuthHelpers.User user = null;
 			if (e.IsAuthenticated)
 			{
-				// If the user is authenticated, request their basic user data from Google
-				// UserInfoUrl = https://www.googleapis.com/oauth2/v2/userinfo
 				var request = new OAuth2Request("GET", new Uri(AppConstants.UserInfoUrl), null, e.Account);
 				var response = await request.GetResponseAsync();
 				if (response != null)
 				{
-					// Deserialize the data and store it in the account store
-					// The users email address will be used to identify data in SimpleDB
 					string userJson = await response.GetResponseTextAsync();
-					user = JsonConvert.DeserializeObject<AuthHelpers.User>(userJson);
+					user = JsonConvert.DeserializeObject<ViewModels.User>(userJson);
+					Preferences.Set("UserToken", e.Account.Serialize());
 				}
-
 				if (user != null)
 				{
+					await App.Current.MainPage.DisplayAlert("Successfull", $"Hi {user.Email}, you have successfully logged into the App!", "OK");
+
 					App.Current.MainPage = new NavigationPage(new MyDashboardPage(user));
 				}
-
-				//await store.SaveAsync(account = e.Account, AppConstant.AppConstants.AppName);
-				//await DisplayAlert("Email address", user.Email, "OK");
 			}
 		}
 

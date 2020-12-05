@@ -4,8 +4,8 @@
              x:Class="AutoMat.Core.Views.LoginPage">
     <ContentPage.Content>
         <StackLayout Margin="20" VerticalOptions="CenterAndExpand" Spacing="20" Orientation="Vertical">
-            <Entry Placeholder="E-mail"  x:Name="UserLoginEmail"></Entry>
-            <Entry Placeholder="Lozinka"  x:Name="UserLoginPassword"></Entry>
+            <Entry Placeholder="E-mail"  x:Name="UserLoginEmail" TextColor="#000"></Entry>
+            <Entry Placeholder="Lozinka"  x:Name="UserLoginPassword" TextColor="#000"></Entry>
             <Button BackgroundColor="Black" Clicked="loginbutton_Clicked" TextColor="White" Text="Login" x:Name="loginbutton"/>
             <Button BackgroundColor="Blue" Clicked="loginbuttonOAuth_Clicked" TextColor="White" Text="Google Login" x:Name="loginoAuthbutton"/>
         </StackLayout>

@@ -6,12 +6,12 @@ using Android.Runtime;
 using AutoMat.Core.AuthHelpers;
 using AutoMat.Core.Constants;
 using System;
+using Xamarin.Auth;
 
 namespace AutoMat.Droid
 {
 	[Activity(Label = "CustomUrlSchemeInterceptorActivity", NoHistory = true, LaunchMode = LaunchMode.SingleTop)]
-	[IntentFilter(
-	new[] { Intent.ActionView },
+	[IntentFilter(new[] { Intent.ActionView },
 	Categories = new[] { Intent.CategoryDefault, Intent.CategoryBrowsable },
 	DataSchemes = new[] { "com.googleusercontent.apps.915728342891-8mfpa7hmqhtfeugs61d6e9t1jhi4pt6m" },
 	DataPath = "/oauth2redirect")]
@@ -20,18 +20,25 @@ namespace AutoMat.Droid
 		protected override void OnCreate(Bundle savedInstanceState)
 		{
 			base.OnCreate(savedInstanceState);
-
+			//StartActivity(base.Intent);
 			// Convert Android.Net.Url to Uri
 			var uri = new Uri(Intent.Data.ToString());
 
 			// Load redirectUrl page
 			AuthenticationState.Authenticator.OnPageLoading(uri);
+			CustomTabsConfiguration.CustomTabsClosingMessage = null;
 
-			//SetResult(Result.FirstUser);
-			Finish();
+			var intent = new Intent(this, typeof(MainActivity));
+			intent.SetFlags(ActivityFlags.ClearTop | ActivityFlags.SingleTop);
+			StartActivity(intent);
 
+			this.Finish();
+
+			return;
 		}
 
 
-	}
+
+
+    }
 }

@@ -1,8 +1,9 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="AutoMat.MainPage">
-    <StackLayout Margin="20" VerticalOptions="CenterAndExpand" Spacing="20" Orientation="Vertical">
+             x:Class="AutoMat.MainPage"
+            >
+    <StackLayout Margin="20" VerticalOptions="CenterAndExpand" Spacing="20" Orientation="Vertical"  >
         <Button BackgroundColor="Black" Clicked="loginPage_Clicked" TextColor="White" Text="Login" x:Name="loginbutton"/>
         <BoxView HeightRequest="1" HorizontalOptions="FillAndExpand" BackgroundColor="Gray"/>
         <Button BackgroundColor="Black" TextColor="White" Text="Signup" Clicked="signupPage_Clicked" x:Name="signupbutton"/>

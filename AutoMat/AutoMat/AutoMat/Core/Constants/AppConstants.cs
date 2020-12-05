@@ -7,6 +7,7 @@ namespace AutoMat.Core.Constants
     public class AppConstants
     {
 		public static string AppName = "AutoMat";
+		public static string WebAPIkey = "AIzaSyAg4riVkvSMtWwKZ6_UssK28-2K6xOndrg";
 
 		// OAuth
 		// For Google login, configure at https://console.developers.google.com/

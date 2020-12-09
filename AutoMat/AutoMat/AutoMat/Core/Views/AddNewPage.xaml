@@ -2,30 +2,12 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="AutoMat.Core.Views.AddNewPage"
-             Visual="Material">
-    <StackLayout Spacing="20" 
-                     Padding="10"
-                     BackgroundColor="White">
-        <FlexLayout Direction="Row" 
-                        Wrap="Wrap" 
-                        JustifyContent="SpaceBetween" 
-                        AlignItems="Start">
-            <Entry Placeholder="Item" 
-                       PlaceholderColor="{StaticResource TertiaryColor}" 
-                       TextColor="{StaticResource TextColor}" 
-                       BackgroundColor="#ddd"
-                       FlexLayout.Basis="100%"
-                       Margin="0,0,0,10" />
-            <Entry Placeholder="Price" 
-                       PlaceholderColor="{StaticResource PrimaryColor}" 
-                       TextColor="{StaticResource MyWhite}" 
-                       BackgroundColor="#ddd"
-                       FlexLayout.Basis="30%" />
-            <Entry Placeholder="Size"
-                       PlaceholderColor="{StaticResource PrimaryColor}" 
-                       TextColor="{StaticResource TextColor}" 
-                       BackgroundColor="#ddd"
-                       FlexLayout.Basis="60%" />
-        </FlexLayout>
+             xmlns:material="clr-namespace:XF.Material.Forms.UI;assembly=XF.Material">
+    <StackLayout Padding="15">
+
+        <material:MaterialTextField Placeholder="Placeholder" HelperText="Helper Text" ErrorText="Error Text"  InputType="Text" TextColor="#ddd"/>
+        <material:MaterialRadioButtonGroup x:Name="radioButtonGroup" Choices="{Binding AirBags}" />
+        <material:MaterialCheckboxGroup x:Name="checkBoxGroup" Choices="{Binding AirBags}" />
     </StackLayout>
+
 </ContentPage>

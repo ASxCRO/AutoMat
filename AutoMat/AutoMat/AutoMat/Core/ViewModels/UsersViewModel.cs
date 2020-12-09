@@ -1,24 +1,23 @@
-﻿using System;
+﻿using AutoMat.Core.Models;
+using AutoMat.Core.Services;
+using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
+using System.Text;
 using System.Threading.Tasks;
-
 using Xamarin.Forms;
-
-using AutoMat.Core.ViewModels;
-using AutoMat.Core.Views;
 
 namespace AutoMat.Core.ViewModels
 {
-    public class ItemsViewModel : BaseViewModel<Item>
+    public class UsersViewModel : BaseViewModel<FirebaseUser>
     {
-        public ObservableCollection<Item> Items { get; set; }
+        public ObservableCollection<FirebaseUser> Items { get; set; }
         public Command LoadItemsCommand { get; set; }
-
-        public ItemsViewModel()
+        public UsersViewModel()
         {
-            Title = "Browse";
-            Items = new ObservableCollection<Item>();
+            Title = "Users";
+            Items = new ObservableCollection<FirebaseUser>();
             LoadItemsCommand = new Command(async () => await ExecuteLoadItemsCommand());
         }
 
@@ -33,7 +32,7 @@ namespace AutoMat.Core.ViewModels
             {
                 Items.Clear();
                 var items = await DataStore.GetItemsAsync(true);
-                foreach (var item in items)
+                 foreach (var item in items)
                 {
                     Items.Add(item);
                 }

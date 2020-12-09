@@ -1,8 +1,13 @@
-﻿using AutoMat.Core.ViewModels;
+﻿using AutoMat.Core.Constants;
+using AutoMat.Core.Models;
+using AutoMat.Core.Services;
+using AutoMat.Core.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http;
 using System.Text;
+using System.Text.Json;
 using System.Threading.Tasks;
 
 using Xamarin.Forms;
@@ -13,22 +18,24 @@ namespace AutoMat.Core.Views
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class SearchPage : ContentPage
     {
-        ItemsViewModel viewModel;
+        ViewCell lastCell;
+
+        AdvertismentsViewModel viewModel;
         public SearchPage()
         {
             InitializeComponent();
-
-            BindingContext = viewModel = new ItemsViewModel();
+            BindingContext = viewModel = new AdvertismentsViewModel();
         }
 
         async void OnItemSelected(object sender, SelectedItemChangedEventArgs args)
         {
-            var item = args.SelectedItem as Item;
+            var item = args.SelectedItem as Advertisement;
             if (item == null)
                 return;
 
             //await Navigation.PushAsync(new ItemDetailPage(new ItemDetailViewModel(item)));
 
+            //var ads = await advertismentDataStorage.GetItemsKeyValueAsync();
             // Manually deselect item.
             ItemsListView.SelectedItem = null;
         }

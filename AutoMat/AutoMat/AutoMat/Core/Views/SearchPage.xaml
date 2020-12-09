@@ -1,68 +1,101 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="AutoMat.Core.Views.SearchPage">
+             x:Class="AutoMat.Core.Views.SearchPage"
+             xmlns:material="clr-namespace:XF.Material.Forms.UI;assembly=XF.Material">
     <ContentPage.Content>
         <StackLayout>
             <ListView 
                 x:Name="ItemsListView" 
-                BackgroundColor="White"
+                BackgroundColor="LightGray"
                 ItemsSource="{Binding Items}"
                 VerticalOptions="FillAndExpand"
                 HasUnevenRows="true"
-                SeparatorVisibility="None"
+                SeparatorVisibility="Default"
                 RefreshCommand="{Binding LoadItemsCommand}"
                 IsPullToRefreshEnabled="true"
                 IsRefreshing="{Binding IsBusy, Mode=OneWay}"
                 CachingStrategy="RecycleElement"
+                SeparatorColor="Black"
+                SelectionMode="Single"
                 ItemSelected="OnItemSelected">
                 <ListView.ItemTemplate>
                     <DataTemplate>
-                        <ViewCell Height="200">
-                            <Frame Padding="0" Margin="10,0,10,20" HasShadow="True" CornerRadius="0">
-                                <StackLayout Orientation="Horizontal" Margin="0" Padding="0">
-                                    <BoxView Color="{Binding BoxColor}" WidthRequest="4" Margin="0" />
-                                    <Grid VerticalOptions="FillAndExpand" Padding="0" Margin="0" HorizontalOptions="FillAndExpand" BackgroundColor="White">
-                                        <Grid.RowDefinitions>
-                                            <RowDefinition Height="*"/>
-                                            <RowDefinition Height="Auto"/>
-                                        </Grid.RowDefinitions>
+                        <ViewCell >
+                            <Frame IsClippedToBounds="True"
+                                            HasShadow="True"
+                                            Padding="10"
+                                            BackgroundColor="AliceBlue" 
+                                            CornerRadius="20"
+                                            BorderColor="DarkGray">
+                                        <Frame.Margin>
+                                            <OnPlatform x:TypeArguments="Thickness"
+                                                        Android="10"
+                                                        iOS="10"/>
+                                        </Frame.Margin>
+                                        <StackLayout HorizontalOptions="Fill" Orientation="Vertical">
+                                            <Image Source="{Binding PicturesURL[0]}" Aspect="AspectFill" HeightRequest="150" />
+                                            <StackLayout HorizontalOptions="FillAndExpand" Orientation="Vertical" Padding="15">
+                                                <Label TextColor="#222" FontSize = "20" Text="{Binding Title}"/>
 
-                                        <Grid Grid.Row="0" VerticalOptions="FillAndExpand" Padding="0" Margin="0" HorizontalOptions="FillAndExpand" BackgroundColor="White">
-                                            <Grid.RowDefinitions>
-                                                <RowDefinition Height="Auto"/>
-                                                <RowDefinition Height="Auto"/>
-                                                <RowDefinition Height="Auto"/>
-                                            </Grid.RowDefinitions>
-                                            <Grid.ColumnDefinitions>
-                                                <ColumnDefinition/>
-                                                <ColumnDefinition Width="Auto"/>
-                                            </Grid.ColumnDefinitions>
-                                            <RelativeLayout Grid.Row="0" Grid.Column="0" Grid.RowSpan="3"  HorizontalOptions="FillAndExpand">
-                                                <Image 
-                                                Source="https://www.njuskalo.hr/image-w920x690/auti/ford-focus-1.5-tdci-navi-pdc-klima-1-vl-49.500km-slika-141442234.jpg" 
-                                                RelativeLayout.XConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width, Factor=0}"
-                                                 RelativeLayout.YConstraint="{ConstraintExpression Type=RelativeToParent, Property=Height, Factor=0.05}"
-                                                 RelativeLayout.WidthConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width, Factor=1}"
-                                                 RelativeLayout.HeightConstraint="{ConstraintExpression Type=RelativeToParent, Property=Height, Factor=1}"/>
-                                            </RelativeLayout>
-                                            
-                                            <Label Margin="5,10,0,5" FontAttributes="Bold" Grid.Row="0" Grid.Column="1" HorizontalTextAlignment="Start" VerticalTextAlignment="Center" FontSize="Default" Text="{Binding Text}" />
-                                            <Label Margin="5,0,5,0" Grid.Row="1" Grid.Column="1" VerticalTextAlignment="Start" FontSize="Small" Text="{Binding Description}"  />
-                                            <StackLayout Grid.Row="2" Grid.Column="1" Orientation="Horizontal" HorizontalOptions="EndAndExpand" VerticalOptions="End">
-                                                <Label HorizontalTextAlignment="Start" VerticalTextAlignment="Center" FontSize="Micro" Text="{Binding PublishDate}"/>
-                                                <Image WidthRequest="15" HeightRequest="15" Source="ic_oglasi" VerticalOptions="Center"  Margin="0,0,5,5"/>
-                                            </StackLayout>
+                                        <FlexLayout Margin="0,15,0,0"  Direction="Row" JustifyContent="SpaceBetween">
+                                            <Button x:Name="btnBrand"
+                                                BackgroundColor="LightGray"
+                                                FontSize="10"
+                                                Text="{Binding Brand}" 
+                                                Padding="0"
+                                                    WidthRequest="100">
+                                            </Button>
+                                            <Button x:Name="btnModel"
+                                                BackgroundColor="Gray"
+                                                Text="{Binding Model}" 
+                                                 FontSize="10"
+                                                    TextColor="White"
+                                                Padding="0"
+                                                    WidthRequest="100">
+                                            </Button>
+                                            <Button x:Name="btnProductionYear"
+                                                BackgroundColor="DarkGray"
+                                                Text="{Binding ProductionYear, StringFormat='{0}.g.'}" 
+                                                 FontSize="10"
+                                                Padding="0"
+                                                    WidthRequest="100">
+                                            </Button>
+                                        </FlexLayout>
+                                        <FlexLayout Direction="Row" JustifyContent="SpaceBetween">
+                                            <Button x:Name="btnKM"
+                                                BackgroundColor="SlateGray"
+                                                Text="{Binding KM, StringFormat='{0} km'}" 
+                                                 FontSize="10"
+                                                  TextColor="White"
+                                                Padding="0"
+                                                    WidthRequest="100">
+                                            </Button>
+                                            <Button x:Name="btnCounty"
+                                                BackgroundColor="DarkSlateGray"
+                                                FontSize="10"
+                                                TextColor="White"
+                                                Text="{Binding County}" 
+                                                Padding="0"
+                                                    WidthRequest="100">
+                                            </Button>
+                                            <Button x:Name="btnTown"
+                                                BackgroundColor="LightSlateGray"
+                                                    TextColor="White"
+                                                Text="{Binding Town}" 
+                                                 FontSize="10"
+                                                Padding="0"
+                                                    WidthRequest="100">
+                                            </Button>
+                                        </FlexLayout>
+                                        <BoxView Margin="0,10,0,0" Color="DarkGray" HeightRequest="2" HorizontalOptions="FillAndExpand"></BoxView>
+                                        <FlexLayout Direction="Row" JustifyContent="SpaceBetween" Margin="0,5,0,0" >
+                                            <material:MaterialButton  ButtonType="Text" FlexLayout.Grow="0.45" ContentLayout="Left" Image="ic_spremljeni" Text="Spremi" TextColor="Black"  />
+                                            <material:MaterialButton  ButtonType="Text" Margin="10,0,0,0" FlexLayout.Grow="0.45" ContentLayout="Left" Image="ic_korisnik"  Text="Podijeli" TextColor="Black"  />
 
-                                          
-                                        </Grid>
-                                        <StackLayout Orientation="Horizontal" Grid.Row="1" Padding="5"  Margin="-6,0,0,0" HorizontalOptions="FillAndExpand" BackgroundColor="#F1F1F1">
-                                            <StackLayout Orientation="Horizontal"  HorizontalOptions="EndAndExpand" BackgroundColor="#F1F1F1">
-                                                <Image WidthRequest="20" HeightRequest="20" Source="ic_spremljeni"  />
-                                                <Image WidthRequest="20" HeightRequest="20" Source="ic_supervised_user_circle" />
-                                            </StackLayout>
-                                        </StackLayout>
-                                    </Grid>
+                                        </FlexLayout>
+
+                                    </StackLayout>
                                 </StackLayout>
                             </Frame>
                         </ViewCell>

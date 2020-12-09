@@ -63,5 +63,15 @@ namespace AutoMat.Core.Services
         {
             return await Task.FromResult(items);
         }
+
+        public Task<IEnumerable<Item>> GetItemsAsync()
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<Dictionary<string, Item>> GetItemsKeyValueAsync()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

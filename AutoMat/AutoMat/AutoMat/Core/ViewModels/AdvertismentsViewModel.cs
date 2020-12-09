@@ -1,24 +1,23 @@
-﻿using System;
+﻿using AutoMat.Core.Models;
+using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
+using System.Text;
 using System.Threading.Tasks;
-
 using Xamarin.Forms;
-
-using AutoMat.Core.ViewModels;
-using AutoMat.Core.Views;
 
 namespace AutoMat.Core.ViewModels
 {
-    public class ItemsViewModel : BaseViewModel<Item>
+    public class AdvertismentsViewModel : BaseViewModel<Advertisement>
     {
-        public ObservableCollection<Item> Items { get; set; }
+        public ObservableCollection<Advertisement> Items { get; set; }
         public Command LoadItemsCommand { get; set; }
 
-        public ItemsViewModel()
+        public AdvertismentsViewModel()
         {
             Title = "Browse";
-            Items = new ObservableCollection<Item>();
+            Items = new ObservableCollection<Advertisement>();
             LoadItemsCommand = new Command(async () => await ExecuteLoadItemsCommand());
         }
 
@@ -32,10 +31,10 @@ namespace AutoMat.Core.ViewModels
             try
             {
                 Items.Clear();
-                var items = await DataStore.GetItemsAsync(true);
+                var items = await DataStore.GetItemsKeyValueAsync();
                 foreach (var item in items)
                 {
-                    Items.Add(item);
+                    Items.Add(item.Value);
                 }
             }
             catch (Exception ex)

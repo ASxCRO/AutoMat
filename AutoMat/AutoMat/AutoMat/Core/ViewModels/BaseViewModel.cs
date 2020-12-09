@@ -10,9 +10,9 @@ using AutoMat.Core.Services;
 
 namespace AutoMat.Core.ViewModels
 {
-    public class BaseViewModel : INotifyPropertyChanged
+    public class BaseViewModel<TBase> : INotifyPropertyChanged
     {
-        public IDataStore<Item> DataStore => DependencyService.Get<IDataStore<Item>>() ?? new MockDataStore();
+        public IDataStore<TBase> DataStore => DependencyService.Get<IDataStore<TBase>>();
 
         bool isBusy = false;
         public bool IsBusy

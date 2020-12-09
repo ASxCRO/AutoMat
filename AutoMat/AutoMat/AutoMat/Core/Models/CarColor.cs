@@ -4,7 +4,8 @@ using System.Text;
 
 namespace AutoMat.Core.Models
 {
-    public class Oglas
+    public class CarColor
     {
+        public List<string> Colors { get; set; }
     }
 }

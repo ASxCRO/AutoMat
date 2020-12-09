@@ -11,6 +11,7 @@ namespace AutoMat
         public App()
         {
             InitializeComponent();
+            XF.Material.Forms.Material.Init(this);
             MainPage = new NavigationPage(new MainPage());
         }
 

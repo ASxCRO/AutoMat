@@ -5,8 +5,7 @@ using Android.OS;
 using Plugin.GoogleClient;
 using AutoMat.Droid.Services;
 using Xamarin.Auth;
-using static Android.Views.View;
-
+using XF.Material.Droid;
 namespace AutoMat.Droid
 {
     [Activity(Label = "AutoMat", Icon = "@mipmap/icon", Theme = "@style/MainTheme", MainLauncher = true, ConfigurationChanges = ConfigChanges.ScreenSize | ConfigChanges.Orientation | ConfigChanges.UiMode | ConfigChanges.ScreenLayout | ConfigChanges.SmallestScreenSize )]
@@ -17,6 +16,7 @@ namespace AutoMat.Droid
             base.OnCreate(savedInstanceState);
             Xamarin.Essentials.Platform.Init(this, savedInstanceState);
             global::Xamarin.Forms.Forms.Init(this, savedInstanceState);
+            XF.Material.Droid.Material.Init(this, savedInstanceState);
             global::Xamarin.Forms.FormsMaterial.Init(this,savedInstanceState);
             global::Xamarin.Auth.Presenters.XamarinAndroid.AuthenticationConfiguration.Init(this, savedInstanceState);
             CustomTabsConfiguration.CustomTabsClosingMessage = null;

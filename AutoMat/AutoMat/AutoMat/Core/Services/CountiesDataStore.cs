@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace AutoMat.Core.ViewModels
+namespace AutoMat.Core.Services
 {
-    class OglasViewModel
+    class CountiesDataStore
     {
     }
 }

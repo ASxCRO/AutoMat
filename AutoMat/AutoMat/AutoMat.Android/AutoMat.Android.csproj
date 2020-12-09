@@ -72,7 +72,10 @@
     <PackageReference Include="Xamarin.Forms.Visual.Material">
       <Version>4.8.0.1687</Version>
     </PackageReference>
-    <PackageReference Include="Xamarin.Google.Android.Material" Version="1.1.0.4-rc3" />
+    <PackageReference Include="Xamarin.Google.Android.Material" Version="1.2.1" />
+    <PackageReference Include="XF.Material">
+      <Version>1.5.8</Version>
+    </PackageReference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BottomBar\Renderers\BottomBarPageRenderer.cs" />

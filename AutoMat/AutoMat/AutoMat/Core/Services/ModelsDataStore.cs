@@ -4,19 +4,20 @@ using Firebase.Database;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
 
-[assembly: Xamarin.Forms.Dependency(typeof(CountiesDataStore))]
+[assembly: Xamarin.Forms.Dependency(typeof(ModelsDataStore))]
 namespace AutoMat.Core.Services
 {
-    public class CountiesDataStore : IDataStore<County>
+    class ModelsDataStore : IDataStore<CarModel>
     {
         private FirebaseClient firebase { get; } = FirebaseDatabaseClient.Instance;
-        public CountiesDataStore()
+        public ModelsDataStore()
         {
         }
 
-        public Task<bool> AddItemAsync(County item)
+        public Task<bool> AddItemAsync(CarModel item)
         {
             throw new NotImplementedException();
         }
@@ -26,31 +27,31 @@ namespace AutoMat.Core.Services
             throw new NotImplementedException();
         }
 
-        public Task<County> GetItemAsync(string id)
+        public Task<CarModel> GetItemAsync(string id)
         {
             throw new NotImplementedException();
         }
 
-        public async Task<IEnumerable<County>> GetItemsAsync(bool forceReload)
+        public async Task<IEnumerable<CarModel>> GetItemsAsync(bool forceReload)
         {
             return (await firebase
-                      .Child("counties")
-                      .OnceAsync<County>()).Select(item => new County
+                      .Child("carModels")
+                      .OnceAsync<CarModel>()).Select(item => new CarModel
                       {
                           Id = item.Object.Id,
-                          Name = item.Object.Name,
-                          EntityType = item.Object.EntityType
+                          Title = item.Object.Title,
+                          BrandId = item.Object.BrandId
                       }).ToList();
         }
 
-        public Task<Dictionary<string, County>> GetItemsKeyValueAsync()
+        public Task<Dictionary<string, CarModel>> GetItemsKeyValueAsync()
         {
             throw new NotImplementedException();
         }
 
-        public Task<bool> UpdateItemAsync(County item)
+        public Task<bool> UpdateItemAsync(CarModel item)
         {
             throw new NotImplementedException();
         }
     }
-    }
+}

@@ -2,12 +2,664 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="AutoMat.Core.Views.AddNewPage"
-             xmlns:material="clr-namespace:XF.Material.Forms.UI;assembly=XF.Material">
-    <StackLayout Padding="15">
+             xmlns:material="clr-namespace:XF.Material.Forms.UI;assembly=XF.Material"
+             >
+    <ScrollView>
+        <StackLayout Padding="15">
 
-        <material:MaterialTextField Placeholder="Placeholder" HelperText="Helper Text" ErrorText="Error Text"  InputType="Text" TextColor="#ddd"/>
-        <material:MaterialRadioButtonGroup x:Name="radioButtonGroup" Choices="{Binding AirBags}" />
-        <material:MaterialCheckboxGroup x:Name="checkBoxGroup" Choices="{Binding AirBags}" />
-    </StackLayout>
+            <material:MaterialCard 
+            CornerRadius="10" 
+            Elevation="5" 
+            HeightRequest="80" 
+            HorizontalOptions="FillAndExpand" 
+            BackgroundColor="White"
+            IsClickable="True"
+            Padding="10"
+            Margin="0,20,0,0"
+            BorderColor="#071b5e">
+            <StackLayout Orientation="Vertical">
+                <StackLayout Orientation="Horizontal">
+                    <material:MaterialChip BackgroundColor="IndianRed"  Text="Brand" TextColor="White"  FontSize="15" />
+                        <material:MaterialLabel Text="{Binding Advertisment.Brand}" HorizontalOptions="EndAndExpand" FontSize="Title" TextColor="Black" x:Name="Label"/>
+                </StackLayout>
+                    <material:MaterialButton BackgroundColor="DarkGray" Clicked="MaterialButton_Clicked"  Text="Odaberite brand vozila" TextColor="White" VerticalOptions="FillAndExpand" />
+            </StackLayout>
+        </material:MaterialCard>
+        <material:MaterialCard 
+            CornerRadius="10" 
+            Elevation="5" 
+            HeightRequest="80" 
+            HorizontalOptions="FillAndExpand" 
+            BackgroundColor="White"
+            IsClickable="True"
+            Padding="10"
+            Margin="0,20,0,0"
+            BorderColor="#071b5e">
+            <StackLayout Orientation="Vertical">
+                <StackLayout Orientation="Horizontal">
+                        <material:MaterialChip BackgroundColor="IndianRed"  Text="Model" TextColor="White"  FontSize="15" />
+                        <material:MaterialLabel Text="{Binding Advertisment.Model}" HorizontalOptions="EndAndExpand" FontSize="Title" TextColor="Black" x:Name="Label_1"/>
+                </StackLayout>
+                    <material:MaterialButton BackgroundColor="DarkGray" Clicked="MaterialButton_Clicked_1"  Text="Odaberite model vozila" TextColor="White" VerticalOptions="FillAndExpand" />
+            </StackLayout>
+        </material:MaterialCard>
+        <material:MaterialCard 
+            CornerRadius="10" 
+            Elevation="5" 
+            HeightRequest="80" 
+            HorizontalOptions="FillAndExpand" 
+            BackgroundColor="White"
+            IsClickable="True"
+            Padding="10"
+            Margin="0,20,0,0"
+            BorderColor="#071b5e">
+            <StackLayout Orientation="Vertical">
+                <StackLayout Orientation="Horizontal">
+                        <material:MaterialChip BackgroundColor="#071b5e"  Text="God. proizvodnje" TextColor="White"  FontSize="15" />
+                        <material:MaterialLabel Text="{Binding Advertisment.ProductionYear}" HorizontalOptions="EndAndExpand" FontSize="Title" TextColor="Black" x:Name="Label_2"/>
+                </StackLayout>
+                    <material:MaterialButton BackgroundColor="DarkGray" Clicked="MaterialButton_Clicked_2"  Text="Odaberite godinu proizvodnje" TextColor="White" VerticalOptions="FillAndExpand" />
+            </StackLayout>
+        </material:MaterialCard>
+        <material:MaterialCard 
+            CornerRadius="10" 
+            Elevation="5" 
+            HeightRequest="80" 
+            HorizontalOptions="FillAndExpand" 
+            BackgroundColor="White"
+            IsClickable="True"
+            Padding="10"
+            Margin="0,20,0,0"
+            BorderColor="#071b5e">
+            <StackLayout Orientation="Vertical">
+                <StackLayout Orientation="Horizontal">
+                    <material:MaterialChip BackgroundColor="#071b5e"  Text="God. modela" TextColor="White"  FontSize="15" />
+                        <material:MaterialLabel Text="{Binding Advertisment.ModelYear}" HorizontalOptions="EndAndExpand" FontSize="Title" TextColor="Black" x:Name="Label_3"/>
+                </StackLayout>
+                    <material:MaterialButton BackgroundColor="DarkGray" Clicked="MaterialButton_Clicked_3"  Text="Odaberite godinu modela" TextColor="White" VerticalOptions="FillAndExpand" />
+            </StackLayout>
+        </material:MaterialCard>
+            <material:MaterialCard 
+            CornerRadius="10" 
+            Elevation="5" 
+            HeightRequest="80" 
+            HorizontalOptions="FillAndExpand" 
+            BackgroundColor="White"
+            IsClickable="True"
+            Padding="10"
+            Margin="0,20,0,0"
+            BorderColor="#071b5e">
+                <StackLayout Orientation="Vertical">
+                    <StackLayout Orientation="Horizontal">
+                        <material:MaterialChip BackgroundColor="#071b5e"  Text="U prometu od" TextColor="White"  FontSize="15" />
+                        <material:MaterialLabel Text="{Binding Advertisment.OnRoadSince}" HorizontalOptions="EndAndExpand" FontSize="Title" TextColor="Black" x:Name="Label_4"/>
+                    </StackLayout>
+                    <material:MaterialButton BackgroundColor="DarkGray" Clicked="MaterialButton_Clicked_4"  Text="Odaberite godinu" TextColor="White" VerticalOptions="FillAndExpand"/>
+                </StackLayout>
+            </material:MaterialCard>
+            <material:MaterialCard 
+            CornerRadius="10" 
+            Elevation="5" 
+            HeightRequest="80" 
+            HorizontalOptions="FillAndExpand" 
+            BackgroundColor="White"
+            IsClickable="True"
+            Padding="10"
+            Margin="0,20,0,0"
+            BorderColor="#071b5e">
+                <StackLayout Orientation="Vertical">
+                    <StackLayout Orientation="Horizontal">
+                        <material:MaterialChip BackgroundColor="Aqua"  Text="Tip motora" TextColor="Black"  FontSize="15" />
+                        <material:MaterialLabel Text="{Binding Advertisment.MotorType}" HorizontalOptions="EndAndExpand" FontSize="Title" TextColor="Black" x:Name="Label_6"/>
+                    </StackLayout>
+                    <material:MaterialButton BackgroundColor="DarkGray" Clicked="MaterialButton_Clicked_6"  Text="Odaberite tip motora" TextColor="White" VerticalOptions="FillAndExpand"/>
+                </StackLayout>
+            </material:MaterialCard>
+            <material:MaterialCard 
+            CornerRadius="10" 
+            Elevation="5" 
+            HeightRequest="80" 
+            HorizontalOptions="FillAndExpand" 
+            BackgroundColor="White"
+            IsClickable="True"
+            Padding="10"
+            Margin="0,20,0,0"
+            BorderColor="#071b5e">
+                <StackLayout Orientation="Vertical">
+                    <StackLayout Orientation="Horizontal">
+                        <material:MaterialChip BackgroundColor="Aqua"  Text="Broj kilometara" TextColor="Black"  FontSize="15" />
+                        <material:MaterialLabel Text="{Binding Advertisment.KM,StringFormat='{0} km'}" HorizontalOptions="EndAndExpand" FontSize="Title" TextColor="Black" x:Name="Label_7"/>
+                    </StackLayout>
+                    <material:MaterialButton BackgroundColor="DarkGray" Clicked="MaterialButton_Clicked_7"  Text="Unesite broj kilometara" TextColor="White" VerticalOptions="FillAndExpand"/>
+                </StackLayout>
+            </material:MaterialCard>
+            <material:MaterialCard 
+            CornerRadius="10" 
+            Elevation="5" 
+            HeightRequest="80" 
+            HorizontalOptions="FillAndExpand" 
+            BackgroundColor="White"
+            IsClickable="True"
+            Padding="10"
+            Margin="0,20,0,0"
+            BorderColor="#071b5e">
+                <StackLayout Orientation="Vertical">
+                    <StackLayout Orientation="Horizontal">
+                        <material:MaterialChip BackgroundColor="Aqua"  Text="Potrošnja goriva" TextColor="Black"  FontSize="15" />
+                        <material:MaterialLabel Text="{Binding Advertisment.AverageFuel, StringFormat='{0} l'}" HorizontalOptions="EndAndExpand" FontSize="Title" TextColor="Black" x:Name="Label_8"/>
+                    </StackLayout>
+                    <material:MaterialButton BackgroundColor="DarkGray" Clicked="MaterialButton_Clicked_8"  Text="Unesite prosječnu potrošnju" TextColor="White" VerticalOptions="FillAndExpand"/>
+                </StackLayout>
+            </material:MaterialCard>
+            <material:MaterialCard 
+            CornerRadius="10" 
+            Elevation="5" 
+            HeightRequest="80" 
+            HorizontalOptions="FillAndExpand" 
+            BackgroundColor="White"
+            IsClickable="True"
+            Padding="10"
+            Margin="0,20,0,0"
+            BorderColor="#071b5e">
+                <StackLayout Orientation="Vertical">
+                    <StackLayout Orientation="Horizontal">
+                        <material:MaterialChip BackgroundColor="Green"  Text="Emisija plinova" TextColor="White"  FontSize="15" />
+                        <material:MaterialLabel Text="{Binding Advertisment.CO2, StringFormat='{0} g/km'}" HorizontalOptions="EndAndExpand" FontSize="Title" TextColor="Black" x:Name="Label_9"/>
+                    </StackLayout>
+                    <material:MaterialButton BackgroundColor="DarkGray" Clicked="MaterialButton_Clicked_9"  Text="Unesite prosječnu emisiju CO2" TextColor="White" VerticalOptions="FillAndExpand"/>
+                </StackLayout>
+            </material:MaterialCard>
+            <material:MaterialCard 
+            CornerRadius="10" 
+            Elevation="5" 
+            HeightRequest="80" 
+            HorizontalOptions="FillAndExpand" 
+            BackgroundColor="White"
+            IsClickable="True"
+            Padding="10"
+            Margin="0,20,0,0"
+            BorderColor="#071b5e">
+                <StackLayout Orientation="Vertical">
+                    <StackLayout Orientation="Horizontal">
+                        <material:MaterialChip BackgroundColor="Green"  Text="Snaga motora" TextColor="White"  FontSize="15" />
+                        <material:MaterialLabel Text="{Binding Advertisment.Power, StringFormat='{0} kW'}" HorizontalOptions="EndAndExpand" FontSize="Title" TextColor="Black" x:Name="Label_10"/>
+                    </StackLayout>
+                    <material:MaterialButton BackgroundColor="DarkGray" Clicked="MaterialButton_Clicked_10"  Text="Unesite snagu motora" TextColor="White" VerticalOptions="FillAndExpand"/>
+                </StackLayout>
+            </material:MaterialCard>
+            <material:MaterialCard 
+            CornerRadius="10" 
+            Elevation="5" 
+            HeightRequest="80" 
+            HorizontalOptions="FillAndExpand" 
+            BackgroundColor="White"
+            IsClickable="True"
+            Padding="10"
+            Margin="0,20,0,0"
+            BorderColor="#071b5e">
+                <StackLayout Orientation="Vertical">
+                    <StackLayout Orientation="Horizontal">
+                        <material:MaterialChip BackgroundColor="Green"  Text="Mjenjač" TextColor="White"  FontSize="15" />
+                        <material:MaterialLabel Text="{Binding Advertisment.ShiftType}" HorizontalOptions="EndAndExpand" FontSize="Title" TextColor="Black" x:Name="Label_11"/>
+                    </StackLayout>
+                    <material:MaterialButton BackgroundColor="DarkGray" Clicked="MaterialButton_Clicked_11"  Text="Odaberite tip mjenjača" TextColor="White" VerticalOptions="FillAndExpand"/>
+                </StackLayout>
+            </material:MaterialCard>
+            <material:MaterialCard 
+            CornerRadius="10" 
+            Elevation="5" 
+            HeightRequest="80" 
+            HorizontalOptions="FillAndExpand" 
+            BackgroundColor="White"
+            IsClickable="True"
+            Padding="10"
+            Margin="0,20,0,0"
+            BorderColor="#071b5e">
+                <StackLayout Orientation="Vertical">
+                    <StackLayout Orientation="Horizontal">
+                        <material:MaterialChip BackgroundColor="Purple"  Text="Broj brzina" TextColor="White"  FontSize="15" />
+                        <material:MaterialLabel Text="{Binding Advertisment.Shifts}" HorizontalOptions="EndAndExpand" FontSize="Title" TextColor="Black" x:Name="Label_12"/>
+                    </StackLayout>
+                    <material:MaterialButton BackgroundColor="DarkGray" Clicked="MaterialButton_Clicked_12"  Text="Odaberite broj brzina vozila" TextColor="White" VerticalOptions="FillAndExpand"/>
+                </StackLayout>
+            </material:MaterialCard>
+            <material:MaterialCard 
+            CornerRadius="10" 
+            Elevation="5" 
+            HeightRequest="80" 
+            HorizontalOptions="FillAndExpand" 
+            BackgroundColor="White"
+            IsClickable="True"
+            Padding="10"
+            Margin="0,20,0,0"
+            BorderColor="#071b5e">
+                <StackLayout Orientation="Vertical">
+                    <StackLayout Orientation="Horizontal">
+                        <material:MaterialChip BackgroundColor="Purple"  Text="Šasija" TextColor="White"  FontSize="15" />
+                        <material:MaterialLabel Text="{Binding Advertisment.ChassisNumber}" HorizontalOptions="EndAndExpand" FontSize="Title" TextColor="Black" x:Name="Label_13"/>
+                    </StackLayout>
+                    <material:MaterialButton BackgroundColor="DarkGray" Clicked="MaterialButton_Clicked_13"  Text="Unesite broj šasije" TextColor="White" VerticalOptions="FillAndExpand"/>
+                </StackLayout>
+            </material:MaterialCard>
+            <material:MaterialCard 
+            CornerRadius="10" 
+            Elevation="5" 
+            HeightRequest="80" 
+            HorizontalOptions="FillAndExpand" 
+            BackgroundColor="White"
+            IsClickable="True"
+            Padding="10"
+            Margin="0,20,0,0"
+            BorderColor="#071b5e">
+                <StackLayout Orientation="Vertical">
+                    <StackLayout Orientation="Horizontal">
+                        <material:MaterialChip BackgroundColor="Purple"  Text="Pogon" TextColor="White"  FontSize="15" />
+                        <material:MaterialLabel Text="{Binding Advertisment.Drive}" HorizontalOptions="EndAndExpand" FontSize="Title" TextColor="Black" x:Name="Label_14"/>
+                    </StackLayout>
+                    <material:MaterialButton BackgroundColor="DarkGray" Clicked="MaterialButton_Clicked_14"  Text="Odaberite vrstu pogona" TextColor="White" VerticalOptions="FillAndExpand"/>
+                </StackLayout>
+            </material:MaterialCard>
+            <material:MaterialCard 
+            CornerRadius="10" 
+            Elevation="5" 
+            HeightRequest="80" 
+            HorizontalOptions="FillAndExpand" 
+            BackgroundColor="White"
+            IsClickable="True"
+            Padding="10"
+            Margin="0,20,0,0"
+            BorderColor="#071b5e">
+                <StackLayout Orientation="Vertical">
+                    <StackLayout Orientation="Horizontal">
+                        <material:MaterialChip BackgroundColor="CadetBlue"  Text="Obujam motora" TextColor="White"  FontSize="15" />
+                        <material:MaterialLabel Text="{Binding Advertisment.MotorVolume, StringFormat='{0} ccm'}" HorizontalOptions="EndAndExpand" FontSize="Title" TextColor="Black" x:Name="Label_15"/>
+                    </StackLayout>
+                    <material:MaterialButton BackgroundColor="DarkGray" Clicked="MaterialButton_Clicked_15"  Text="Unesite obujam motora" TextColor="White" VerticalOptions="FillAndExpand"/>
+                </StackLayout>
+            </material:MaterialCard>
+            <material:MaterialCard 
+            CornerRadius="10" 
+            Elevation="5" 
+            HeightRequest="80" 
+            HorizontalOptions="FillAndExpand" 
+            BackgroundColor="White"
+            IsClickable="True"
+            Padding="10"
+            Margin="0,20,0,0"
+            BorderColor="#071b5e">
+                <StackLayout Orientation="Vertical">
+                    <StackLayout Orientation="Horizontal">
+                        <material:MaterialChip BackgroundColor="CadetBlue"  Text="Vrata" TextColor="White"  FontSize="15" />
+                        <material:MaterialLabel Text="{Binding Advertisment.Doors}" HorizontalOptions="EndAndExpand" FontSize="Title" TextColor="Black" x:Name="Label_16"/>
+                    </StackLayout>
+                    <material:MaterialButton BackgroundColor="DarkGray" Clicked="MaterialButton_Clicked_16"  Text="Odaberite broj vrata" TextColor="White" VerticalOptions="FillAndExpand"/>
+                </StackLayout>
+            </material:MaterialCard>
+            <material:MaterialCard 
+            CornerRadius="10" 
+            Elevation="5" 
+            HeightRequest="80" 
+            HorizontalOptions="FillAndExpand" 
+            BackgroundColor="White"
+            IsClickable="True"
+            Padding="10"
+            Margin="0,20,0,0"
+            BorderColor="#071b5e">
+                <StackLayout Orientation="Vertical">
+                    <StackLayout Orientation="Horizontal">
+                        <material:MaterialChip BackgroundColor="CadetBlue"  Text="Karoserija" TextColor="White"  FontSize="15" />
+                        <material:MaterialLabel Text="{Binding Advertisment.Body}" HorizontalOptions="EndAndExpand" FontSize="Title" TextColor="Black" x:Name="Label_17"/>
+                    </StackLayout>
+                    <material:MaterialButton BackgroundColor="DarkGray" Clicked="MaterialButton_Clicked_17"  Text="Odaberite vrstu karoserije" TextColor="White" VerticalOptions="FillAndExpand"/>
+                </StackLayout>
+            </material:MaterialCard>
+            <material:MaterialCard 
+            CornerRadius="10" 
+            Elevation="5" 
+            HeightRequest="80" 
+            HorizontalOptions="FillAndExpand" 
+            BackgroundColor="White"
+            IsClickable="True"
+            Padding="10"
+            Margin="0,20,0,0"
+            BorderColor="#071b5e">
+                <StackLayout Orientation="Vertical">
+                    <StackLayout Orientation="Horizontal">
+                        <material:MaterialChip BackgroundColor="DeepSkyBlue"  Text="Ovjes" TextColor="Black"  FontSize="15" />
+                        <material:MaterialLabel Text="{Binding Advertisment.Suspension, StringFormat='{0} ovijes'}" HorizontalOptions="EndAndExpand" FontSize="Title" TextColor="Black" x:Name="Label_18"/>
+                    </StackLayout>
+                    <material:MaterialButton BackgroundColor="DarkGray" Clicked="MaterialButton_Clicked_18"  Text="Odaberite vrstu ovjesa" TextColor="White" VerticalOptions="FillAndExpand"/>
+                </StackLayout>
+            </material:MaterialCard>
+            <material:MaterialCard 
+            CornerRadius="10" 
+            Elevation="5" 
+            HeightRequest="80" 
+            HorizontalOptions="FillAndExpand" 
+            BackgroundColor="White"
+            IsClickable="True"
+            Padding="10"
+            Margin="0,20,0,0"
+            BorderColor="#071b5e">
+                <StackLayout Orientation="Vertical">
+                    <StackLayout Orientation="Horizontal">
+                        <material:MaterialChip BackgroundColor="DeepSkyBlue"  Text="Boja vozila" TextColor="Black"  FontSize="15" />
+                        <material:MaterialLabel Text="{Binding Advertisment.Color , StringFormat='{0} boja'}" HorizontalOptions="EndAndExpand" FontSize="Title" TextColor="Black" x:Name="Label_19"/>
+                    </StackLayout>
+                    <material:MaterialButton BackgroundColor="DarkGray" Clicked="MaterialButton_Clicked_19"  Text="Odaberite boju vozila" TextColor="White" VerticalOptions="FillAndExpand"/>
+                </StackLayout>
+            </material:MaterialCard>
+            <material:MaterialCard 
+            CornerRadius="10" 
+            Elevation="5" 
+            HeightRequest="80" 
+            HorizontalOptions="FillAndExpand" 
+            BackgroundColor="White"
+            IsClickable="True"
+            Padding="10"
+            Margin="0,20,0,0"
+            BorderColor="#071b5e">
+                <StackLayout Orientation="Vertical">
+                    <StackLayout Orientation="Horizontal">
+                        <material:MaterialChip BackgroundColor="DeepSkyBlue"  Text="Eko norma" TextColor="Black"  FontSize="15" />
+                        <material:MaterialLabel Text="{Binding Advertisment.EcoNorm}" HorizontalOptions="EndAndExpand" FontSize="Title" TextColor="Black" x:Name="Label_20"/>
+                    </StackLayout>
+                    <material:MaterialButton BackgroundColor="DarkGray" Clicked="MaterialButton_Clicked_20"  Text="Odaberite eko normu vozila" TextColor="White" VerticalOptions="FillAndExpand"/>
+                </StackLayout>
+            </material:MaterialCard>
+            <material:MaterialCard 
+            CornerRadius="10" 
+            Elevation="5" 
+            HeightRequest="80" 
+            HorizontalOptions="FillAndExpand" 
+            BackgroundColor="White"
+            IsClickable="True"
+            Padding="10"
+            Margin="0,20,0,0"
+            BorderColor="#071b5e">
+                <StackLayout Orientation="Vertical">
+                    <StackLayout Orientation="Horizontal">
+                        <material:MaterialChip BackgroundColor="Red"  Text="Vlasnik" TextColor="White"  FontSize="15" />
+                        <material:MaterialLabel Text="{Binding Advertisment.Owner, StringFormat='{0} vlasnik'}" HorizontalOptions="EndAndExpand" FontSize="Title" TextColor="Black" x:Name="Label_21"/>
+                    </StackLayout>
+                    <material:MaterialButton BackgroundColor="DarkGray" Clicked="MaterialButton_Clicked_21"  Text="Odaberite vlasnika" TextColor="White" VerticalOptions="FillAndExpand"/>
+                </StackLayout>
+            </material:MaterialCard>
+            <material:MaterialCard 
+            CornerRadius="10" 
+            Elevation="5" 
+            HeightRequest="80" 
+            HorizontalOptions="FillAndExpand" 
+            BackgroundColor="White"
+            IsClickable="True"
+            Padding="10"
+            Margin="0,20,0,0"
+            BorderColor="#071b5e">
+                <StackLayout Orientation="Vertical">
+                    <StackLayout Orientation="Horizontal">
+                        <material:MaterialChip BackgroundColor="Red"  Text="Dodatna oprema" TextColor="White"  FontSize="15" />
+                        <material:MaterialLabel Text="{Binding AdvertismentEquipmentCount, StringFormat='Odabrano {0}'}" HorizontalOptions="EndAndExpand" FontSize="Title" TextColor="Black" x:Name="Label_22"/>
+                    </StackLayout>
+                    <material:MaterialButton BackgroundColor="DarkGray" Clicked="MaterialButton_Clicked_22"  Text="Odaberite dodatnu opremu" TextColor="White" VerticalOptions="FillAndExpand"/>
+                </StackLayout>
+            </material:MaterialCard>
+            <material:MaterialCard 
+            CornerRadius="10" 
+            Elevation="5" 
+            HeightRequest="80" 
+            HorizontalOptions="FillAndExpand" 
+            BackgroundColor="White"
+            IsClickable="True"
+            Padding="10"
+            Margin="0,20,0,0"
+            BorderColor="#071b5e">
+                <StackLayout Orientation="Vertical">
+                    <StackLayout Orientation="Horizontal">
+                        <material:MaterialChip BackgroundColor="Red"  Text="Sigurnost" TextColor="White"  FontSize="15" />
+                        <material:MaterialLabel Text="{Binding SecurityEquipmentCount, StringFormat='Odabrano {0}'}" HorizontalOptions="EndAndExpand" FontSize="Title" TextColor="Black" x:Name="Label_23"/>
+                    </StackLayout>
+                    <material:MaterialButton BackgroundColor="DarkGray" Clicked="MaterialButton_Clicked_23"  Text="Odaberite sigurnosnu opremu" TextColor="White" VerticalOptions="FillAndExpand"/>
+                </StackLayout>
+            </material:MaterialCard>
+            <material:MaterialCard 
+            CornerRadius="10" 
+            Elevation="5" 
+            HeightRequest="80" 
+            HorizontalOptions="FillAndExpand" 
+            BackgroundColor="White"
+            IsClickable="True"
+            Padding="10"
+            Margin="0,20,0,0"
+            BorderColor="#071b5e">
+                <StackLayout Orientation="Vertical">
+                    <StackLayout Orientation="Horizontal">
+                        <material:MaterialChip BackgroundColor="#071b5e"  Text="Klima" TextColor="White"  FontSize="15" />
+                        <material:MaterialLabel Text="{Binding ACEquipmentCount, StringFormat='Odabrano {0}'}" HorizontalOptions="EndAndExpand" FontSize="Title" TextColor="Black" x:Name="Label_24"/>
+                    </StackLayout>
+                    <material:MaterialButton BackgroundColor="DarkGray" Clicked="MaterialButton_Clicked_24"  Text="Odaberite klima opremu" TextColor="White" VerticalOptions="FillAndExpand"/>
+                </StackLayout>
+            </material:MaterialCard>
+            <material:MaterialCard 
+            CornerRadius="10" 
+            Elevation="5" 
+            HeightRequest="80" 
+            HorizontalOptions="FillAndExpand" 
+            BackgroundColor="White"
+            IsClickable="True"
+            Padding="10"
+            Margin="0,20,0,0"
+            BorderColor="#071b5e">
+                <StackLayout Orientation="Vertical">
+                    <StackLayout Orientation="Horizontal">
+                        <material:MaterialChip BackgroundColor="#071b5e"  Text="Zr. jastuci" TextColor="White"  FontSize="15" />
+                        <material:MaterialLabel Text="{Binding AirBagEquipmentCount, StringFormat='Odabrano {0}'}" HorizontalOptions="EndAndExpand" FontSize="Title" TextColor="Black" x:Name="Label_25"/>
+                    </StackLayout>
+                    <material:MaterialButton BackgroundColor="DarkGray" Clicked="MaterialButton_Clicked_25"  Text="Odaberite zračne jastuke" TextColor="White" VerticalOptions="FillAndExpand"/>
+                </StackLayout>
+            </material:MaterialCard>
+            <material:MaterialCard 
+            CornerRadius="10" 
+            Elevation="5" 
+            HeightRequest="80" 
+            HorizontalOptions="FillAndExpand" 
+            BackgroundColor="White"
+            IsClickable="True"
+            Padding="10"
+            Margin="0,20,0,0"
+            BorderColor="#071b5e">
+                <StackLayout Orientation="Vertical">
+                    <StackLayout Orientation="Horizontal">
+                        <material:MaterialChip BackgroundColor="#071b5e"  Text="Krađa" TextColor="White"  FontSize="15" />
+                        <material:MaterialLabel Text="{Binding StealEquipmentCount, StringFormat='Odabrano {0}'}" HorizontalOptions="EndAndExpand" FontSize="Title" TextColor="Black" x:Name="Label_26"/>
+                    </StackLayout>
+                    <material:MaterialButton BackgroundColor="DarkGray" Clicked="MaterialButton_Clicked_26"  Text="Odaberite opremu protiv krađe" TextColor="White" VerticalOptions="FillAndExpand"/>
+                </StackLayout>
+            </material:MaterialCard>
+            <material:MaterialCard 
+            CornerRadius="10" 
+            Elevation="5" 
+            HeightRequest="80" 
+            HorizontalOptions="FillAndExpand" 
+            BackgroundColor="White"
+            IsClickable="True"
+            Padding="10"
+            Margin="0,20,0,0"
+            BorderColor="#071b5e">
+                <StackLayout Orientation="Vertical">
+                    <StackLayout Orientation="Horizontal">
+                        <material:MaterialChip BackgroundColor="Aqua"  Text="Radio" TextColor="Black"  FontSize="15" />
+                        <material:MaterialLabel Text="{Binding RadioEquipmentCount, StringFormat='Odabrano {0}'}" HorizontalOptions="EndAndExpand" FontSize="Title" TextColor="Black" x:Name="Label_27"/>
+                    </StackLayout>
+                    <material:MaterialButton BackgroundColor="DarkGray" Clicked="MaterialButton_Clicked_27"  Text="Odaberite vrstu autoradia" TextColor="White" VerticalOptions="FillAndExpand"/>
+                </StackLayout>
+            </material:MaterialCard>
+            <material:MaterialCard 
+            CornerRadius="10" 
+            Elevation="5" 
+            HeightRequest="80" 
+            HorizontalOptions="FillAndExpand" 
+            BackgroundColor="White"
+            IsClickable="True"
+            Padding="10"
+            Margin="0,20,0,0"
+            BorderColor="#071b5e">
+                <StackLayout Orientation="Vertical">
+                    <StackLayout Orientation="Horizontal">
+                        <material:MaterialChip BackgroundColor="Aqua"  Text="Udobnost" TextColor="Black"  FontSize="15" />
+                        <material:MaterialLabel Text="{Binding ComfortEquipmentCount, StringFormat='Odabrano {0}'}" HorizontalOptions="EndAndExpand" FontSize="Title" TextColor="Black" x:Name="Label_28"/>
+                    </StackLayout>
+                    <material:MaterialButton BackgroundColor="DarkGray" Clicked="MaterialButton_Clicked_28"  Text="Odaberite opremu za udobnost" TextColor="White" VerticalOptions="FillAndExpand"/>
+                </StackLayout>
+            </material:MaterialCard>
+            <material:MaterialCard 
+            CornerRadius="10" 
+            Elevation="5" 
+            HeightRequest="80" 
+            HorizontalOptions="FillAndExpand" 
+            BackgroundColor="White"
+            IsClickable="True"
+            Padding="10"
+            Margin="0,20,0,0"
+            BorderColor="#071b5e">
+                <StackLayout Orientation="Vertical">
+                    <StackLayout Orientation="Horizontal">
+                        <material:MaterialChip BackgroundColor="OrangeRed"  Text="Naslov oglasa" TextColor="White"  FontSize="15" />
+                        <material:MaterialLabel Text="{Binding isEntered}" HorizontalOptions="EndAndExpand" FontSize="Title" TextColor="Black" x:Name="Label_29"/>
+                    </StackLayout>
+                    <material:MaterialButton BackgroundColor="DarkGray" Clicked="MaterialButton_Clicked_29"  Text="Unesite naslov oglasa" TextColor="White" VerticalOptions="FillAndExpand"/>
+                </StackLayout>
+            </material:MaterialCard>
+            <material:MaterialCard 
+            CornerRadius="10" 
+            Elevation="5" 
+            HeightRequest="80" 
+            HorizontalOptions="FillAndExpand" 
+            BackgroundColor="White"
+            IsClickable="True"
+            Padding="10"
+            Margin="0,20,0,0"
+            BorderColor="#071b5e">
+                <StackLayout Orientation="Vertical">
+                    <StackLayout Orientation="Horizontal">
+                        <material:MaterialChip BackgroundColor="OrangeRed"  Text="Opis oglasa" TextColor="White"  FontSize="15" />
+                        <material:MaterialLabel Text="{Binding isNotEntered}" HorizontalOptions="EndAndExpand" FontSize="Title" TextColor="Black" x:Name="Label_30"/>
+                    </StackLayout>
+                    <material:MaterialButton BackgroundColor="DarkGray" Clicked="MaterialButton_Clicked_30"  Text="Unesite opis oglasa" TextColor="White" VerticalOptions="FillAndExpand"/>
+                </StackLayout>
+            </material:MaterialCard>
+            <material:MaterialCard 
+            CornerRadius="10" 
+            Elevation="5" 
+            HeightRequest="80" 
+            HorizontalOptions="FillAndExpand" 
+            BackgroundColor="White"
+            IsClickable="True"
+            Padding="10"
+            Margin="0,20,0,0"
+            BorderColor="#071b5e">
+                <StackLayout Orientation="Vertical">
+                    <StackLayout Orientation="Horizontal">
+                        <material:MaterialChip BackgroundColor="OrangeRed"  Text="Cijena vozila" TextColor="White"  FontSize="15" />
+                        <material:MaterialLabel Text="{Binding Advertisment.Price, StringFormat='{0} €'}" HorizontalOptions="EndAndExpand" FontSize="Title" TextColor="Black" x:Name="Label_31"/>
+                    </StackLayout>
+                    <material:MaterialButton BackgroundColor="DarkGray" Clicked="MaterialButton_Clicked_31"  Text="Unesite cijenu vozila" TextColor="White" VerticalOptions="FillAndExpand"/>
+                </StackLayout>
+            </material:MaterialCard>
+            <material:MaterialCard 
+            CornerRadius="10" 
+            Elevation="5" 
+            HeightRequest="80" 
+            HorizontalOptions="FillAndExpand" 
+            BackgroundColor="White"
+            IsClickable="True"
+            Padding="10"
+            Margin="0,20,0,0"
+            BorderColor="#071b5e">
+                <StackLayout Orientation="Vertical">
+                    <StackLayout Orientation="Horizontal">
+                        <material:MaterialChip BackgroundColor="SaddleBrown"  Text="Vrsta plaćanja" TextColor="White"  FontSize="15" />
+                        <material:MaterialLabel Text="{Binding PayTypesCount, StringFormat='Odabrano {0}'}" HorizontalOptions="EndAndExpand" FontSize="Title" TextColor="Black" x:Name="Label_32"/>
+                    </StackLayout>
+                    <material:MaterialButton BackgroundColor="DarkGray" Clicked="MaterialButton_Clicked_32"  Text="odaberite vrste plaćanja" TextColor="White" VerticalOptions="FillAndExpand"/>
+                </StackLayout>
+            </material:MaterialCard>
+            <material:MaterialCard 
+            CornerRadius="10" 
+            Elevation="5" 
+            HeightRequest="80" 
+            HorizontalOptions="FillAndExpand" 
+            BackgroundColor="White"
+            IsClickable="True"
+            Padding="10"
+            Margin="0,20,0,0"
+            BorderColor="#071b5e">
+                <StackLayout Orientation="Vertical">
+                    <StackLayout Orientation="Horizontal">
+                        <material:MaterialChip BackgroundColor="SaddleBrown"  Text="Dostupnost" TextColor="White"  FontSize="15" />
+                        <material:MaterialLabel Text="{Binding Advertisment.Availability}" HorizontalOptions="EndAndExpand" FontSize="Title" TextColor="Black" x:Name="Label_33"/>
+                    </StackLayout>
+                    <material:MaterialButton BackgroundColor="DarkGray" Clicked="MaterialButton_Clicked_33"  Text="odaberite dostupnost vozila" TextColor="White" VerticalOptions="FillAndExpand"/>
+                </StackLayout>
+            </material:MaterialCard>
+            <material:MaterialCard 
+            CornerRadius="10" 
+            Elevation="5" 
+            HeightRequest="80" 
+            HorizontalOptions="FillAndExpand" 
+            BackgroundColor="White"
+            IsClickable="True"
+            Padding="10"
+            Margin="0,20,0,0"
+            BorderColor="#071b5e">
+                <StackLayout Orientation="Vertical">
+                    <StackLayout Orientation="Horizontal">
+                        <material:MaterialChip BackgroundColor="DarkSeaGreen"  Text="Županija" TextColor="Black"  FontSize="15" />
+                        <material:MaterialLabel Text="{Binding isEntered}" HorizontalOptions="EndAndExpand" FontSize="Title" TextColor="Black" x:Name="Label_34"/>
+                    </StackLayout>
+                    <material:MaterialButton BackgroundColor="DarkGray" Clicked="MaterialButton_Clicked_34"  Text="Odaberite lokaciju vozila (Ž)" TextColor="White" VerticalOptions="FillAndExpand"/>
+                </StackLayout>
+            </material:MaterialCard>
+            <material:MaterialCard 
+            CornerRadius="10" 
+            Elevation="5" 
+            HeightRequest="80" 
+            HorizontalOptions="FillAndExpand" 
+            BackgroundColor="White"
+            IsClickable="True"
+            Padding="10"
+            Margin="0,20,0,0"
+            BorderColor="#071b5e">
+                <StackLayout Orientation="Vertical">
+                    <StackLayout Orientation="Horizontal">
+                        <material:MaterialChip BackgroundColor="DarkSeaGreen"  Text="Grad" TextColor="Black"  FontSize="15" />
+                        <material:MaterialLabel Text="{Binding isNotEntered}" HorizontalOptions="EndAndExpand" FontSize="Title" TextColor="Black" x:Name="Label_35"/>
+                    </StackLayout>
+                    <material:MaterialButton BackgroundColor="DarkGray" Clicked="MaterialButton_Clicked_35"  Text="Odaberite lokaciju vozila (G)" TextColor="White" VerticalOptions="FillAndExpand"/>
+                </StackLayout>
+            </material:MaterialCard>
+            <material:MaterialCard 
+            CornerRadius="10" 
+            Elevation="5" 
+            HeightRequest="80" 
+            HorizontalOptions="FillAndExpand" 
+            BackgroundColor="White"
+            IsClickable="True"
+            Padding="10"
+            Margin="0,20,0,0"
+            BorderColor="#071b5e">
+                <StackLayout Orientation="Vertical">
+                    <StackLayout Orientation="Horizontal">
+                        <material:MaterialChip BackgroundColor="PaleVioletRed"  Text="Mobilni broj" TextColor="Black"  FontSize="15" />
+                        <material:MaterialLabel Text="{Binding Advertisment.PhoneNumber}" HorizontalOptions="EndAndExpand" FontSize="Title" TextColor="Black" x:Name="Label_36"/>
+                    </StackLayout>
+                    <material:MaterialButton BackgroundColor="DarkGray" Clicked="MaterialButton_Clicked_36"  Text="Unesite broj mobitela" TextColor="White" VerticalOptions="FillAndExpand"/>
+                </StackLayout>
+            </material:MaterialCard>
+            <material:MaterialButton Margin="5,15,5,5" HeightRequest="120" BorderColor="Black" BorderWidth="3" BackgroundColor="#071b5e"  Text="Objavi oglas" TextColor="White" HorizontalOptions="FillAndExpand"/>
+        </StackLayout>
+    </ScrollView>
+
+        <!--<material:MaterialTextField Placeholder="Placeholder" HelperText="Helper Text" ErrorText="Error Text"  InputType="Text" TextColor="#ddd"/>-->
+
 
 </ContentPage>

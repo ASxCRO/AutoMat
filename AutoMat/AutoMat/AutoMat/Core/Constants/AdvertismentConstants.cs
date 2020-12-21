@@ -23,7 +23,7 @@ namespace AutoMat.Core.Constants
         public static List<string> payTypeStrings = new List<string>() { "gotovina", "kredit", "leasing", "preuzimanje leasinga", " staro za novo", "obročno bankovnim karticama", "zamjena" };
         public static List<string> shiftsStrings = new List<string>() { "4", "5", "6", "7 i više" };
         public static List<string> shiftTypeStrings = new List<string>() { "automatski", "ručni" };
-        public static IEnumerable<int> productionYearsNumber = Enumerable.Range(1930, DateTime.Now.Year - 1930 + 1).Reverse().ToList();
+        public static IEnumerable<int> productionYearsNumber = Enumerable.Range(1970, DateTime.Now.Year - 1970 + 1).Reverse().ToList();
 
 
         public static MaterialInputDialogConfiguration configText = new MaterialInputDialogConfiguration()

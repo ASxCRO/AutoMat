@@ -1,11 +1,66 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:local="clr-namespace:Xamarin.Forms"
+             mc:Ignorable="d"
              x:Class="AutoMat.Core.Views.MyDashboardPage">
-    <ContentPage.Content>
-        <StackLayout VerticalOptions="CenterAndExpand" Orientation="Vertical">
-            <Label x:Name="MyUserName" VerticalOptions="CenterAndExpand" HorizontalOptions="CenterAndExpand" FontSize="Large"/>
-            <Button x:Name="Logout" Text="Logout" BackgroundColor="Black" TextColor="White" Clicked="Logout_Clicked"/>
-        </StackLayout>
-    </ContentPage.Content>
+
+    <Grid BackgroundColor="White">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+
+        <!-- 1. Profile picture-->
+        <Image Grid.Row="0" Source="Katty" VerticalOptions="Start" />
+
+        <!-- 2. Contact informaqtion frame-->
+        <local:WrapLayout Grid.Row="0" BackgroundColor="White" VerticalOptions="End">
+            <Frame CornerRadius="40" Style="{StaticResource stlMainFrame}">
+                <!-- Blocks: 3 and 4 -->
+                <Grid Padding="25,10,25,0" RowSpacing="0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+                    <!-- 3. Phone & message buttons-->
+                    <Button Grid.Row="0" Grid.Column="1" Style="{StaticResource stlContactBtn}" HorizontalOptions="End"   ImageSource="Phone"/>
+                    <Button Grid.Row="0" Grid.Column="2" Style="{StaticResource stlContactBtn}" HorizontalOptions="Start" ImageSource="Correo"/>
+                    <!-- 4. Contact information-->
+                    <Label Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3" Text="asupan" FontAttributes="Bold" FontSize="30"/>
+                    <Label Grid.Row="1" Grid.Column="0" Text="Virovitica" TextColor="#a5a2a2" FontSize="16"/>
+                    <Label Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="3" Padding="0,10,0,0" FontSize="16">
+                        <Label.FormattedText>
+                            <FormattedString>
+                                <Span Text="Email: " FontAttributes="Bold" />
+                                <Span Text="antonio.supan@vsmti.hr"  />
+                            </FormattedString>
+                        </Label.FormattedText>
+                    </Label>
+                    <!--4. Contact information: Board inforation-->
+                    <Label Grid.Row="3" Grid.Column="0" Text="Oglasa" Style="{StaticResource stlBoardTitle}" />
+                    <Label Grid.Row="4" Grid.Column="0" Text="3" Style="{StaticResource stlBoardDesc}"/>
+                    <Button Grid.Row="2" Grid.Column="2" Style="{StaticResource stlContactBtn}"  HorizontalOptions="Start" ImageSource="image"/>
+                    
+                    <Label Grid.Row="3" Grid.Column="1" Text="Aktivan" Style="{StaticResource stlBoardTitle}"/>
+                    <Label Grid.Row="4" Grid.Column="1" Text="Da" Style="{StaticResource stlBoardDesc}"/>
+
+                    <Label Grid.Row="3" Grid.Column="2" Text="Automatik od" Style="{StaticResource stlBoardTitle}"/>
+                    <Label Grid.Row="4" Grid.Column="2" Text="2018" Style="{StaticResource stlBoardDesc}"/>
+                    <!--4. Contact information: Follow button-->
+                    <Button Grid.Row="5" Grid.Column="0" Grid.ColumnSpan="3" TextColor="White" BackgroundColor="#071b5e" Text="Odjavi se" Margin="0,15,0,2" FontAttributes="Bold" FontSize="15" HeightRequest="45" Clicked="Logout_Clicked"/>
+                </Grid>
+            </Frame>
+        </local:WrapLayout>
+
+    </Grid>
 </ContentPage>

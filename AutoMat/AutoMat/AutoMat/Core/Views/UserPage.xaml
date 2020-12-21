@@ -2,8 +2,11 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="AutoMat.Core.Views.UserPage"
-             BackgroundColor="White">
-    <RelativeLayout>
+             BackgroundColor="White"
+             NavigationPage.HasNavigationBar="False"
+             >
+    <ContentPage.Content>
+        <RelativeLayout>
         <StackLayout
             BackgroundColor="White"
             Orientation="Horizontal"
@@ -77,4 +80,5 @@
             <Button BackgroundColor="Black" TextColor="White" Text="Registriraj me" x:Name="signupbutton" Clicked="signupbutton_Clicked"/>
         </StackLayout>
     </RelativeLayout>
+</ContentPage.Content>
 </ContentPage>

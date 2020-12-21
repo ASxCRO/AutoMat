@@ -12,7 +12,7 @@ namespace AutoMat
         {
             InitializeComponent();
             XF.Material.Forms.Material.Init(this);
-            MainPage = new NavigationPage(new MainPage());
+            MainPage = new NavigationPage(new UserPage());
         }
 
         protected override void OnStart()

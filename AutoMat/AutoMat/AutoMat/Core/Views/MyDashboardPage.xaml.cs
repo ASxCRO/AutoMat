@@ -15,6 +15,11 @@ namespace AutoMat.Core.Views
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class MyDashboardPage : ContentPage
     {
+        public int AdCount { get; set; } = 20;
+        public string IsActive { get; set; } = "Da";
+
+        public int RegistrationYear { get; set; } = 2020;
+
         public MyDashboardPage()
         {
             InitializeComponent();
@@ -24,7 +29,6 @@ namespace AutoMat.Core.Views
         public MyDashboardPage(ViewModels.User user)
         {
             InitializeComponent();
-            MyUserName.Text = user.Email;
         }
 
         async private void GetProfileInformationAndRefreshToken()
@@ -36,18 +40,6 @@ namespace AutoMat.Core.Views
                 var savedfirebaseauth = JsonConvert.DeserializeObject<FirebaseAuthLink>(authLink);
                 var RefreshedContent = await authProvider.RefreshAuthAsync(savedfirebaseauth);
                 Preferences.Set("MyFirebaseRefreshToken", JsonConvert.SerializeObject(RefreshedContent));
-                var firebase = new FirebaseClient("https://automat-29cec.firebaseio.com/");
-                var users = await firebase
-                      .Child("users")
-                      .OnceAsync<JObject>();
-
-                string bla = "";
-                foreach (var item in users)
-                {
-                    bla += item.Object.GetValue("Ime");
-                }
-
-                App.Current.MainPage.DisplayAlert("Alert", bla, "OK");
             }
             catch (Exception ex)
             {
@@ -59,7 +51,8 @@ namespace AutoMat.Core.Views
         {
             Preferences.Remove("MyFirebaseRefreshToken");
             Preferences.Remove("UserToken");
-            App.Current.MainPage = new NavigationPage(new MainPage());
+            Preferences.Remove("CurrentUser");
+            App.Current.MainPage = new NavigationPage(new UserPage());
         }
     }
 }

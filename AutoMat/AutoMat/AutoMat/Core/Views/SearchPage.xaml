@@ -90,7 +90,7 @@
                                         </FlexLayout>
                                         <BoxView Margin="0,10,0,0" Color="DarkGray" HeightRequest="2" HorizontalOptions="FillAndExpand"></BoxView>
                                         <FlexLayout Direction="Row" JustifyContent="SpaceBetween" Margin="0,5,0,0" >
-                                            <material:MaterialButton  ButtonType="Text" FlexLayout.Grow="0.45" ContentLayout="Left" Image="ic_spremljeni" Text="Spremi" TextColor="Black"  />
+                                            <material:MaterialButton  ButtonType="Text" FlexLayout.Grow="0.45" ContentLayout="Left" Image="ic_spremljeni" Text="Spremi" TextColor="Black" BindingContext="{Binding Id}" Clicked="SaveFavorite_Clicked"/>
                                             <material:MaterialButton  ButtonType="Text" Margin="10,0,0,0" FlexLayout.Grow="0.45" ContentLayout="Left" Image="ic_korisnik"  Text="Podijeli" TextColor="Black"  />
 
                                         </FlexLayout>

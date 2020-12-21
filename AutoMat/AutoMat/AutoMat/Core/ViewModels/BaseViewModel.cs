@@ -12,7 +12,7 @@ namespace AutoMat.Core.ViewModels
 {
     public class BaseViewModel<TBase> : INotifyPropertyChanged
     {
-        public IDataStore<TBase> DataStore => DependencyService.Get<IDataStore<TBase>>();
+        public IDataStore<TBase> DataStore => DependencyService.Get<IDataStore<TBase>>() ?? null;
 
         bool isBusy = false;
         public bool IsBusy

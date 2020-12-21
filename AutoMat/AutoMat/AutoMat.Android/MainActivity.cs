@@ -6,6 +6,9 @@ using Plugin.GoogleClient;
 using AutoMat.Droid.Services;
 using Xamarin.Auth;
 using XF.Material.Droid;
+using FFImageLoading.Forms.Platform;
+using Xamd.ImageCarousel.Forms.Plugin.Droid;
+
 namespace AutoMat.Droid
 {
     [Activity(Label = "AutoMat", Icon = "@mipmap/icon", Theme = "@style/MainTheme", MainLauncher = true, ConfigurationChanges = ConfigChanges.ScreenSize | ConfigChanges.Orientation | ConfigChanges.UiMode | ConfigChanges.ScreenLayout | ConfigChanges.SmallestScreenSize )]
@@ -14,6 +17,7 @@ namespace AutoMat.Droid
         protected override void OnCreate(Bundle savedInstanceState)
         {
             base.OnCreate(savedInstanceState);
+            ImageCarouselRenderer.Init();
             Xamarin.Essentials.Platform.Init(this, savedInstanceState);
             global::Xamarin.Forms.Forms.Init(this, savedInstanceState);
             XF.Material.Droid.Material.Init(this, savedInstanceState);
@@ -34,7 +38,6 @@ namespace AutoMat.Droid
         protected override void OnActivityResult(int requestCode, Result resultCode, Android.Content.Intent data)
         {
             base.OnActivityResult(requestCode, resultCode, data);
-            //GoogleClientManager.OnAuthCompleted(requestCode, resultCode, data);
         }
     }
 }

@@ -69,6 +69,7 @@ namespace AutoMat.Core.Services
               .Child("users")
               .OnceAsync<FirebaseUser>()).Select(item => new FirebaseUser
               {
+                  Id = item.Object.Id,
                   Email = item.Object.Email,
                   Ime = item.Object.Ime,
                   Prezime = item.Object.Prezime

@@ -14,6 +14,11 @@ namespace AutoMat
         {
             InitializeComponent();
         }
+        public MainPage(Core.ViewModels.User user)
+        {
+            InitializeComponent();
+        }
+
 
     }
 }

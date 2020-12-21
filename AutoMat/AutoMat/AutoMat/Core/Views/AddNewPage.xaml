@@ -3,10 +3,17 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="AutoMat.Core.Views.AddNewPage"
              xmlns:material="clr-namespace:XF.Material.Forms.UI;assembly=XF.Material"
+             xmlns:viewModels="clr-namespace:AutoMat.Core.ViewModels"
+               xmlns:cards="clr-namespace:PanCardView;assembly=PanCardView"
+              xmlns:ffimage="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
+             xmlns:controls="clr-namespace:Xamd.ImageCarousel.Forms.Plugin.Abstractions;assembly=Xamd.ImageCarousel.Forms.Plugin.Abstractions"
              >
     <ScrollView>
         <StackLayout Padding="15">
-
+            <StackLayout HorizontalOptions="Center" VerticalOptions="StartAndExpand">
+                <controls:ImageCarousel x:Name="imgSlider" HeightRequest="300" HorizontalOptions="StartAndExpand" />
+            </StackLayout>
+            <Button Text="Izaberi slike za oglas" Clicked="Button1_Clicked" />
             <material:MaterialCard 
             CornerRadius="10" 
             Elevation="5" 

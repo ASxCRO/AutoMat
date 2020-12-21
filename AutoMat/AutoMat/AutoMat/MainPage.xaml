@@ -7,9 +7,9 @@
     x:Class="AutoMat.MainPage"
     NavigationPage.HasNavigationBar="false">
 
-    <local:HomePage Title="Početna"
+    <!--<local:HomePage Title="Početna"
                          Icon="ic_pocetna.png" 
-                                       xf:BottomBarPageExtensions.TabColor="#071b5e"/>
+                                       xf:BottomBarPageExtensions.TabColor="#071b5e"/>-->
 
     <local:SearchPage Title="Pretraži"
                        Icon="ic_oglasi.png"
@@ -26,7 +26,7 @@
                        xf:BottomBarPageExtensions.BadgeCount="6"
                        xf:BottomBarPageExtensions.BadgeColor="#92a9f0" />
     
-    <local:UserPage Title="Profil"
+    <local:MyDashboardPage Title="Profil"
                        Icon="ic_korisnik.png"
                        xf:BottomBarPageExtensions.TabColor="#071b5e" />
 

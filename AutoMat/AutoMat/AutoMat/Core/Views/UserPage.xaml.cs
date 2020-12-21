@@ -1,7 +1,9 @@
 ﻿using AutoMat.Core.AuthHelpers;
 using AutoMat.Core.Constants;
 using Firebase.Auth;
+using Firebase.Database;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -29,6 +31,10 @@ namespace AutoMat.Core.Views
             store = AccountStore.Create();
             registerline.Opacity = 0;
         }
+
+       
+
+
 
         private async void loginButton_Clicked(object sender, EventArgs e)
         {
@@ -75,7 +81,7 @@ namespace AutoMat.Core.Views
                 }
                 if (user != null)
                 {
-                    App.Current.MainPage = new NavigationPage(new MyDashboardPage(user));
+                    App.Current.MainPage = new NavigationPage(new MainPage(user));
                 }
                 else
                 {
@@ -86,7 +92,7 @@ namespace AutoMat.Core.Views
             {
                 if (!string.IsNullOrEmpty(Preferences.Get("MyFirebaseRefreshToken", "")))
                 {
-                    App.Current.MainPage = new NavigationPage(new MyDashboardPage());
+                    App.Current.MainPage = new NavigationPage(new MainPage());
                 }
                 else
                 {
@@ -111,13 +117,43 @@ namespace AutoMat.Core.Views
                     var content = await auth.GetFreshAuthAsync();
                     var serializedcontnet = JsonConvert.SerializeObject(content);
                     Preferences.Set("MyFirebaseRefreshToken", serializedcontnet);
-                    await App.Current.MainPage.DisplayAlert("Successfull", $"Hi {user.DisplayName}, you have successfully logged into the App!", "OK");
-                    await Navigation.PushModalAsync(new MyDashboardPage());
+                    var serializedUser = JsonConvert.SerializeObject(user);
+                    Preferences.Set("CurrentUser", serializedUser);
+                    await App.Current.MainPage.DisplayAlert("Successfull", $"Pozdrav {user.DisplayName}, uspješno ste izvršili prijavu!", "OK");
+                    await Navigation.PushModalAsync(new MainPage());
                 }
             }
             catch (Exception ex)
             {
                 await App.Current.MainPage.DisplayAlert("Alert", $"Invalid useremail or password: {ex.Message}", "OK");
+            }
+        }
+
+        async private void GetProfileInformationAndRefreshToken()
+        {
+            var authProvider = new FirebaseAuthProvider(new Firebase.Auth.FirebaseConfig("AIzaSyAg4riVkvSMtWwKZ6_UssK28-2K6xOndrg"));
+            try
+            {
+                string authLink = Preferences.Get("MyFirebaseRefreshToken", "");
+                var savedfirebaseauth = JsonConvert.DeserializeObject<FirebaseAuthLink>(authLink);
+                var RefreshedContent = await authProvider.RefreshAuthAsync(savedfirebaseauth);
+                Preferences.Set("MyFirebaseRefreshToken", JsonConvert.SerializeObject(RefreshedContent));
+                var firebase = new FirebaseClient("https://automat-29cec.firebaseio.com/");
+                var users = await firebase
+                      .Child("users")
+                      .OnceAsync<JObject>();
+
+                string bla = "";
+                foreach (var item in users)
+                {
+                    bla += item.Object.GetValue("Ime");
+                }
+
+                App.Current.MainPage.DisplayAlert("Alert", bla, "OK");
+            }
+            catch (Exception ex)
+            {
+                await App.Current.MainPage.DisplayAlert("Alert", $"Token expired {ex.Message}", "OK");
             }
         }
 
@@ -178,7 +214,7 @@ namespace AutoMat.Core.Views
                 {
                     await App.Current.MainPage.DisplayAlert("Successfull", $"Hi {user.Email}, you have successfully logged into the App!", "OK");
 
-                    App.Current.MainPage = new NavigationPage(new MyDashboardPage(user));
+                    App.Current.MainPage = new NavigationPage(new UserPage());
                 }
             }
         }

@@ -35,7 +35,7 @@ namespace AutoMat.Core.Services
         public async Task<IEnumerable<Town>> GetItemsAsync(bool forceReload)
         {
             return (await firebase
-                      .Child("users")
+                      .Child("towns")
                       .OnceAsync<Town>()).Select(item => new Town
                       {
                           Id = item.Object.Id,

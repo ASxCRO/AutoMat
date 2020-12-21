@@ -28,6 +28,10 @@ namespace AutoMat.Core.Constants
 		//realtime database
 		public static string FirebaseDatabaseURL { get; } = "https://automat-29cec.firebaseio.com/";
 
+		public static string FirebaseStorageURL { get; } = "automat-29cec.appspot.com";
+
+
+
 	}
 }
 

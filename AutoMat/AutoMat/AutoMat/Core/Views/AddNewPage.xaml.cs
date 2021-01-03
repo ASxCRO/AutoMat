@@ -1,24 +1,13 @@
-﻿using Android.OS;
-using AutoMat.Core.Constants;
+﻿using AutoMat.Core.Constants;
 using AutoMat.Core.Models;
 using AutoMat.Core.Services;
 using AutoMat.Core.ViewModels;
 using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
-using XF.Material.Forms.UI;
 using XF.Material.Forms.UI.Dialogs;
-using XF.Material.Forms.UI.Dialogs.Configurations;
 using Xamarin.Essentials;
-using Plugin.FilePicker;
-using Plugin.FilePicker.Abstractions;
-using System.IO;
 using Firebase.Storage;
 
 namespace AutoMat.Core.Views
@@ -38,7 +27,6 @@ namespace AutoMat.Core.Views
         {
             InitializeComponent();
             addNewViewModel = new AddNewViewModel();
-
         }
 
         protected async override void OnAppearing()
@@ -87,19 +75,6 @@ namespace AutoMat.Core.Views
                         addNewViewModel.ImageSources.Add(image.FullPath);
                         var imageStream = await image.OpenReadAsync();
                         addNewViewModel.imagesByteArrays.Add(imageStream);
-
-                        //byte[] imageBytes = null;
-                        //using (MemoryStream ms = new MemoryStream())
-                        //{
-                        //    imageStream.CopyTo(ms);
-                        //    imageBytes = ms.ToArray();
-                        //}
-                        //Stream stream = new MemoryStream(imageBytes);
-                        //var guid = Guid.NewGuid();
-                        //var task = await new FirebaseStorage("automat-29cec.appspot.com")
-                        //    .Child("data")
-                        //    .Child(guid + ".png")
-                        //    .PutAsync(stream);
                     }
                     imgSlider.Images = addNewViewModel.ImageSources;
                     imgSlider.HeightRequest = 300;
@@ -232,7 +207,7 @@ namespace AutoMat.Core.Views
         private async void MaterialButton_Clicked_9(object sender, EventArgs e)
         {
             //emisija plinova
-            var CO2 = await MaterialDialog.Instance.InputAsync("Max. emisija CO2", "g/km", null, "Litre", "Dalje", "Odustani", AdvertismentConstants.configNumber);
+            var CO2 = await MaterialDialog.Instance.InputAsync("Max. emisija CO2", "g/km", null, "CO2", "Dalje", "Odustani", AdvertismentConstants.configNumber);
             if (!String.IsNullOrEmpty(CO2))
             {
                 addNewViewModel.Advertisement.CO2 = CO2;

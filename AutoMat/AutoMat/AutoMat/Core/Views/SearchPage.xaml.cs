@@ -37,7 +37,7 @@ namespace AutoMat.Core.Views
             if (item == null)
                 return;
 
-            //await Navigation.PushAsync(new ItemDetailPage(new ItemDetailViewModel(item)));
+            await Navigation.PushAsync(new AdvertismentPage(item));
 
             //var ads = await advertismentDataStorage.GetItemsKeyValueAsync();
             // Manually deselect item.

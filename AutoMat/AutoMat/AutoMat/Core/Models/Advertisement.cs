@@ -18,6 +18,7 @@ namespace AutoMat.Core.Models
              ACEquipment = new List<string>();
              RadioEquipment = new List<string>();
              ComfortEquipment = new List<string>();
+            ImagesName = new List<string>();
         }
 
         public string Id { get; set; }
@@ -79,6 +80,8 @@ namespace AutoMat.Core.Models
         public List<string> ACEquipment { get; set; }
         public List<string> RadioEquipment { get; set; }
         public List<string> ComfortEquipment { get; set; }
+        public List<string> ImagesName { get; set; }
+
 
         //delete
         public Dictionary<string,string> AdditionalInformations { get; set; }

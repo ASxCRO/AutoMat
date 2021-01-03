@@ -11,7 +11,7 @@
     <ScrollView>
         <StackLayout Padding="15">
             <StackLayout HorizontalOptions="Center" VerticalOptions="StartAndExpand">
-                <controls:ImageCarousel x:Name="imgSlider" HeightRequest="300" HorizontalOptions="StartAndExpand" />
+                <controls:ImageCarousel x:Name="imgSlider" HeightRequest="0" HorizontalOptions="StartAndExpand" />
             </StackLayout>
             <Button Text="Izaberi slike za oglas" Clicked="Button1_Clicked" />
             <material:MaterialCard 
@@ -333,7 +333,7 @@
                 <StackLayout Orientation="Vertical">
                     <StackLayout Orientation="Horizontal">
                         <material:MaterialChip BackgroundColor="DeepSkyBlue"  Text="Ovjes" TextColor="Black"  FontSize="15" />
-                        <material:MaterialLabel Text="{Binding Advertisment.Suspension, StringFormat='{0} ovijes'}" HorizontalOptions="EndAndExpand" FontSize="Title" TextColor="Black" x:Name="Label_18"/>
+                        <material:MaterialLabel Text="{Binding Advertisment.Suspension, StringFormat='{0} ovjes'}" HorizontalOptions="EndAndExpand" FontSize="Title" TextColor="Black" x:Name="Label_18"/>
                     </StackLayout>
                     <material:MaterialButton BackgroundColor="DarkGray" Clicked="MaterialButton_Clicked_18"  Text="Odaberite vrstu ovjesa" TextColor="White" VerticalOptions="FillAndExpand"/>
                 </StackLayout>
@@ -662,11 +662,8 @@
                     <material:MaterialButton BackgroundColor="DarkGray" Clicked="MaterialButton_Clicked_36"  Text="Unesite broj mobitela" TextColor="White" VerticalOptions="FillAndExpand"/>
                 </StackLayout>
             </material:MaterialCard>
-            <material:MaterialButton Margin="5,15,5,5" HeightRequest="120" BorderColor="Black" BorderWidth="3" BackgroundColor="#071b5e"  Text="Objavi oglas" TextColor="White" HorizontalOptions="FillAndExpand"/>
+            <material:MaterialButton Margin="5,15,5,5" HeightRequest="120" BorderColor="Black" BorderWidth="3" BackgroundColor="#071b5e"  Text="Objavi oglas" TextColor="White" HorizontalOptions="FillAndExpand" Clicked="PostAdverisment_Clicked"/>
         </StackLayout>
     </ScrollView>
-
         <!--<material:MaterialTextField Placeholder="Placeholder" HelperText="Helper Text" ErrorText="Error Text"  InputType="Text" TextColor="#ddd"/>-->
-
-
 </ContentPage>

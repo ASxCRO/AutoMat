@@ -18,6 +18,8 @@ using XF.Material.Forms.UI.Dialogs.Configurations;
 using Xamarin.Essentials;
 using Plugin.FilePicker;
 using Plugin.FilePicker.Abstractions;
+using System.IO;
+using Firebase.Storage;
 
 namespace AutoMat.Core.Views
 {
@@ -25,6 +27,7 @@ namespace AutoMat.Core.Views
     public partial class AddNewPage : ContentPage
     {
         public AddNewViewModel addNewViewModel { get; set; }
+        public IDataStore<Advertisement> DataStoreAdvertisment { get; set; }
         public IDataStore<AdditionalEquipment> DataStoreAdditionalEquipment { get; set; }
         public IDataStore<CarBrand> DataStoreCarBrands { get; set; }
         public IDataStore<CarModel> DataStoreCarModels { get; set; }
@@ -34,6 +37,8 @@ namespace AutoMat.Core.Views
         public AddNewPage()
         {
             InitializeComponent();
+            addNewViewModel = new AddNewViewModel();
+
         }
 
         protected async override void OnAppearing()
@@ -41,9 +46,9 @@ namespace AutoMat.Core.Views
             using (await MaterialDialog.Instance.LoadingDialogAsync(message: "Inicijalniziram.."))
             {
                 IsBusy = true;
-                addNewViewModel = new AddNewViewModel();
 
                 //data storage initialize
+                DataStoreAdvertisment = DependencyService.Get<IDataStore<Advertisement>>() ?? new AdvertismentDataStorage();
                 DataStoreAdditionalEquipment = DependencyService.Get<IDataStore<AdditionalEquipment>>() ?? new AdditionalEquipmentDataStore();
                 DataStoreCarBrands = DependencyService.Get<IDataStore<CarBrand>>() ?? new BrandsDataStore();
                 DataStoreCarModels = DependencyService.Get<IDataStore<CarModel>>() ?? new ModelsDataStore();
@@ -56,8 +61,8 @@ namespace AutoMat.Core.Views
                 addNewViewModel.towns = await DataStoreTowns.GetItemsAsync(false);
                 addNewViewModel.brands = await DataStoreCarBrands.GetItemsAsync(false);
                 addNewViewModel.models = await DataStoreCarModels.GetItemsAsync(false);
-
                 addNewViewModel.SetUpStringLists();
+
                 IsBusy = false;
             }
         }
@@ -69,19 +74,35 @@ namespace AutoMat.Core.Views
                 var pickResult = await FilePicker.PickMultipleAsync(new PickOptions
                 {
                     FileTypes = FilePickerFileType.Images,
-                    PickerTitle = "Pick image(s)"
+                    PickerTitle = "Odaberite slike oglasa"
                 });
+
+
 
                 if (pickResult != null)
                 {
                     addNewViewModel.ImageSources.Clear();
                     foreach (var image in pickResult)
                     {
-                        var stream = image.FullPath;
+                        addNewViewModel.ImageSources.Add(image.FullPath);
+                        var imageStream = await image.OpenReadAsync();
+                        addNewViewModel.imagesByteArrays.Add(imageStream);
 
-                        addNewViewModel.ImageSources.Add(stream);
+                        //byte[] imageBytes = null;
+                        //using (MemoryStream ms = new MemoryStream())
+                        //{
+                        //    imageStream.CopyTo(ms);
+                        //    imageBytes = ms.ToArray();
+                        //}
+                        //Stream stream = new MemoryStream(imageBytes);
+                        //var guid = Guid.NewGuid();
+                        //var task = await new FirebaseStorage("automat-29cec.appspot.com")
+                        //    .Child("data")
+                        //    .Child(guid + ".png")
+                        //    .PutAsync(stream);
                     }
                     imgSlider.Images = addNewViewModel.ImageSources;
+                    imgSlider.HeightRequest = 300;
                 }
             }
             catch (Exception ex)
@@ -109,7 +130,7 @@ namespace AutoMat.Core.Views
 
         private async void MaterialButton_Clicked_1(object sender, EventArgs e)
         {
-            if (addNewViewModel.filteredModels.Count() > 0)
+            if(addNewViewModel.selectedCarBrand.Id != null)
             {
                 addNewViewModel.modelsStrings.Clear();
                 //model se filtrira po brandu
@@ -123,12 +144,16 @@ namespace AutoMat.Core.Views
                 {
                     model = await MaterialDialog.Instance.SelectChoiceAsync(title: "Model vozila", choices: addNewViewModel.modelsStrings, "Dalje", "Odustani", AdvertismentConstants.configChoice);
                 }
-                if(model != -1)
+                if (model != -1)
                 {
                     var selectedModel = addNewViewModel.filteredModels.ElementAt(model);
                     addNewViewModel.Advertisement.Model = selectedModel.Title;
                     Label_1.Text = addNewViewModel.Advertisement.Model;
                 }
+            }
+            else
+            {
+                await MaterialDialog.Instance.SnackbarAsync(message: "Odaberite marku automobila");
             }
         }
 
@@ -558,5 +583,38 @@ choices: AdvertismentConstants.availabilityStrings, "Dalje", "Odustani", Adverti
                 Label_36.Text = addNewViewModel.Advertisement.PhoneNumber;
             }
         }
+
+        private async void PostAdverisment_Clicked(object sender, EventArgs e)
+        {
+            var firebaseStorage = new FirebaseStorage("automat-29cec.appspot.com");
+
+            foreach (var imageStream in addNewViewModel.imagesByteArrays)
+            {
+                var nazivSlike = Guid.NewGuid().ToString();
+
+                var task = await firebaseStorage
+                    .Child("data")
+                    .Child(nazivSlike + ".png")
+                    .PutAsync(imageStream);
+
+                var urlSlike = await firebaseStorage
+                    .Child("data")
+                    .Child(nazivSlike + ".png")
+                    .GetDownloadUrlAsync();
+
+                addNewViewModel.Advertisement.PicturesURL.Add(urlSlike);
+
+            }
+
+            bool isSuccessful  = await DataStoreAdvertisment.AddItemAsync(addNewViewModel.Advertisement);
+
+            if(isSuccessful)
+                await MaterialDialog.Instance.SnackbarAsync(message: "Oglas uspješno objavljen");
+            else
+                await MaterialDialog.Instance.SnackbarAsync(message: "Došlo je do pogreške. Provjerite internet vezu.");
+
+
+        }
+
     }
 }

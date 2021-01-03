@@ -4,6 +4,7 @@ using AutoMat.Core.Services;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.IO;
 using System.Text;
 using Xamarin.Forms;
 
@@ -25,12 +26,16 @@ namespace AutoMat.Core.ViewModels
             brandsStrings = new List<string>();
             modelsStrings = new List<string>();
             registeredUntilStrings = new List<string>();
+            imageNames = new List<string>();
+
+            imagesByteArrays = new List<Stream>();
 
             _imageSources = new ObservableCollection<FileImageSource>();
             ImageSources = new ObservableCollection<FileImageSource>();
             additionalEquipment = new AdditionalEquipment();
             selectedCarBrand = new CarBrand();
             Advertisement = new Advertisement();
+            additionalEquipment = new AdditionalEquipment();
         }
 
         public ObservableCollection<FileImageSource> _imageSources;
@@ -57,6 +62,9 @@ namespace AutoMat.Core.ViewModels
         public List<string> modelsStrings { get; set; }
         public List<string> registeredUntilStrings { get; set; }
 
+        public List<string> imageNames { get; set;  }
+
+        public List<Stream> imagesByteArrays { get; set; } 
         public CarBrand selectedCarBrand { get; set; }
         public IEnumerable<CarModel> filteredModels { get; set; }
 

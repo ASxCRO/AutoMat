@@ -93,6 +93,13 @@ namespace AutoMat.Core.ViewModels
 
         public void SetUpStringLists()
         {
+            productionYearsStrings.Clear();
+            countiesStrings.Clear();
+            townsStrings.Clear();
+            brandsStrings.Clear();
+            registeredUntilStrings.Clear();
+
+
             foreach (var item in AdvertismentConstants.productionYearsNumber)
             {
                 productionYearsStrings.Add(item.ToString());
@@ -131,6 +138,10 @@ namespace AutoMat.Core.ViewModels
 
         public void SetUpStringListsForFilter()
         {
+            productionYearsStrings.Clear();
+            countiesStrings.Clear();
+            brandsStrings.Clear();
+
             foreach (var item in AdvertismentConstants.productionYearsNumber)
             {
                 productionYearsStrings.Add(item.ToString());

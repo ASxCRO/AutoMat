@@ -109,14 +109,37 @@ namespace AutoMat.Core.Views
         {
             var prikazFiltera_brand = "";
             var prikazFiltera_year = "";
+            var prikazFilter_county = "";
+            var prikazFilter_price = "";
+            var prikazFilter_km = "";
+
 
             if (filter_selectedBrand != null)
             {
                 prikazFiltera_brand = $"\nMarka - {filter_selectedBrand}";
-                prikazFiltera_year = $"\nGod. {filter_selectedYear["yearFrom"]}-{filter_selectedYear["yearTo"]}";
-
             }
-            var filterby = await MaterialDialog.Instance.SelectChoiceAsync(title: $"Trenutno filtrirano po:{prikazFiltera_brand}{prikazFiltera_year} \nFiltriraj oglase po: ", choices: AdvertismentConstants.filterAdBy, "Dalje", "Odustani", AdvertismentConstants.configChoice);
+
+            if(filter_selectedYear.ContainsKey("yearFrom") && filter_selectedYear.ContainsKey("yearTo"))
+            {
+                prikazFiltera_year = $"\nGod. {filter_selectedYear["yearFrom"]}-{filter_selectedYear["yearTo"]}";
+            }
+
+            if (filter_selectedCounty != null)
+            {
+                prikazFilter_county = $"\nŽupanija - {filter_selectedCounty}";
+            }
+
+            if (filter_selectedPrice.ContainsKey("priceFrom") && filter_selectedPrice.ContainsKey("priceTo"))
+            {
+                prikazFilter_price = $"\nCijena {filter_selectedPrice["priceFrom"]}€ - {filter_selectedPrice["priceTo"]}€";
+            }
+
+            if (filter_selectedKm.ContainsKey("kmFrom") && filter_selectedKm.ContainsKey("kmTo"))
+            {
+                prikazFilter_km = $"\nPrijeđeno {filter_selectedKm["kmFrom"]}km - {filter_selectedKm["kmTo"]}km";
+            }
+
+            var filterby = await MaterialDialog.Instance.SelectChoiceAsync(title: $"Trenutno filtrirano po:{prikazFiltera_brand}{prikazFiltera_year}{prikazFilter_county}{prikazFilter_price}{prikazFilter_km} \nFiltriraj oglase po: ", choices: AdvertismentConstants.filterAdBy, "Dalje", "Resetiraj", AdvertismentConstants.configChoice);
             if (filterby != -1)
             {
                 var selected = AdvertismentConstants.filterAdBy.ElementAt(filterby);
@@ -135,6 +158,7 @@ namespace AutoMat.Core.Views
                         int yearTo = await MaterialDialog.Instance.SelectChoiceAsync(title: "Do godine", choices: addNewViewModel.productionYearsStrings, "Dalje", "Odustani", AdvertismentConstants.configChoice);
                         if (yearFrom != -1 && yearTo != -1)
                         {
+                            filter_selectedPrice.Clear();
                             filter_selectedYear.Add("yearFrom", addNewViewModel.productionYearsStrings.ElementAt(yearFrom));
                             filter_selectedYear.Add("yearTo", addNewViewModel.productionYearsStrings.ElementAt(yearTo));
 
@@ -145,22 +169,42 @@ namespace AutoMat.Core.Views
                         }
                         break;
                     case "Županiji":
-
-
-                        viewModel.Items = new ObservableCollection<Advertisement>(viewModel.Items.OrderBy(o => o.Date).ToList());
-                        ItemsListView.ItemsSource = viewModel.Items;
+                        int county = await MaterialDialog.Instance.SelectChoiceAsync(title: "Županija", choices: addNewViewModel.countiesStrings, "Dalje", "Odustani",         AdvertismentConstants.configChoice);
+                        if (county != -1)
+                        {
+                            filter_selectedCounty = addNewViewModel.countiesStrings.ElementAt(county);
+                            ItemsListView.ItemsSource = new ObservableCollection<Advertisement>(viewModel.Items.ToList().Where(o => o.County == filter_selectedCounty).ToList());
+                        }
                         break;
                     case "Cijeni":
+                        var priceFrom = await MaterialDialog.Instance.InputAsync("Cijena od", "Unesite cijenu od koje filtrirate", null, "Cijena od", "Dalje", "Odustani", AdvertismentConstants.configNumber);
+                        var priceTo = await MaterialDialog.Instance.InputAsync("Cijena do", "Unesite cijenu do koje filtrirate", null, "Cijena do", "Filtriraj", "Odustani", AdvertismentConstants.configNumber);
+                        if (!String.IsNullOrEmpty(priceFrom) && !String.IsNullOrEmpty(priceTo))
+                        {
+                            filter_selectedPrice.Clear();
+                            filter_selectedPrice.Add("priceFrom", priceFrom);
+                            filter_selectedPrice.Add("priceTo", priceTo);
 
+                            var pf = Convert.ToInt32(filter_selectedPrice["priceFrom"]);
+                            var pt = Convert.ToInt32(filter_selectedPrice["priceTo"]);
 
-                        viewModel.Items = new ObservableCollection<Advertisement>(viewModel.Items.OrderBy(o => o.Date).ToList());
-                        ItemsListView.ItemsSource = viewModel.Items;
+                            ItemsListView.ItemsSource = new ObservableCollection<Advertisement>(viewModel.Items.ToList().Where(o => Convert.ToInt32(o.Price) >= pf && Convert.ToInt32(o.Price) <= pt).ToList());
+                        }
                         break;
                     case "Kilometrima":
+                        var kmFrom = await MaterialDialog.Instance.InputAsync("KM od", "Unesite KM od kojih filtrirate", null, "KM od", "Dalje", "Odustani", AdvertismentConstants.configNumber);
+                        var kmTo = await MaterialDialog.Instance.InputAsync("KM do", "Unesite KM do kojih filtrirate", null, "KM do", "Filtriraj", "Odustani", AdvertismentConstants.configNumber);
+                        if (!String.IsNullOrEmpty(kmFrom) && !String.IsNullOrEmpty(kmTo))
+                        {
+                            filter_selectedKm.Clear();
+                            filter_selectedKm.Add("kmFrom", kmFrom);
+                            filter_selectedKm.Add("kmTo", kmTo);
 
+                            var pf = Convert.ToInt32(filter_selectedKm["kmFrom"]);
+                            var pt = Convert.ToInt32(filter_selectedKm["kmTo"]);
 
-                        viewModel.Items = new ObservableCollection<Advertisement>(viewModel.Items.OrderBy(o => o.Date).ToList());
-                        ItemsListView.ItemsSource = viewModel.Items;
+                            ItemsListView.ItemsSource = new ObservableCollection<Advertisement>(viewModel.Items.ToList().Where(o => Convert.ToInt32(o.KM) >= pf && Convert.ToInt32(o.KM) <= pt).ToList());
+                        }
                         break;
                     default:
                         break;
@@ -168,7 +212,18 @@ namespace AutoMat.Core.Views
             }
             else
             {
-                //ResetFilterModel();
+                prikazFiltera_brand = "";
+                prikazFiltera_year = "";
+                prikazFilter_county = "";
+                prikazFilter_price = "";
+                prikazFilter_km = "";
+                filter_selectedBrand = "";
+                filter_selectedYear = new Dictionary<string, string>();
+                filter_selectedCounty = "";
+                filter_selectedPrice = new Dictionary<string, string>();
+                filter_selectedKm = new Dictionary<string, string>();
+
+                ItemsListView.ItemsSource = new ObservableCollection<Advertisement>(viewModel.Items.ToList());
             }
         }
 

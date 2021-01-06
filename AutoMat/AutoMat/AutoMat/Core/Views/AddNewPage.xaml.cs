@@ -27,21 +27,20 @@ namespace AutoMat.Core.Views
         {
             InitializeComponent();
             addNewViewModel = new AddNewViewModel();
+
+            //data storage initialize
+            DataStoreAdvertisment = DependencyService.Get<IDataStore<Advertisement>>() ?? new AdvertismentDataStorage();
+            DataStoreAdditionalEquipment = DependencyService.Get<IDataStore<AdditionalEquipment>>() ?? new AdditionalEquipmentDataStore();
+            DataStoreCarBrands = DependencyService.Get<IDataStore<CarBrand>>() ?? new BrandsDataStore();
+            DataStoreCarModels = DependencyService.Get<IDataStore<CarModel>>() ?? new ModelsDataStore();
+            DataStoreCounties = DependencyService.Get<IDataStore<County>>() ?? new CountiesDataStore();
+            DataStoreTowns = DependencyService.Get<IDataStore<Town>>() ?? new TownsDataStore();
         }
 
         protected async override void OnAppearing()
         {
-            using (await MaterialDialog.Instance.LoadingDialogAsync(message: "Inicijalniziram.."))
-            {
                 IsBusy = true;
 
-                //data storage initialize
-                DataStoreAdvertisment = DependencyService.Get<IDataStore<Advertisement>>() ?? new AdvertismentDataStorage();
-                DataStoreAdditionalEquipment = DependencyService.Get<IDataStore<AdditionalEquipment>>() ?? new AdditionalEquipmentDataStore();
-                DataStoreCarBrands = DependencyService.Get<IDataStore<CarBrand>>() ?? new BrandsDataStore();
-                DataStoreCarModels = DependencyService.Get<IDataStore<CarModel>>() ?? new ModelsDataStore();
-                DataStoreCounties = DependencyService.Get<IDataStore<County>>() ?? new CountiesDataStore();
-                DataStoreTowns = DependencyService.Get<IDataStore<Town>>() ?? new TownsDataStore();
 
                 //data storages get items
                 addNewViewModel.additionalEquipment = await DataStoreAdditionalEquipment.GetItemAsync("0");
@@ -52,7 +51,6 @@ namespace AutoMat.Core.Views
                 addNewViewModel.SetUpStringLists();
 
                 IsBusy = false;
-            }
         }
 
         async void Button1_Clicked(System.Object sender, System.EventArgs e)

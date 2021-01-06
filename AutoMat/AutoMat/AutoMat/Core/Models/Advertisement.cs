@@ -71,6 +71,15 @@ namespace AutoMat.Core.Models
         public string ServiceBook { get; set; }
         public string Owner { get; set; }
 
+        public DateTime Date { get; set; }
+
+        public string DateUI
+        {
+            get
+            {
+                return $"{Date.Day}.{Date.Month}.{Date.Year}";
+            }
+        }
 
         public List<string> PayTypes { get; set; }
         public List<string> AntiSteal { get; set; }

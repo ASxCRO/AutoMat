@@ -5,6 +5,11 @@
              xmlns:material="clr-namespace:XF.Material.Forms.UI;assembly=XF.Material">
     <ContentPage.Content>
         <StackLayout>
+            <FlexLayout Direction="Row" JustifyContent="SpaceBetween" VerticalOptions="FillAndExpand">
+                <material:MaterialButton  ButtonType="Text" FlexLayout.Grow="0.45" ContentLayout="Left" Image="ic_filter_white" Text="Filtriraj" TextColor="White"  Clicked="Filter_Clicked" Background="Gray"/>
+                <material:MaterialButton  ButtonType="Text" Margin="10,0,0,0" FlexLayout.Grow="0.45" ContentLayout="Left" Image="ic_sort"  Text="Sortiraj" TextColor="Black"  Clicked="Sort_Clicked"/>
+            </FlexLayout>
+            <BoxView Color="DarkGray" HeightRequest="5" HorizontalOptions="FillAndExpand" Margin="0"></BoxView>
             <ListView 
                 x:Name="ItemsListView" 
                 BackgroundColor="LightGray"
@@ -75,14 +80,13 @@
                                                 BackgroundColor="DarkSlateGray"
                                                 FontSize="10"
                                                 TextColor="White"
-                                                Text="{Binding County}" 
-                                                Padding="0"
-                                                    WidthRequest="100">
+                                                Text="{Binding Price,StringFormat='{0} €'}" 
+                                                Padding="0">
                                             </Button>
                                             <Button x:Name="btnTown"
                                                 BackgroundColor="LightSlateGray"
                                                     TextColor="White"
-                                                Text="{Binding Town}" 
+                                                Text="{Binding DateUI}" 
                                                  FontSize="10"
                                                 Padding="0"
                                                     WidthRequest="100">

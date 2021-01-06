@@ -128,5 +128,23 @@ namespace AutoMat.Core.ViewModels
                 registeredUntilStrings.Add($"{month}/{year}");
             }
         }
+
+        public void SetUpStringListsForFilter()
+        {
+            foreach (var item in AdvertismentConstants.productionYearsNumber)
+            {
+                productionYearsStrings.Add(item.ToString());
+            }
+
+            foreach (var item in counties)
+            {
+                countiesStrings.Add(item.Name);
+            }
+
+            foreach (var item in brands)
+            {
+                brandsStrings.Add(item.Title.ToString());
+            }
+        }
     }
 }

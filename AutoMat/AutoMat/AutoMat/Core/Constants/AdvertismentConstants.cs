@@ -23,7 +23,9 @@ namespace AutoMat.Core.Constants
         public static List<string> payTypeStrings = new List<string>() { "gotovina", "kredit", "leasing", "preuzimanje leasinga", " staro za novo", "obročno bankovnim karticama", "zamjena" };
         public static List<string> shiftsStrings = new List<string>() { "4", "5", "6", "7 i više" };
         public static List<string> shiftTypeStrings = new List<string>() { "automatski", "ručni" };
-        public static IEnumerable<int> productionYearsNumber = Enumerable.Range(1970, DateTime.Now.Year - 1970 + 1).Reverse().ToList();
+        public static IEnumerable<int> productionYearsNumber = Enumerable.Range(2000, DateTime.Now.Year - 2000 + 1).Reverse().ToList();
+        public static List<string> sortAdBy = new List<string>() { "Od najnovijeg", "Od najstarijeg", "Od najskupljeg", "Od najjeftinijeg" };
+        public static List<string> filterAdBy = new List<string>() { "Brandu", "Godini proizvodnje", "Županiji", "Cijeni", "Kilometrima" };
 
 
         public static MaterialInputDialogConfiguration configText = new MaterialInputDialogConfiguration()
@@ -31,6 +33,19 @@ namespace AutoMat.Core.Constants
             InputType = MaterialTextFieldInputType.Text,
             CornerRadius = 8,
             InputMaxLength = 30,
+            BackgroundColor = Color.FromHex("#2c3e50"),
+            InputTextColor = Color.White,
+            InputPlaceholderColor = Color.White.MultiplyAlpha(0.6),
+            TintColor = Color.White,
+            TitleTextColor = Color.White,
+            MessageTextColor = Color.FromHex("#DEFFFFFF")
+        };
+
+        public static MaterialInputDialogConfiguration configPlain = new MaterialInputDialogConfiguration()
+        {
+            InputType = MaterialTextFieldInputType.Plain,
+            CornerRadius = 8,
+            InputMaxLength = 500,
             BackgroundColor = Color.FromHex("#2c3e50"),
             InputTextColor = Color.White,
             InputPlaceholderColor = Color.White.MultiplyAlpha(0.6),

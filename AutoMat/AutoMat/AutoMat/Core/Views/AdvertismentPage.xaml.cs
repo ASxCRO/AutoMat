@@ -33,14 +33,6 @@ namespace AutoMat.Core.Views
 
         public AdvertismentViewModel AdViewModel { get; set; }
 
-        private void Button_Clicked(object sender, EventArgs e)
-        {
-            AdViewModel.CurrentImageIndex--;
-        }
 
-        private void Button_Clicked_1(object sender, EventArgs e)
-        {
-            AdViewModel.CurrentImageIndex++; ;
-        }
     }
 }

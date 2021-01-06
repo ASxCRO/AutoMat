@@ -49,34 +49,232 @@
                 <Label Grid.Column="0" Grid.Row="3" Text="Tip motora" HorizontalOptions="Fill" BackgroundColor="LightGray" HorizontalTextAlignment="Center" Margin="1" Padding="10"></Label>
                 <Label Grid.Column="0" Grid.Row="4"  Text="Godina proizvodnje" HorizontalOptions="Fill" BackgroundColor="LightGray" HorizontalTextAlignment="Center" Margin="1" Padding="10"></Label>
                 <Label Grid.Column="0" Grid.Row="5" Text="Karoserija" HorizontalOptions="Fill" BackgroundColor="LightGray" HorizontalTextAlignment="Center" Margin="1" Padding="10"></Label>
-                <Label Grid.Column="0" Grid.Row="6"  Text="Ovjes" HorizontalOptions="Fill" BackgroundColor="LightGray" HorizontalTextAlignment="Center" Margin="1" Padding="10"></Label>
+                <Label Grid.Column="0" Grid.Row="6"  Text="Cijena" HorizontalOptions="Fill" BackgroundColor="LightGray" HorizontalTextAlignment="Center" Margin="1" Padding="10"></Label>
                 <Label Grid.Column="0" Grid.Row="7" Text="Snaga motora" HorizontalOptions="Fill" BackgroundColor="LightGray" HorizontalTextAlignment="Center" Margin="1" Padding="10"></Label>
                 <Label Grid.Column="0" Grid.Row="8"  Text="Županija" HorizontalOptions="Fill" BackgroundColor="LightGray" HorizontalTextAlignment="Center" Margin="1" Padding="10"></Label>
                 <Label Grid.Column="0" Grid.Row="9" Text="Grad" HorizontalOptions="Fill" BackgroundColor="LightGray" HorizontalTextAlignment="Center" Margin="1" Padding="10"></Label>
 
 
                 <!--Podatci-->
-                <Label Grid.Column="1" Grid.Row="0" Text="{Binding Advertisment.Brand}}" HorizontalOptions="Fill"  Padding="10" BackgroundColor="white" HorizontalTextAlignment="Center" Margin="5" ></Label>
-                <Label Grid.Column="1" Grid.Row="1" Text="{Binding Advertisment.Model}}" HorizontalOptions="Fill"  Padding="10" BackgroundColor="white" HorizontalTextAlignment="Center" Margin="5"></Label>
-                <Label Grid.Column="1" Grid.Row="2" Text="{Binding Advertisment.KM}}" HorizontalOptions="Fill"  Padding="10" BackgroundColor="white" HorizontalTextAlignment="Center" Margin="5"></Label>
-                <Label Grid.Column="1" Grid.Row="3" Text="{Binding Advertisment.MotorType}}" HorizontalOptions="Fill"  Padding="10" BackgroundColor="white" HorizontalTextAlignment="Center" Margin="5"></Label>
-                <Label Grid.Column="1" Grid.Row="4" Text="{Binding Advertisment.ProductionYear}}" HorizontalOptions="Fill"  Padding="10" BackgroundColor="white" HorizontalTextAlignment="Center" Margin="5"></Label>
-                <Label Grid.Column="1" Grid.Row="5" Text="{Binding Advertisment.Body}}" HorizontalOptions="Fill"  Padding="10" BackgroundColor="white" HorizontalTextAlignment="Center" Margin="5"></Label>
-                <Label Grid.Column="1" Grid.Row="6" Text="{Binding Advertisment.Suspension}}" HorizontalOptions="Fill"  Padding="10" BackgroundColor="white" HorizontalTextAlignment="Center" Margin="5"></Label>
-                <Label Grid.Column="1" Grid.Row="7" Text="{Binding Advertisment.Power}}" HorizontalOptions="Fill"  Padding="10" BackgroundColor="white" HorizontalTextAlignment="Center" Margin="5"></Label>
-                <Label Grid.Column="1" Grid.Row="8" Text="{Binding Advertisment.County}}" HorizontalOptions="Fill"  Padding="10" BackgroundColor="white" HorizontalTextAlignment="Center" Margin="5"></Label>
+                <Label Grid.Column="1" Grid.Row="0" Text="{Binding Advertisment.Brand}" HorizontalOptions="Fill"  Padding="10" BackgroundColor="white" HorizontalTextAlignment="Center" Margin="5" ></Label>
+                <Label Grid.Column="1" Grid.Row="1" Text="{Binding Advertisment.Model}" HorizontalOptions="Fill"  Padding="10" BackgroundColor="white" HorizontalTextAlignment="Center" Margin="5"></Label>
+                <Label Grid.Column="1" Grid.Row="2" Text="{Binding Advertisment.KM}" HorizontalOptions="Fill"  Padding="10" BackgroundColor="white" HorizontalTextAlignment="Center" Margin="5"></Label>
+                <Label Grid.Column="1" Grid.Row="3" Text="{Binding Advertisment.MotorType}" HorizontalOptions="Fill"  Padding="10" BackgroundColor="white" HorizontalTextAlignment="Center" Margin="5"></Label>
+                <Label Grid.Column="1" Grid.Row="4" Text="{Binding Advertisment.ProductionYear}" HorizontalOptions="Fill"  Padding="10" BackgroundColor="white" HorizontalTextAlignment="Center" Margin="5"></Label>
+                <Label Grid.Column="1" Grid.Row="5" Text="{Binding Advertisment.Body}" HorizontalOptions="Fill"  Padding="10" BackgroundColor="white" HorizontalTextAlignment="Center" Margin="5"></Label>
+                <Label Grid.Column="1" Grid.Row="6" Text="{Binding Advertisment.Price,StringFormat='{0} €'}}" HorizontalOptions="Fill"  Padding="10" BackgroundColor="white" HorizontalTextAlignment="Center" Margin="5"></Label>
+                <Label Grid.Column="1" Grid.Row="7" Text="{Binding Advertisment.Power}" HorizontalOptions="Fill"  Padding="10" BackgroundColor="white" HorizontalTextAlignment="Center" Margin="5"></Label>
+                <Label Grid.Column="1" Grid.Row="8" Text="{Binding Advertisment.County}" HorizontalOptions="Fill"  Padding="10" BackgroundColor="white" HorizontalTextAlignment="Center" Margin="5"></Label>
                 <Frame OutlineColor="Black" Grid.Column="1" Grid.Row="9"  Padding="10" HorizontalOptions="Fill" BackgroundColor="white"  Margin="5">
                     <Label  HorizontalTextAlignment="Center" Text="{Binding Advertisment.Town}" ></Label>
                 </Frame>
 
             </Grid>
-            <Label Text="Opis oglasa"  HorizontalOptions="Fill" BackgroundColor="gray" HorizontalTextAlignment="Center" Margin="20 0 0 0" Padding="10" FontSize="30" TextColor="White"></Label>
+            <Label Text="Opis oglasa"  HorizontalOptions="Fill" BackgroundColor="gray" HorizontalTextAlignment="Center"  Padding="10" FontSize="30" TextColor="White"></Label>
             <Frame OutlineColor="Black" Padding="10" HorizontalOptions="Fill" BackgroundColor="white"  Margin="5">
                 <Label  HorizontalTextAlignment="Center" Text="{Binding Advertisment.Description}" FontSize="20"></Label>
             </Frame>
-            <Label Text="Dodatna oprema"  HorizontalOptions="Fill" BackgroundColor="gray" HorizontalTextAlignment="Center" Margin="20 0 0 0" Padding="10" FontSize="30" TextColor="White"></Label>
-            <Label Text="Dodatne informacije"  HorizontalOptions="Fill" BackgroundColor="gray" HorizontalTextAlignment="Center" Margin="20 0 0 0" Padding="10" FontSize="30" TextColor="White"></Label>
-            <Label Text="Prodavač"  HorizontalOptions="Fill" BackgroundColor="gray" HorizontalTextAlignment="Center" Margin="20 0 0 0" Padding="10" FontSize="30" TextColor="White"></Label>
+
+            <!--
+                AdditionalEquipment
+                SafetyEquipment
+                ComfortEquipment
+                RadioEquipment
+                ACEquipment
+                PayTypes
+            -->
+           <Label Text="Dodatna oprema"  HorizontalOptions="Fill" BackgroundColor="gray" HorizontalTextAlignment="Center"  Padding="10" FontSize="30" TextColor="White"></Label>
+            <StackLayout VerticalOptions="FillAndExpand" Spacing="0">
+                <ListView 
+                BackgroundColor="LightGray"
+                ItemsSource="{Binding Advertisment.AdditionalEquipment}"
+                HasUnevenRows="true"
+                 HeightRequest="{Binding AEHeightList}">
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <ViewCell Height="80" >
+                                <Frame IsClippedToBounds="True"
+                                            HasShadow="True"
+                                            Padding="10"
+                                            BackgroundColor="AliceBlue" 
+                                            CornerRadius="20"
+                                            BorderColor="DarkGray">
+                                    <Frame.Margin>
+                                        <OnPlatform x:TypeArguments="Thickness"
+                                                        Android="10"
+                                                        iOS="10"/>
+                                    </Frame.Margin>
+                                    <StackLayout HorizontalOptions="Fill" Orientation="Horizontal">
+                                        <Image Source="https://icons-for-free.com/iconfiles/png/512/circle+more+plus+icon-1320183136549593898.png" WidthRequest="30" HeightRequest="30"></Image>
+                                        <Label Text="{Binding .}" FontSize="18" FontAttributes="Bold" HorizontalOptions="CenterAndExpand" VerticalOptions="Center"></Label>
+                                    </StackLayout>
+                                </Frame>
+                            </ViewCell>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+            </StackLayout>
+            <Label Text="Sigurnost"  HorizontalOptions="Fill" BackgroundColor="gray" HorizontalTextAlignment="Center"  Padding="10" FontSize="30" TextColor="White"></Label>
+            <StackLayout VerticalOptions="FillAndExpand" Spacing="0">
+                <ListView 
+                BackgroundColor="LightGray"
+                ItemsSource="{Binding Advertisment.SafetyEquipment}"
+                HasUnevenRows="true"
+                 HeightRequest="{Binding SEHeightList}">
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <ViewCell Height="80" >
+                                <Frame IsClippedToBounds="True"
+                                            HasShadow="True"
+                                            Padding="10"
+                                            BackgroundColor="AliceBlue" 
+                                            CornerRadius="20"
+                                            BorderColor="DarkGray">
+                                    <Frame.Margin>
+                                        <OnPlatform x:TypeArguments="Thickness"
+                                                        Android="10"
+                                                        iOS="10"/>
+                                    </Frame.Margin>
+                                    <StackLayout HorizontalOptions="Fill" Orientation="Horizontal">
+                                        <Image Source="https://png.pngitem.com/pimgs/s/215-2150428_brand-safety-ad-fraud-viewability-hd-png-download.png" WidthRequest="30" HeightRequest="30"></Image>
+                                        <Label Text="{Binding .}" FontSize="24" FontAttributes="Bold" HorizontalOptions="CenterAndExpand"></Label>
+                                    </StackLayout>
+                                </Frame>
+                            </ViewCell>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+            </StackLayout>
+            <Label Text="Udobnost"  HorizontalOptions="Fill" BackgroundColor="gray" HorizontalTextAlignment="Center"  Padding="10" FontSize="30" TextColor="White"></Label>
+            <StackLayout VerticalOptions="FillAndExpand" Spacing="0">
+                <ListView 
+                BackgroundColor="LightGray"
+                ItemsSource="{Binding Advertisment.ComfortEquipment}"
+                HasUnevenRows="true"
+                 HeightRequest="{Binding CEHeightList}">
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <ViewCell Height="80" >
+                                <Frame IsClippedToBounds="True"
+                                            HasShadow="True"
+                                            Padding="10"
+                                            BackgroundColor="AliceBlue" 
+                                            CornerRadius="20"
+                                            BorderColor="DarkGray">
+                                    <Frame.Margin>
+                                        <OnPlatform x:TypeArguments="Thickness"
+                                                        Android="10"
+                                                        iOS="10"/>
+                                    </Frame.Margin>
+                                    <StackLayout HorizontalOptions="Fill" Orientation="Horizontal">
+                                        <Image Source="https://c0.klipartz.com/pngpicture/1016/739/sticker-png-product-design-line-comfort-icon-text-vector-icons-armchair-symbol-svg.png" WidthRequest="30" HeightRequest="30"></Image>
+                                        <Label Text="{Binding .}" FontSize="24" FontAttributes="Bold" HorizontalOptions="CenterAndExpand"></Label>
+                                    </StackLayout>
+                                </Frame>
+                            </ViewCell>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+            </StackLayout>
+            <Label Text="Radio oprema"  HorizontalOptions="Fill" BackgroundColor="gray" HorizontalTextAlignment="Center"  Padding="10" FontSize="30" TextColor="White"></Label>
+            <StackLayout VerticalOptions="FillAndExpand" Spacing="0">
+                <ListView 
+                BackgroundColor="LightGray"
+                ItemsSource="{Binding Advertisment.RadioEquipment}"
+                HasUnevenRows="true"
+                 HeightRequest="{Binding REHeightList}">
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <ViewCell Height="80" >
+                                <Frame IsClippedToBounds="True"
+                                            HasShadow="True"
+                                            Padding="10"
+                                            BackgroundColor="AliceBlue" 
+                                            CornerRadius="20"
+                                            BorderColor="DarkGray">
+                                    <Frame.Margin>
+                                        <OnPlatform x:TypeArguments="Thickness"
+                                                        Android="10"
+                                                        iOS="10"/>
+                                    </Frame.Margin>
+                                    <StackLayout HorizontalOptions="Fill" Orientation="Horizontal">
+                                        <Image Source="https://i.pinimg.com/736x/68/ea/6f/68ea6fd63d58b8f085f327b81edcf3a5.jpg" WidthRequest="30" HeightRequest="30"></Image>
+                                        <Label Text="{Binding .}" FontSize="24" FontAttributes="Bold" HorizontalOptions="CenterAndExpand"></Label>
+                                    </StackLayout>
+                                </Frame>
+                            </ViewCell>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+            </StackLayout>
+            <Label Text="Klimatizacija"  HorizontalOptions="Fill" BackgroundColor="gray" HorizontalTextAlignment="Center"  Padding="10" FontSize="30" TextColor="White"></Label>
+            <StackLayout VerticalOptions="FillAndExpand" Spacing="0">
+                <ListView 
+                BackgroundColor="LightGray"
+                ItemsSource="{Binding Advertisment.ACEquipment}"
+                HasUnevenRows="true"
+                 HeightRequest="{Binding ACEHeightList}">
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <ViewCell Height="80" >
+                                <Frame IsClippedToBounds="True"
+                                            HasShadow="True"
+                                            Padding="10"
+                                            BackgroundColor="AliceBlue" 
+                                            CornerRadius="20"
+                                            BorderColor="DarkGray">
+                                    <Frame.Margin>
+                                        <OnPlatform x:TypeArguments="Thickness"
+                                                        Android="10"
+                                                        iOS="10"/>
+                                    </Frame.Margin>
+                                    <StackLayout HorizontalOptions="Fill" Orientation="Horizontal">
+                                        <Image Source="https://cdn1.iconfinder.com/data/icons/appliancesets/31/aircon_2-512.png" WidthRequest="30" HeightRequest="30"></Image>
+                                        <Label Text="{Binding .}" FontSize="24" FontAttributes="Bold" HorizontalOptions="CenterAndExpand"></Label>
+                                    </StackLayout>
+                                </Frame>
+                            </ViewCell>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+            </StackLayout>
+            <Label Text="Način plaćanja"  HorizontalOptions="Fill" BackgroundColor="gray" HorizontalTextAlignment="Center"  Padding="10" FontSize="30" TextColor="White"></Label>
+            <StackLayout VerticalOptions="FillAndExpand" Spacing="0">
+                <ListView 
+                BackgroundColor="LightGray"
+                ItemsSource="{Binding Advertisment.PayTypes}"
+                HasUnevenRows="true"
+                 HeightRequest="{Binding PTHeightList}">
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <ViewCell Height="80" >
+                                <Frame IsClippedToBounds="True"
+                                            HasShadow="True"
+                                            Padding="10"
+                                            BackgroundColor="AliceBlue" 
+                                            CornerRadius="20"
+                                            BorderColor="DarkGray">
+                                    <Frame.Margin>
+                                        <OnPlatform x:TypeArguments="Thickness"
+                                                        Android="10"
+                                                        iOS="10"/>
+                                    </Frame.Margin>
+                                    <StackLayout HorizontalOptions="Fill" Orientation="Horizontal">
+                                        <Image Source="https://cdn2.iconfinder.com/data/icons/user-interface-icons-bundle-4/32/228-512.png" WidthRequest="30" HeightRequest="30"></Image>
+                                        <Label Text="{Binding .}" FontSize="24" FontAttributes="Bold" HorizontalOptions="CenterAndExpand"></Label>
+                                    </StackLayout>
+                                </Frame>
+                            </ViewCell>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+            </StackLayout>
+
+
+
+
+            <Label Text="Dodatne informacije"  HorizontalOptions="Fill" BackgroundColor="gray" HorizontalTextAlignment="Center"  Padding="10" FontSize="30" TextColor="White"></Label>
+            <Label Text="Prodavač"  HorizontalOptions="Fill" BackgroundColor="gray" HorizontalTextAlignment="Center"  Padding="10" FontSize="30" TextColor="White"></Label>
         </StackLayout>
     </ScrollView>
 </ContentPage>

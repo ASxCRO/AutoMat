@@ -13,22 +13,20 @@
 
     <local:SearchPage Title="Pretraži"
                        Icon="ic_oglasi.png"
-                       xf:BottomBarPageExtensions.TabColor="#111e47"
+                       xf:BottomBarPageExtensions.TabColor="Black"
                       />
 
     <local:AddNewPage Title="Dodaj oglas"
                        Icon="ic_dodaj.png"
-                    xf:BottomBarPageExtensions.TabColor="#071b5e"/>
+                    xf:BottomBarPageExtensions.TabColor="Black"/>
     
     <local:FavoritesPage Title="Spremljeni"
                        Icon="ic_spremljeni.png"
-                       xf:BottomBarPageExtensions.TabColor="#111e47"
-                       xf:BottomBarPageExtensions.BadgeCount="6"
-                       xf:BottomBarPageExtensions.BadgeColor="#92a9f0" />
+                       xf:BottomBarPageExtensions.TabColor="Black" />
     
     <local:MyDashboardPage Title="Profil"
                        Icon="ic_korisnik.png"
-                       xf:BottomBarPageExtensions.TabColor="#071b5e" />
+                       xf:BottomBarPageExtensions.TabColor="Black"/>
 
     <!--<StackLayout Margin="20" VerticalOptions="CenterAndExpand" Spacing="20" Orientation="Vertical"  >
         <Button BackgroundColor="Black" Clicked="loginPage_Clicked" TextColor="White" Text="Login" x:Name="loginbutton"/>

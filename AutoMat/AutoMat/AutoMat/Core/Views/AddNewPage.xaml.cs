@@ -477,7 +477,7 @@ namespace AutoMat.Core.Views
         private async void MaterialButton_Clicked_30(object sender, EventArgs e)
         {
 
-            var description = await MaterialDialog.Instance.InputAsync("Unesite opis oglasa", "Opširniji opis Vašeg vozila pridonosi bržoj i uspješnijoj prodaji.", null, "Opis", "Dalje", "Odustani", AdvertismentConstants.configText);
+            var description = await MaterialDialog.Instance.InputAsync("Unesite opis oglasa", "Opširniji opis Vašeg vozila pridonosi bržoj i uspješnijoj prodaji.", null, "Opis", "Dalje", "Odustani", AdvertismentConstants.configPlain);
             if (!String.IsNullOrEmpty(description))
             {
                 addNewViewModel.Advertisement.Description = description;
@@ -561,35 +561,38 @@ choices: AdvertismentConstants.availabilityStrings, "Dalje", "Odustani", Adverti
 
         private async void PostAdverisment_Clicked(object sender, EventArgs e)
         {
-            var firebaseStorage = new FirebaseStorage("automat-29cec.appspot.com");
-
-            foreach (var imageStream in addNewViewModel.imagesByteArrays)
+            using (await MaterialDialog.Instance.LoadingDialogAsync(message: "Pričekajte.."))
             {
-                var nazivSlike = Guid.NewGuid().ToString();
+                IsBusy = true;
+                var firebaseStorage = new FirebaseStorage("automat-29cec.appspot.com");
+                foreach (var imageStream in addNewViewModel.imagesByteArrays)
+                {
+                    var nazivSlike = Guid.NewGuid().ToString();
 
-                var task = await firebaseStorage
-                    .Child("data")
-                    .Child(nazivSlike + ".png")
-                    .PutAsync(imageStream);
+                    var task = await firebaseStorage
+                        .Child("data")
+                        .Child(nazivSlike + ".png")
+                        .PutAsync(imageStream);
 
-                var urlSlike = await firebaseStorage
-                    .Child("data")
-                    .Child(nazivSlike + ".png")
-                    .GetDownloadUrlAsync();
+                    var urlSlike = await firebaseStorage
+                        .Child("data")
+                        .Child(nazivSlike + ".png")
+                        .GetDownloadUrlAsync();
 
-                addNewViewModel.Advertisement.PicturesURL.Add(urlSlike);
+                    addNewViewModel.Advertisement.PicturesURL.Add(urlSlike);
 
+                }
+
+                addNewViewModel.Advertisement.Date = DateTime.Now;
+
+                bool isSuccessful = await DataStoreAdvertisment.AddItemAsync(addNewViewModel.Advertisement);
+
+                if (isSuccessful)
+                    await MaterialDialog.Instance.SnackbarAsync(message: "Oglas uspješno objavljen");
+                else
+                    await MaterialDialog.Instance.SnackbarAsync(message: "Došlo je do pogreške. Provjerite internet vezu.");
+                IsBusy = false;
             }
-
-            bool isSuccessful  = await DataStoreAdvertisment.AddItemAsync(addNewViewModel.Advertisement);
-
-            if(isSuccessful)
-                await MaterialDialog.Instance.SnackbarAsync(message: "Oglas uspješno objavljen");
-            else
-                await MaterialDialog.Instance.SnackbarAsync(message: "Došlo je do pogreške. Provjerite internet vezu.");
-
-
         }
-
     }
 }

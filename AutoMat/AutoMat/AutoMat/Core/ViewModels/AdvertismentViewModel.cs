@@ -39,5 +39,60 @@ namespace AutoMat.Core.ViewModels
                 OnPropertyChanged();
             }
         }
+
+        string heightList;
+        int heightRowsList = 80;
+        public string AEHeightList
+        {
+            get
+            {
+                heightList = (Advertisment.AdditionalEquipment.Count * heightRowsList).ToString();
+                return heightList;
+            }
+        }
+        public string SEHeightList
+        {
+            get
+            {
+                heightList = (Advertisment.SafetyEquipment.Count * heightRowsList).ToString();
+                return heightList;
+            }
+        }
+
+        public string REHeightList
+        {
+            get
+            {
+                heightList = (Advertisment.RadioEquipment.Count * heightRowsList).ToString();
+                return heightList;
+            }
+        }
+
+        public string ACEHeightList
+        {
+            get
+            {
+                heightList = (Advertisment.ACEquipment.Count * heightRowsList).ToString();
+                return heightList;
+            }
+        }
+
+        public string PTHeightList
+        {
+            get
+            {
+                heightList = (Advertisment.PayTypes.Count * heightRowsList).ToString();
+                return heightList;
+            }
+        }
+
+        public string CEHeightList
+        {
+            get
+            {
+                heightList = (Advertisment.ComfortEquipment.Count * heightRowsList).ToString();
+                return heightList;
+            }
+        }
     }
 }

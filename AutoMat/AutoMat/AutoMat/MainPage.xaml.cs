@@ -1,4 +1,6 @@
-﻿using AutoMat.Core.Services;
+﻿using AutoMat.Core.Models;
+using AutoMat.Core.Services;
+using AutoMat.Core.ViewModels;
 using AutoMat.Core.Views;
 
 using System;
@@ -9,16 +11,9 @@ namespace AutoMat
 {
     public partial class MainPage : BottomBar.XamarinForms.BottomBarPage
     {
-
         public MainPage()
         {
             InitializeComponent();
         }
-        public MainPage(Core.ViewModels.User user)
-        {
-            InitializeComponent();
-        }
-
-
     }
 }

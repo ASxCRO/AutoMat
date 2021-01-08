@@ -6,7 +6,7 @@ namespace AutoMat.Core.Models
 {
     public class UserFavoriteAd
     {
-        public string OglasId { get; set; }
-        public string UserId { get; set; }
+        public string AdId { get; set; }
+        public string Username { get; set; }
     }
 }

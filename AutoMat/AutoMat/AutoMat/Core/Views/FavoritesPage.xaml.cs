@@ -1,6 +1,7 @@
 ﻿using AutoMat.Core.Models;
 using AutoMat.Core.Services;
 using AutoMat.Core.ViewModels;
+using Firebase.Auth;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -25,8 +26,7 @@ namespace AutoMat.Core.Views
         public FavoritesPage()
         {
             InitializeComponent();
-            viewModel = new FavoritesViewModel();
-            BindingContext = viewModel;
+            BindingContext = viewModel = new FavoritesViewModel();
             AdverismentDataStore = DependencyService.Get<IDataStore<Advertisement>>() ?? new AdvertismentDataStorage();
             UserDataStore = DependencyService.Get<IDataStore<FirebaseUser>>() ?? new UserDataStore();
             UserFavoriteAdsDataStore = DependencyService.Get<IDataStore<UserFavoriteAd>>() ?? new FavoritesDataStore();
@@ -40,13 +40,11 @@ namespace AutoMat.Core.Views
 
         public async Task GetCurrentUserFavoriteAds()
         {
-            var currentUserCached = (Firebase.Auth.User)JsonConvert.DeserializeObject(Preferences.Get("CurrentUser", ""),typeof(Firebase.Auth.User));
-            var allUsers = await UserDataStore.GetItemsAsync(false);
-            var currentUserFirebase = allUsers.Where(u => u.Email == currentUserCached.Email).FirstOrDefault();
-            if(currentUserFirebase != null)
+            var currentUserCached = (FirebaseUser)JsonConvert.DeserializeObject(Preferences.Get("FirebaseUser", ""),typeof(FirebaseUser));
+            if(currentUserCached != null)
             {
                 var allUsersFavoriteAds = await UserFavoriteAdsDataStore.GetItemsAsync(false);
-                var currentUserFavoriteAds = allUsersFavoriteAds.Where(u => u.UserId == currentUserFirebase.Id).ToList();
+                var currentUserFavoriteAds = allUsersFavoriteAds.Where(u => u.Username == currentUserCached.Username).ToList();
 
                 var allAdsDict = await AdverismentDataStore.GetItemsKeyValueAsync();
                 viewModel.Items.Clear();
@@ -55,7 +53,7 @@ namespace AutoMat.Core.Views
                 {
                     foreach (var favorite in currentUserFavoriteAds)
                     {
-                        if (ad.Value.Id == favorite.OglasId)
+                        if (ad.Value.Id == favorite.AdId)
                         {
                             viewModel.Items.Add(ad.Value);
                         }
@@ -71,10 +69,6 @@ namespace AutoMat.Core.Views
             if (item == null)
                 return;
 
-            //await Navigation.PushAsync(new ItemDetailPage(new ItemDetailViewModel(item)));
-
-            //var ads = await advertismentDataStorage.GetItemsKeyValueAsync();
-            // Manually deselect item.
             ItemsListView.SelectedItem = null;
         }
 

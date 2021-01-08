@@ -3,7 +3,7 @@
 namespace AutoMat.Core.ViewModels
 {
 	[JsonObject]
-	public class User
+	public class UserViewModel
 	{
 		[JsonProperty("id")]
 		public string Id { get; set; }

@@ -16,9 +16,10 @@ namespace AutoMat.Core.Services
     {
         public UserDataStore()
         {
+            firebase = FirebaseDatabaseClient.Instance;
         }
 
-        private FirebaseClient firebase { get; } = FirebaseDatabaseClient.Instance;
+        private FirebaseClient firebase { get; }
 
         public async Task<bool> AddItemAsync(FirebaseUser item)
         {
@@ -36,11 +37,11 @@ namespace AutoMat.Core.Services
             return true;
         }
 
-        public async Task<bool> DeleteItemAsync(string id)
+        public async Task<bool> DeleteItemAsync(string username)
         {
             var toDeletePerson = (await firebase
                                       .Child("users")
-                                      .OnceAsync<FirebaseUser>()).Where(a => a.Object.Id == id).FirstOrDefault();
+                                      .OnceAsync<FirebaseUser>()).Where(a => a.Object.Username == username).FirstOrDefault();
 
             try
             {
@@ -60,20 +61,24 @@ namespace AutoMat.Core.Services
             await firebase
               .Child("users")
               .OnceAsync<FirebaseUser>();
-            return allPersons.Where(a => a.Id == id).FirstOrDefault();
+            return allPersons.Where(a => a.Username == id).FirstOrDefault();
         }
 
         public async Task<IEnumerable<FirebaseUser>> GetItemsAsync(bool forceReload)
         {
-            return (await firebase
+            var allUsers = (await firebase
               .Child("users")
               .OnceAsync<FirebaseUser>()).Select(item => new FirebaseUser
               {
-                  Id = item.Object.Id,
+                  Username = item.Object.Username,
                   Email = item.Object.Email,
-                  Ime = item.Object.Ime,
-                  Prezime = item.Object.Prezime
+                  FirstName = item.Object.FirstName,
+                  LastName = item.Object.LastName,
+                  Year = item.Object.Year,
+                  PicturePath = item.Object.PicturePath,
+                  PhoneNumber = item.Object.PhoneNumber
               }).ToList();
+            return allUsers;
         }
 
         public Task<Dictionary<string, FirebaseUser>> GetItemsKeyValueAsync()
@@ -85,7 +90,7 @@ namespace AutoMat.Core.Services
         {
             var toUpdateUser = (await firebase
               .Child("users")
-              .OnceAsync<FirebaseUser>()).Where(a => a.Object.Id == item.Id).FirstOrDefault();
+              .OnceAsync<FirebaseUser>()).Where(a => a.Object.Username == item.Username).FirstOrDefault();
 
             try
             {

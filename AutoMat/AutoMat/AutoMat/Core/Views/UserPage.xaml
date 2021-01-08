@@ -22,7 +22,7 @@
                     BackgroundColor="White"
                     VerticalOptions="FillAndExpand"
                     HorizontalOptions="FillAndExpand"
-                    Clicked="loginButton_Clicked"
+                    Clicked="gotoLoginTab_Clicked"
                 />
             <Button 
                     Text="Registracija"
@@ -30,7 +30,7 @@
                     BackgroundColor="White"
                     VerticalOptions="FillAndExpand"
                     HorizontalOptions="FillAndExpand"
-                    Clicked="registrationButton_Clicked"
+                    Clicked="gotoRegistrationTab_Clicked"
                 />
         </StackLayout>
         <FlexLayout 
@@ -60,8 +60,8 @@
             <StackLayout VerticalOptions="CenterAndExpand" Spacing="20" Orientation="Vertical">
                 <Entry Placeholder="E-mail"  x:Name="UserLoginEmail" TextColor="#000"></Entry>
                 <Entry Placeholder="Lozinka"  x:Name="UserLoginPassword" TextColor="#000" IsPassword="true" ></Entry>
-                <Button BackgroundColor="Black"  TextColor="White" Text="Prijava" x:Name="loginbutton" Clicked="loginbutton_Clicked"/>
-                <Button BackgroundColor="#071b5e" TextColor="White" Text="Google prijava" x:Name="loginoAuthbutton" Clicked="loginbuttonOAuth_Clicked"/>
+                <Button BackgroundColor="Black"  TextColor="White" Text="Prijava" x:Name="loginbutton" Clicked="LoginButton_Clicked"/>
+                    <Button BackgroundColor="#071b5e" TextColor="White" Text="Google prijava" x:Name="loginoAuthbutton" Clicked="OAuthLogin_Clicked"/>
             </StackLayout>
         </StackLayout>
         <StackLayout VerticalOptions="CenterAndExpand" Orientation="Vertical"
@@ -74,10 +74,14 @@
             RelativeLayout.WidthConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width, Factor=1}"
             RelativeLayout.HeightConstraint="{ConstraintExpression Type=RelativeToParent, Property=Height, Factor=0.80}">
             <Image Source="ic_supervised_user_circle.png" />
-            <Entry Placeholder="Ime i prezime"  x:Name="UserName"></Entry>
-            <Entry Placeholder="E-mail"  x:Name="UserNewEmail"></Entry>
-            <Entry Placeholder="Lozinka"  x:Name="UserNewPassword" IsPassword="True"></Entry>
-            <Button BackgroundColor="Black" TextColor="White" Text="Registriraj me" x:Name="signupbutton" Clicked="signupbutton_Clicked"/>
+                <Entry Placeholder="Ime"  x:Name="newuser_firstname" IsTextPredictionEnabled="True"></Entry>
+                <Entry Placeholder="Prezime"  x:Name="newuser_lastname" IsTextPredictionEnabled="True"></Entry>
+            <Entry Placeholder="Korisničko ime"  x:Name="newuser_username"></Entry>
+            <Entry Placeholder="E-mail"  x:Name="newuser_email" IsTextPredictionEnabled="True"></Entry>
+            <Entry Placeholder="Lozinka"  x:Name="newuser_password" IsPassword="True" ClearButtonVisibility="WhileEditing"></Entry>
+                <Entry Placeholder="Broj mobitela"  x:Name="newuser_phonenumber"></Entry>
+
+                <Button BackgroundColor="Black" TextColor="White" Text="Registriraj me" x:Name="signupbutton" Clicked="RegistrationButton_Clicked"/>
         </StackLayout>
     </RelativeLayout>
 </ContentPage.Content>

@@ -39,7 +39,7 @@ namespace AutoMat.Core.Services
         {
             var toDeleteFavorite = (await firebase
                           .Child("userOglasFavorit")
-                          .OnceAsync<UserFavoriteAd>()).Where(a => a.Object.OglasId == id).FirstOrDefault();
+                          .OnceAsync<UserFavoriteAd>()).Where(a => a.Object.AdId == id).FirstOrDefault();
 
             try
             {
@@ -64,8 +64,8 @@ namespace AutoMat.Core.Services
               .Child("userOglasFavorit")
               .OnceAsync<UserFavoriteAd>()).Select(item => new UserFavoriteAd
               {
-                  OglasId = item.Object.OglasId,
-                  UserId = item.Object.UserId
+                  AdId = item.Object.AdId,
+                  Username = item.Object.Username
               }).ToList();
         }
 

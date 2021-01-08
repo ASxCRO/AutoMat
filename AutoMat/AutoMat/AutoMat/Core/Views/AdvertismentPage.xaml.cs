@@ -19,7 +19,6 @@ namespace AutoMat.Core.Views
         public AdvertismentPage(Advertisement ad)
         {
             InitializeComponent();
-         
             BindingContext = AdViewModel = new AdvertismentViewModel { Advertisment = ad, CurrentImageIndex = 0};
         }
 

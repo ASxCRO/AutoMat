@@ -9,6 +9,7 @@ using Xamarin.Forms.Xaml;
 using XF.Material.Forms.UI.Dialogs;
 using Xamarin.Essentials;
 using Firebase.Storage;
+using Newtonsoft.Json;
 
 namespace AutoMat.Core.Views
 {
@@ -40,7 +41,6 @@ namespace AutoMat.Core.Views
         protected async override void OnAppearing()
         {
                 IsBusy = true;
-
 
                 //data storages get items
                 addNewViewModel.additionalEquipment = await DataStoreAdditionalEquipment.GetItemAsync("0");
@@ -583,6 +583,8 @@ choices: AdvertismentConstants.availabilityStrings, "Dalje", "Odustani", Adverti
 
                 addNewViewModel.Advertisement.Date = DateTime.Now;
 
+                var user = JsonConvert.DeserializeObject<FirebaseUser>(Preferences.Get("FirebaseUser", ""));
+                addNewViewModel.Advertisement.UserId = user.Username;
                 bool isSuccessful = await DataStoreAdvertisment.AddItemAsync(addNewViewModel.Advertisement);
 
                 if (isSuccessful)

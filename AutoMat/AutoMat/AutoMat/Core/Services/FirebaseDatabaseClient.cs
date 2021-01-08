@@ -1,8 +1,12 @@
 ﻿using AutoMat.Core.Constants;
+using AutoMat.Core.Models;
 using Firebase.Database;
+using Java.Util.Prefs;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace AutoMat.Core.Services
 {
@@ -28,6 +32,15 @@ namespace AutoMat.Core.Services
                     }
                     return instance;
                 }
+            }
+        }
+
+        public static FirebaseClient NewInstance
+        {
+            get
+            {
+                instance = new FirebaseClient(AppConstants.FirebaseDatabaseURL);
+                return instance;
             }
         }
     }

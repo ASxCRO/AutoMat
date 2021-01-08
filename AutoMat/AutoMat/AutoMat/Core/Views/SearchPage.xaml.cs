@@ -2,6 +2,7 @@
 using AutoMat.Core.Models;
 using AutoMat.Core.Services;
 using AutoMat.Core.ViewModels;
+using Firebase.Auth;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -73,18 +74,18 @@ namespace AutoMat.Core.Views
         private async void SaveFavorite_Clicked(object sender, EventArgs e)
         {
             string SelectedAdId = ((Button)sender).BindingContext as string;
-            var currentUserCached = (Firebase.Auth.User)JsonConvert.DeserializeObject(Preferences.Get("CurrentUser", ""), typeof(Firebase.Auth.User));
+            var currentUserCached = (FirebaseUser)JsonConvert.DeserializeObject(Preferences.Get("FirebaseUser", ""), typeof(FirebaseUser));
             var allUsers = await UserDataStore.GetItemsAsync(false);
             var currentUserFirebase = allUsers.Where(u => u.Email == currentUserCached.Email).FirstOrDefault();
             if(currentUserFirebase != null)
             {
                 UserFavoriteAd favoriteAd = new UserFavoriteAd
                 {
-                    UserId = currentUserFirebase.Id,
-                    OglasId = SelectedAdId
+                    Username = currentUserFirebase.Username,
+                    AdId = SelectedAdId
                 };
                 var allUserFavorites = await UserFavoriteAdsDataStore.GetItemsAsync(false);
-                var alreadyExists = allUserFavorites.Where(f => f.OglasId == favoriteAd.OglasId && f.UserId == favoriteAd.UserId).ToList();
+                var alreadyExists = allUserFavorites.Where(f => f.AdId == favoriteAd.AdId && f.Username == favoriteAd.Username).ToList();
                 if (alreadyExists.Count() > 0)
                 {
                     await XF.Material.Forms.UI.Dialogs.MaterialDialog.Instance.AlertAsync(message: "Oglas je već bio spremljen!");

@@ -1,5 +1,8 @@
 ﻿using AutoMat.Core.AuthHelpers;
 using AutoMat.Core.Constants;
+using AutoMat.Core.Models;
+using AutoMat.Core.Services;
+using AutoMat.Core.ViewModels;
 using Firebase.Auth;
 using Firebase.Database;
 using Newtonsoft.Json;
@@ -20,88 +23,34 @@ namespace AutoMat.Core.Views
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class UserPage : ContentPage
     {
-
-        Account account;
-        AccountStore store;
-        ViewModels.User user = null;
+        public Account account { get; set; }
+        public AccountStore store { get; set; }
+        public UserViewModel user { get; set; }
+        public IDataStore<FirebaseUser> UserDataStore { get; set; }
 
         public UserPage()
         {
             InitializeComponent();
             store = AccountStore.Create();
-            registerline.Opacity = 0;
+            UserDataStore = DependencyService.Get<IDataStore<FirebaseUser>>() ?? new UserDataStore();
         }
 
-       
-
-
-
-        private async void loginButton_Clicked(object sender, EventArgs e)
-        {
-            registrationPageTab.IsVisible = false;
-            loginPageTab.IsVisible = true;
-            lines.ForceLayout();
-            loginPageTab.ForceLayout();
-            await Task.WhenAny<bool>
-            (
-                loginline.FadeTo(1, 1000),
-                registerline.FadeTo(0, 1000)
-            );
-            
-        }
-
-
-        private async void registrationButton_Clicked(object sender, EventArgs e)
-        {
-
-            loginPageTab.IsVisible = false;
-            registrationPageTab.IsVisible = true;
-            lines.ForceLayout();
-            registrationPageTab.ForceLayout();
-            await Task.WhenAny<bool>
-            (
-                loginline.FadeTo(0, 1000),
-                registerline.FadeTo(1, 1000)
-            );
-        }
-
-        protected async override void OnAppearing()
+        protected override void OnAppearing()
         {
             this.IsVisible = false;
-
             base.OnAppearing();
-            if (!string.IsNullOrEmpty(Preferences.Get("UserToken", "")))
+            registerline.Opacity = 0;
+
+            if (!string.IsNullOrEmpty(Preferences.Get("FirebaseUser", "")))
             {
-                var request = new OAuth2Request("GET", new Uri(AppConstants.UserInfoUrl), null, Account.Deserialize(Preferences.Get("UserToken", "")));
-                var response = await request.GetResponseAsync();
-                if (response != null)
-                {
-                    string userJson = await response.GetResponseTextAsync();
-                    user = JsonConvert.DeserializeObject<ViewModels.User>(userJson);
-                }
-                if (user != null)
-                {
-                    App.Current.MainPage = new NavigationPage(new MainPage(user));
-                }
-                else
-                {
-                    this.IsVisible = true;
-                }
+                var user = JsonConvert.DeserializeObject<FirebaseUser>(Preferences.Get("FirebaseUser", ""));
+                App.Current.MainPage = new NavigationPage(new MainPage());
             }
             else
-            {
-                if (!string.IsNullOrEmpty(Preferences.Get("MyFirebaseRefreshToken", "")))
-                {
-                    App.Current.MainPage = new NavigationPage(new MainPage());
-                }
-                else
-                {
-                    this.IsVisible = true;
-                }
-            }
+                this.IsVisible = true;
         }
 
-        async void loginbutton_Clicked(System.Object sender, System.EventArgs e)
+        async void LoginButton_Clicked(System.Object sender, System.EventArgs e)
         {
             var authProvider = new FirebaseAuthProvider(new FirebaseConfig("AIzaSyAg4riVkvSMtWwKZ6_UssK28-2K6xOndrg"));
             try
@@ -109,18 +58,23 @@ namespace AutoMat.Core.Views
                 var auth = await authProvider.SignInWithEmailAndPasswordAsync(UserLoginEmail.Text, UserLoginPassword.Text);
                 var user = await authProvider.GetUserAsync(auth.FirebaseToken);
                 if (!user.IsEmailVerified)
-                {
                     await App.Current.MainPage.DisplayAlert("Mail", "Potvrdite mail adresu kako bi nastavili koristiti aplikaciju.", "Ok");
-                }
                 else
                 {
-                    var content = await auth.GetFreshAuthAsync();
-                    var serializedcontnet = JsonConvert.SerializeObject(content);
-                    Preferences.Set("MyFirebaseRefreshToken", serializedcontnet);
-                    var serializedUser = JsonConvert.SerializeObject(user);
-                    Preferences.Set("CurrentUser", serializedUser);
-                    await App.Current.MainPage.DisplayAlert("Successfull", $"Pozdrav {user.DisplayName}, uspješno ste izvršili prijavu!", "OK");
-                    await Navigation.PushModalAsync(new MainPage());
+                    var users = await  UserDataStore.GetItemsAsync(false);
+                    var firebaseUser = users.Where(u => u.Username == user.DisplayName).FirstOrDefault();
+
+                    if(firebaseUser != null)
+                    {
+                        var serializedUser = JsonConvert.SerializeObject(firebaseUser);
+                        Preferences.Set("FirebaseUser", serializedUser);
+                        await App.Current.MainPage.DisplayAlert("Successfull", $"Pozdrav {user.DisplayName}, uspješno ste izvršili prijavu!", "OK");
+                        await Navigation.PushAsync(new MainPage());
+                    }
+                    else
+                    {
+                        await App.Current.MainPage.DisplayAlert("Pogreška", $"Korisnik ne postoji.", "OK");
+                    }
                 }
             }
             catch (Exception ex)
@@ -129,35 +83,7 @@ namespace AutoMat.Core.Views
             }
         }
 
-        async private void GetProfileInformationAndRefreshToken()
-        {
-            var authProvider = new FirebaseAuthProvider(new Firebase.Auth.FirebaseConfig("AIzaSyAg4riVkvSMtWwKZ6_UssK28-2K6xOndrg"));
-            try
-            {
-                string authLink = Preferences.Get("MyFirebaseRefreshToken", "");
-                var savedfirebaseauth = JsonConvert.DeserializeObject<FirebaseAuthLink>(authLink);
-                var RefreshedContent = await authProvider.RefreshAuthAsync(savedfirebaseauth);
-                Preferences.Set("MyFirebaseRefreshToken", JsonConvert.SerializeObject(RefreshedContent));
-                var firebase = new FirebaseClient("https://automat-29cec.firebaseio.com/");
-                var users = await firebase
-                      .Child("users")
-                      .OnceAsync<JObject>();
-
-                string bla = "";
-                foreach (var item in users)
-                {
-                    bla += item.Object.GetValue("Ime");
-                }
-
-                App.Current.MainPage.DisplayAlert("Alert", bla, "OK");
-            }
-            catch (Exception ex)
-            {
-                await App.Current.MainPage.DisplayAlert("Alert", $"Token expired {ex.Message}", "OK");
-            }
-        }
-
-        void loginbuttonOAuth_Clicked(System.Object sender, System.EventArgs e)
+        void OAuthLogin_Clicked(System.Object sender, System.EventArgs e)
         {
             string clientId = null;
             string redirectUri = null;
@@ -207,20 +133,47 @@ namespace AutoMat.Core.Views
                 if (response != null)
                 {
                     string userJson = await response.GetResponseTextAsync();
-                    user = JsonConvert.DeserializeObject<ViewModels.User>(userJson);
-                    Preferences.Set("UserToken", e.Account.Serialize());
-                }
-                if (user != null)
-                {
-                    await App.Current.MainPage.DisplayAlert("Successfull", $"Hi {user.Email}, you have successfully logged into the App!", "OK");
+                    user = JsonConvert.DeserializeObject<UserViewModel>(userJson);
 
-                    App.Current.MainPage = new NavigationPage(new UserPage());
+                    var allFbUsers = await UserDataStore.GetItemsAsync(false);
+                    var fbUser = allFbUsers.Where(f => f.Email == user.Email).FirstOrDefault();
+
+                    FirebaseUser firebaseUser;
+                    bool isSuccessful;
+                    if (fbUser != null)
+                    {
+                        isSuccessful = true;
+                    }
+                    else
+                    {
+                        firebaseUser = new FirebaseUser
+                        {
+                            Email = user.Email,
+                            Username = "",
+                            Year = DateTime.Now.Year.ToString(),
+                            FirstName = "",
+                            LastName = "",
+                            PicturePath = user.Picture,
+                            PhoneNumber = ""
+                        };
+
+                        isSuccessful = await UserDataStore.AddItemAsync(firebaseUser);
+                    }
+
+                    if (isSuccessful)
+                    {
+                        var serializedUser = JsonConvert.SerializeObject(fbUser);
+                        Preferences.Set("FirebaseUser", serializedUser);
+                        await App.Current.MainPage.DisplayAlert("Uspješna prijava", $"Pozdrav {e.Account.Username}, upješno ste se prijavili u aplikaciju!", "OK");
+                        App.Current.MainPage = new NavigationPage(new MainPage());
+                    }
+                    else
+                        await App.Current.MainPage.DisplayAlert("Greška", "Pokušajte ponovno ili se obratite korisničkoj podršci", "Ok");
                 }
             }
         }
 
-
-        void OnAuthError(object sender, AuthenticatorErrorEventArgs e)
+        async void OnAuthError(object sender, AuthenticatorErrorEventArgs e)
         {
             var authenticator = sender as OAuth2Authenticator;
             if (authenticator != null)
@@ -229,45 +182,138 @@ namespace AutoMat.Core.Views
                 authenticator.Error -= OnAuthError;
             }
 
-            Debug.WriteLine("Authentication error: " + e.Message);
+            await App.Current.MainPage.DisplayAlert("Alert", e.Message, "OK");
         }
 
-        async void signupbutton_Clicked(System.Object sender, System.EventArgs e)
+        async void RegistrationButton_Clicked(System.Object sender, System.EventArgs e)
         {
             try
             {
-                var authProvider = new FirebaseAuthProvider(new FirebaseConfig("AIzaSyAg4riVkvSMtWwKZ6_UssK28-2K6xOndrg"));
-                var auth = await authProvider.CreateUserWithEmailAndPasswordAsync(UserNewEmail.Text, UserNewPassword.Text, UserName.Text, true);
-                var user = await authProvider.GetUserAsync(auth.FirebaseToken);
-                if (!user.IsEmailVerified)
+                var users = await UserDataStore.GetItemsAsync(false);
+                var username_alreadyexists = users.Where(u => u.Username == newuser_username.Text).FirstOrDefault();
+                FirebaseUser firebaseUser = new FirebaseUser();
+
+                if (username_alreadyexists != null)
                 {
-                    await App.Current.MainPage.DisplayAlert("Mail", "Potvrdite mail adresu kako bi nastavili koristiti aplikaciju.", "Ok");
+                    throw new FirebaseAuthException(null, null, null, null, reason: AuthErrorReason.UserNotFound);
                 }
-                else
+
+                var authProvider = new FirebaseAuthProvider(new FirebaseConfig("AIzaSyAg4riVkvSMtWwKZ6_UssK28-2K6xOndrg"));
+                var auth = await authProvider.CreateUserWithEmailAndPasswordAsync(newuser_email.Text, newuser_password.Text, newuser_username.Text, true);
+                var user = await authProvider.GetUserAsync(auth.FirebaseToken);
+                if(!user.IsEmailVerified)
                 {
-                    await App.Current.MainPage.DisplayAlert("Bravo", "Uspješno ste se registrirali, prijavite se kako bi nastavili koristiti aplikaciju.", "Ok");
+                    var allFbUsers = await UserDataStore.GetItemsAsync(false);
+                    var fbUser = allFbUsers.Where(f => f.Email == user.Email).FirstOrDefault();
+
+                    bool isSuccessful;
+                    if (fbUser != null)
+                    {
+                        isSuccessful = true;
+                    }
+                    else
+                    {
+                        firebaseUser = new FirebaseUser
+                        {
+                            Email = newuser_email.Text,
+                            Username = newuser_username.Text,
+                            Year = DateTime.Now.Year.ToString(),
+                            FirstName = newuser_firstname.Text,
+                            LastName = newuser_lastname.Text,
+                            PicturePath = "https://png.pngtree.com/png-vector/20190710/ourmid/pngtree-user-vector-avatar-png-image_1541962.jpg",
+                            PhoneNumber = newuser_phonenumber.Text
+                        };
+
+                        isSuccessful = await UserDataStore.AddItemAsync(firebaseUser);
+                    }
+
+                    if(isSuccessful)
+                    {
+                        await App.Current.MainPage.DisplayAlert("Uspješna registracija", "Potvrdite mail adresu kako bi nastavili koristiti aplikaciju.", "Ok");
+                        var serializedUser = JsonConvert.SerializeObject(firebaseUser);
+                        Preferences.Set("FirebaseUser", serializedUser);
+                    }
+                    else
+                    {
+                        await App.Current.MainPage.DisplayAlert("Greška", "Pokušajte ponovno ili se obratite korisničkoj podršci", "Ok");
+
+                    }
+                    App.Current.MainPage = new NavigationPage(new UserPage());
+
                 }
             }
             catch (FirebaseAuthException ex)
             {
                 if (ex.Reason.Equals(Firebase.Auth.AuthErrorReason.EmailExists))
-                {
                     await App.Current.MainPage.DisplayAlert("Upozorenje", "Račun sa ovom mail adresom već postoji. Pokušajte ponovno", "OK");
-                }
                 else if (ex.Reason.Equals(Firebase.Auth.AuthErrorReason.InvalidEmailAddress))
-                {
                     await App.Current.MainPage.DisplayAlert("Upozorenje", "Email adresa nije valjana. Pokušajte ponovno ili upišite neku drugu email adresu.", "OK");
-                }
                 else if (ex.Reason.Equals(Firebase.Auth.AuthErrorReason.WeakPassword))
-                {
                     await App.Current.MainPage.DisplayAlert("Upozorenje", "Lozinka mora biti dugačka barem 7 znakova, mora se sastojati od kojih barem jedan mora biti znak i barem jedan broj.", "OK");
-                }
+                else if (ex.Reason.Equals(Firebase.Auth.AuthErrorReason.UserNotFound))
+                    await App.Current.MainPage.DisplayAlert("Upozorenje", "Već postoji osoba s tim korisničkim imenom!", "OK");
                 else
-                {
                     await App.Current.MainPage.DisplayAlert("Alert", ex.Message, "OK");
-                }
             }
 
+        }
+
+
+        async private Task<FirebaseUser> GetProfileInformationAndRefreshToken()
+        {
+            var firebaseUser = new FirebaseUser();
+            var authProvider = new FirebaseAuthProvider(new FirebaseConfig("AIzaSyAg4riVkvSMtWwKZ6_UssK28-2K6xOndrg"));
+            try
+            {
+                string authLink = Preferences.Get("FirebaseRefreshToken", "");
+
+                var savedfirebaseauth = JsonConvert.DeserializeObject<FirebaseAuthLink>(authLink);
+                var newRefreshToken = await authProvider.RefreshAuthAsync(savedfirebaseauth);
+
+                var users = await UserDataStore.GetItemsAsync(false);
+                var currentUser = users.Where(u => u.Username == newRefreshToken.User.DisplayName).FirstOrDefault();
+
+                var serializedUser = JsonConvert.SerializeObject(currentUser);
+                var newRefreshTokenSerialized = JsonConvert.SerializeObject(newRefreshToken);
+
+                Preferences.Set("FirebaseRefreshToken", newRefreshTokenSerialized);
+                Preferences.Set("FirebaseUser", serializedUser);
+
+                firebaseUser = currentUser;
+            }
+            catch (Exception ex)
+            {
+                await App.Current.MainPage.DisplayAlert("Upozorenje", $"Sesija istekla {ex.Message}", "OK");
+                App.Current.MainPage = new NavigationPage(new UserPage());
+            }
+            return firebaseUser;
+        }
+        private async void gotoLoginTab_Clicked(object sender, EventArgs e)
+        {
+            registrationPageTab.IsVisible = false;
+            loginPageTab.IsVisible = true;
+            lines.ForceLayout();
+            loginPageTab.ForceLayout();
+            await Task.WhenAny<bool>
+            (
+                loginline.FadeTo(1, 1000),
+                registerline.FadeTo(0, 1000)
+            );
+
+        }
+
+        private async void gotoRegistrationTab_Clicked(object sender, EventArgs e)
+        {
+
+            loginPageTab.IsVisible = false;
+            registrationPageTab.IsVisible = true;
+            lines.ForceLayout();
+            registrationPageTab.ForceLayout();
+            await Task.WhenAny<bool>
+            (
+                loginline.FadeTo(0, 1000),
+                registerline.FadeTo(1, 1000)
+            );
         }
     }
 }

@@ -5,7 +5,7 @@ using System.Text;
 
 namespace AutoMat.Core.ViewModels
 {
-    public class FirebaseUserViewModel
+    public class FirebaseUserViewModel : BaseViewModel<FirebaseUser>
     {
         public FirebaseUserViewModel()
         {

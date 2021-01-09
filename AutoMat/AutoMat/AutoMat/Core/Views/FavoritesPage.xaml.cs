@@ -19,13 +19,21 @@ namespace AutoMat.Core.Views
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class FavoritesPage : ContentPage
     {
+        public string typeOfAdsPage { get; set; }
         public FavoritesViewModel viewModel{ get; set; }
         public IDataStore<Advertisement> AdverismentDataStore { get; set; }
         public IDataStore<FirebaseUser> UserDataStore { get; set; }
         public IDataStore<UserFavoriteAd> UserFavoriteAdsDataStore { get; set; }
+
         public FavoritesPage()
         {
+            typeOfAdsPage = "favorites";
+        }
+
+        public FavoritesPage(string typeOfFavorites)
+        {
             InitializeComponent();
+            typeOfAdsPage = typeOfFavorites;
             BindingContext = viewModel = new FavoritesViewModel();
             AdverismentDataStore = DependencyService.Get<IDataStore<Advertisement>>() ?? new AdvertismentDataStorage();
             UserDataStore = DependencyService.Get<IDataStore<FirebaseUser>>() ?? new UserDataStore();
@@ -35,7 +43,17 @@ namespace AutoMat.Core.Views
         protected override async void OnAppearing()
         {
             base.OnAppearing();
-            await GetCurrentUserFavoriteAds();
+            switch (typeOfAdsPage)
+            {
+                case "favorites":
+                    await GetCurrentUserFavoriteAds();
+                    break;
+                case "profile":
+                    await GetCurrentUserAds();
+                    break;
+                default:
+                    break;
+            }
         }
 
         public async Task GetCurrentUserFavoriteAds()
@@ -59,7 +77,23 @@ namespace AutoMat.Core.Views
                         }
                     }
                 }
+            }
+        }
 
+        public async Task GetCurrentUserAds()
+        {
+            var currentUserCached = (FirebaseUser)JsonConvert.DeserializeObject(Preferences.Get("FirebaseUser", ""), typeof(FirebaseUser));
+            if (currentUserCached != null)
+            {
+                var allAds = await AdverismentDataStore.GetItemsKeyValueAsync();
+                var currentUserAds = allAds.Where(u => u.Value.UserId == currentUserCached.Username).ToList();
+
+                viewModel.Items.Clear();
+
+                foreach (var ad in currentUserAds)
+                {
+                    viewModel.Items.Add(ad.Value);
+                }
             }
         }
 
@@ -81,8 +115,13 @@ namespace AutoMat.Core.Views
             {
                 var hasDeleted = await UserFavoriteAdsDataStore.DeleteItemAsync(SelectedAdId);
                 if (hasDeleted)
-                    GetCurrentUserFavoriteAds();
+                    await GetCurrentUserFavoriteAds();
             }
         }
+
+        private async void DeleteAd_Clicked(object sender, EventArgs e)
+        {
+        }
+            
     }
 }

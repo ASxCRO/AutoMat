@@ -1,0 +1,21 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="AutoMat.Core.Views.UpdateProfilePage"
+             Title="Ažuriranje profila">
+    <ContentPage.Content>
+        <StackLayout VerticalOptions="StartAndExpand" Orientation="Vertical"
+            x:Name="updateProfilePage"
+            BackgroundColor="White"
+            IsVisible="true"
+            Padding="20">
+            <Image Source="ic_supervised_user_circle.png" />
+                <Entry Placeholder="Ime"  Text="{Binding FirstName}" IsTextPredictionEnabled="True"  x:Name="ime"></Entry>
+                <Entry Placeholder="Prezime"  Text="{Binding LastName}" IsTextPredictionEnabled="True"  x:Name="prezime"></Entry>
+                <Entry Placeholder="Korisničko ime"  Text="{Binding Username}"  x:Name="korime" IsEnabled="False"></Entry>
+                <Entry Placeholder="Email"  Text="{Binding Email}"  x:Name="email" IsEnabled="False"></Entry>
+                <Entry Placeholder="Broj mobitela"  Text="{Binding PhoneNumber}" x:Name="brojmobitela"></Entry>
+                <Button BackgroundColor="Black" TextColor="White" Text="Ažuriraj profil" x:Name="updateProfileButton" Clicked="UpdateProfile_Clicked"/>
+            </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

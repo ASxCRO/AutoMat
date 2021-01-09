@@ -58,9 +58,6 @@ namespace AutoMat.Core.Services
         public async Task<FirebaseUser> GetItemAsync(string id)
         {
             var allPersons = await GetItemsAsync(false);
-            await firebase
-              .Child("users")
-              .OnceAsync<FirebaseUser>();
             return allPersons.Where(a => a.Username == id).FirstOrDefault();
         }
 
@@ -90,12 +87,12 @@ namespace AutoMat.Core.Services
         {
             var toUpdateUser = (await firebase
               .Child("users")
-              .OnceAsync<FirebaseUser>()).Where(a => a.Object.Username == item.Username).FirstOrDefault();
+              .OnceAsync<FirebaseUser>()).Where(a => a.Object.Email == item.Email).FirstOrDefault();
 
             try
             {
                 await firebase
-                      .Child("Persons")
+                      .Child("users")
                       .Child(toUpdateUser.Key)
                       .PutAsync(item);
             }

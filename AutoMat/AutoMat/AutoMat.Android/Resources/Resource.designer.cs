@@ -22152,37 +22152,40 @@ namespace AutoMat.Droid
 			public const int Phone = 2131165373;
 			
 			// aapt resource value: 0x7F0700BE
-			public const int test_custom_background = 2131165374;
+			public const int Plus = 2131165374;
 			
 			// aapt resource value: 0x7F0700BF
-			public const int tooltip_frame_dark = 2131165375;
+			public const int test_custom_background = 2131165375;
 			
 			// aapt resource value: 0x7F0700C0
-			public const int tooltip_frame_light = 2131165376;
+			public const int tooltip_frame_dark = 2131165376;
 			
 			// aapt resource value: 0x7F0700C1
-			public const int xf_arrow_dropdown = 2131165377;
+			public const int tooltip_frame_light = 2131165377;
 			
 			// aapt resource value: 0x7F0700C2
-			public const int xf_check = 2131165378;
+			public const int xf_arrow_dropdown = 2131165378;
 			
 			// aapt resource value: 0x7F0700C3
-			public const int xf_checkbox_selected = 2131165379;
+			public const int xf_check = 2131165379;
 			
 			// aapt resource value: 0x7F0700C4
-			public const int xf_checkbox_unselected = 2131165380;
+			public const int xf_checkbox_selected = 2131165380;
 			
 			// aapt resource value: 0x7F0700C5
-			public const int xf_clear = 2131165381;
+			public const int xf_checkbox_unselected = 2131165381;
 			
 			// aapt resource value: 0x7F0700C6
-			public const int xf_error = 2131165382;
+			public const int xf_clear = 2131165382;
 			
 			// aapt resource value: 0x7F0700C7
-			public const int xf_radio_button_selected = 2131165383;
+			public const int xf_error = 2131165383;
 			
 			// aapt resource value: 0x7F0700C8
-			public const int xf_radio_button_unselected = 2131165384;
+			public const int xf_radio_button_selected = 2131165384;
+			
+			// aapt resource value: 0x7F0700C9
+			public const int xf_radio_button_unselected = 2131165385;
 			
 			static Drawable()
 			{

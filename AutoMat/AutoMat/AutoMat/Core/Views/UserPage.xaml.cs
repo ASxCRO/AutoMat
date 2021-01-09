@@ -30,6 +30,7 @@ namespace AutoMat.Core.Views
 
         public UserPage()
         {
+            Preferences.Clear();
             InitializeComponent();
             store = AccountStore.Create();
             UserDataStore = DependencyService.Get<IDataStore<FirebaseUser>>() ?? new UserDataStore();
@@ -232,13 +233,14 @@ namespace AutoMat.Core.Views
                         await App.Current.MainPage.DisplayAlert("Uspješna registracija", "Potvrdite mail adresu kako bi nastavili koristiti aplikaciju.", "Ok");
                         var serializedUser = JsonConvert.SerializeObject(firebaseUser);
                         Preferences.Set("FirebaseUser", serializedUser);
+                        App.Current.MainPage = new NavigationPage(new UserPage());
                     }
                     else
                     {
                         await App.Current.MainPage.DisplayAlert("Greška", "Pokušajte ponovno ili se obratite korisničkoj podršci", "Ok");
 
                     }
-                    App.Current.MainPage = new NavigationPage(new UserPage());
+                    
 
                 }
             }

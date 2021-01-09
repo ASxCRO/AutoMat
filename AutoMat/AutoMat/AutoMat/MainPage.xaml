@@ -5,23 +5,30 @@
     xmlns:xf="clr-namespace:BottomBar.XamarinForms"
     xmlns:local="clr-namespace:AutoMat.Core.Views"
     x:Class="AutoMat.MainPage"
-    NavigationPage.HasNavigationBar="false">
+    NavigationPage.HasNavigationBar="false"
+    TabIndex="1">
     
     <local:SearchPage Title="Pretraži"
                        Icon="ic_oglasi.png"
                        xf:BottomBarPageExtensions.TabColor="Black"
+                      x:Name="searchpage"
                       />
 
     <local:AddNewPage Title="Dodaj oglas"
                        Icon="ic_dodaj.png"
-                    xf:BottomBarPageExtensions.TabColor="Black"/>
+                    xf:BottomBarPageExtensions.TabColor="Black"
+                      x:Name="addnewpage"
+                      />
     
     <local:FavoritesPage Title="Spremljeni"
                        Icon="ic_spremljeni.png"
-                       xf:BottomBarPageExtensions.TabColor="Black" />
+                       xf:BottomBarPageExtensions.TabColor="Black"
+                         x:Name="favoritespage"/>
 
     <local:MyDashboardPage Title="Profil"
                        Icon="ic_korisnik.png"
-                       xf:BottomBarPageExtensions.TabColor="Black"/>
+                       xf:BottomBarPageExtensions.TabColor="Black"
+                           TabIndex="4"
+                           x:Name="mydashboardpage"/>
 
 </xf:BottomBarPage>

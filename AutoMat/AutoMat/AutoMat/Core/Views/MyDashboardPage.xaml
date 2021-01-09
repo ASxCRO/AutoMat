@@ -5,7 +5,9 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:local="clr-namespace:Xamarin.Forms"
              mc:Ignorable="d"
-             x:Class="AutoMat.Core.Views.MyDashboardPage">
+             x:Class="AutoMat.Core.Views.MyDashboardPage"
+             xmlns:material="clr-namespace:XF.Material.Forms.UI;assembly=XF.Material"
+             >
 
     <Grid BackgroundColor="White">
         <Grid.RowDefinitions>
@@ -14,10 +16,26 @@
         </Grid.RowDefinitions>
 
         <!-- 1. Profile picture-->
-        <Image Grid.Row="0" Source="{Binding FirebaseUser.PicturePath}" Aspect="AspectFill" />
+        <Image Grid.Row="0" Source="{Binding FirebaseUser.PicturePath}" Aspect="AspectFill" x:Name="profilePicture"/>
+
+
+        <Grid Grid.Row="0" HorizontalOptions="End" RowSpacing="0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+            <Button Grid.Row="0"  Style="{StaticResource stlContactBtn}" HorizontalOptions="End" Margin="0,10,60,0" VerticalOptions="StartAndExpand" ImageSource="Plus"  Clicked="Fab_Clicked" IsVisible="true"/>
+            <material:MaterialButton Opacity="0"   Grid.Row="1" Margin="0,10,0,0" HeightRequest="60" BorderColor="Black" BorderWidth="3" BackgroundColor="#071b5e"  Text="Ažuriraj profil" TextColor="White" HorizontalOptions="End" Clicked="UpdateProfile_Clicked" x:Name="updateButton"/>
+            <material:MaterialButton Opacity="0"  Grid.Row="2" Margin="0,10,0,0" HeightRequest="60" BorderColor="Black" BorderWidth="3" BackgroundColor="#071b5e"  Text="Pogledaj oglase" TextColor="White" HorizontalOptions="End" Clicked="ViewAds_Clicked" x:Name="viewAdsButton"/>
+            <material:MaterialButton Opacity="0"  Grid.Row="3" Margin="0,10,0,0" HeightRequest="60" BorderColor="Black" BorderWidth="3" BackgroundColor="#071b5e"  Text="Nova profilna slika" TextColor="White" HorizontalOptions="End" Clicked="NewProfilePicture_Clicked" x:Name="profilePictureButton"/>
+        </Grid>
+
+    
 
         <!-- 2. Contact informaqtion frame-->
-        <local:WrapLayout Grid.Row="1" BackgroundColor="White" VerticalOptions="End">
+        <local:WrapLayout Grid.Row="1" BackgroundColor="White" VerticalOptions="End" HorizontalOptions="FillAndExpand">
             <Frame CornerRadius="40" Style="{StaticResource stlMainFrame}">
                 <!-- Blocks: 3 and 4 -->
                 <Grid Padding="25,10,25,0" RowSpacing="0">
@@ -38,7 +56,7 @@
                     <Button Grid.Row="0" Grid.Column="2" Style="{StaticResource stlContactBtn}" HorizontalOptions="Start" ImageSource="Correo"
                             Clicked="SendEmail_Clicked"/>
                     <!-- 4. Contact information-->
-                    <Label Grid.Row="0" Grid.Column="0" Text="{Binding FirebaseUser.Username}" FontAttributes="Bold" FontSize="30"/>
+                    <Label Grid.Row="0" Grid.Column="0" Text="{Binding FirebaseUser.Username}" FontAttributes="Bold" FontSize="25"/>
                     <Label Grid.Row="1" Grid.Column="0" Text="{Binding FullName}" TextColor="#a5a2a2" FontSize="16"/>
                     <Label Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="3" Padding="0,10,0,0" FontSize="16">
                         <Label.FormattedText>
@@ -51,8 +69,7 @@
                     <!--4. Contact information: Board inforation-->
                     <Label Grid.Row="3" Grid.Column="0" Text="Oglasa" Style="{StaticResource stlBoardTitle}" />
                     <Label Grid.Row="4" Grid.Column="0" Text="3" Style="{StaticResource stlBoardDesc}"/>
-                    <Button Grid.Row="2" Grid.Column="2" Style="{StaticResource stlContactBtn}"  HorizontalOptions="Start" ImageSource="image" />
-                    
+
                     <Label Grid.Row="3" Grid.Column="1" Text="Aktivan" Style="{StaticResource stlBoardTitle}"/>
                     <Label Grid.Row="4" Grid.Column="1" Text="Da" Style="{StaticResource stlBoardDesc}"/>
 

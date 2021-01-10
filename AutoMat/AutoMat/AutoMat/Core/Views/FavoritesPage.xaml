@@ -2,7 +2,9 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="AutoMat.Core.Views.FavoritesPage"
-             xmlns:material="clr-namespace:XF.Material.Forms.UI;assembly=XF.Material">
+             xmlns:material="clr-namespace:XF.Material.Forms.UI;assembly=XF.Material"
+             Title=""
+             >
     <ContentPage.Content>
         <StackLayout>
             <ListView 
@@ -87,16 +89,11 @@
                                             </Button>
                                         </FlexLayout>
                                         <BoxView Margin="0,10,0,0" Color="DarkGray" HeightRequest="2" HorizontalOptions="FillAndExpand"></BoxView>
-                                        <FlexLayout Direction="Row" JustifyContent="SpaceBetween" Margin="0,5,0,0" x:Name="profile">
-                                            <material:MaterialButton  ButtonType="Text" FlexLayout.Grow="0.45" ContentLayout="Left" Image="ic_remove" Text="Obriši" TextColor="Black"  Clicked="DeleteAd_Clicked" BindingContext="{Binding Id}"/>
-                                            <material:MaterialButton  ButtonType="Text" Margin="10,0,0,0" FlexLayout.Grow="0.45" ContentLayout="Left" Image="ic_korisnik"  Text="Ažuriraj" TextColor="Black"  />
+                                        <FlexLayout Direction="Row" JustifyContent="SpaceBetween" Margin="0,5,0,0">
+                                            <material:MaterialButton  ButtonType="Text" FlexLayout.Grow="0.45" ContentLayout="Left" Image="ic_remove" Text="" TextColor="Black"  Clicked="DeleteAd_Clicked" BindingContext="{Binding Id}"/>
+                                            <material:MaterialButton  ButtonType="Text" Margin="10,0,0,0" FlexLayout.Grow="0.45" ContentLayout="Left" Image="ic_edit"  Text="" Clicked="UpdateButton_Clicked" TextColor="Black" BindingContext="{Binding Id}"/>
+                                            <material:MaterialButton  ButtonType="Text" Margin="10,0,0,0" FlexLayout.Grow="0.45" ContentLayout="Left"   Image="ic_share"  Text="" TextColor="Black" BindingContext="{Binding Id}" Clicked="ShareButton_Clicked" />
                                         </FlexLayout>
-                                        <FlexLayout Direction="Row" JustifyContent="SpaceBetween" Margin="0,5,0,0" x:Name="favorites">
-                                            <material:MaterialButton  ButtonType="Text" FlexLayout.Grow="0.45" ContentLayout="Left" Image="ic_remove" Text="Ukloni" TextColor="Black"  Clicked="RemoveAd_Clicked" BindingContext="{Binding Id}"/>
-                                            <material:MaterialButton  ButtonType="Text" Margin="10,0,0,0" FlexLayout.Grow="0.45" ContentLayout="Left" Image="ic_korisnik"  Text="Podijeli" TextColor="Black"  />
-                                        </FlexLayout>
-
-
                                     </StackLayout>
                                 </StackLayout>
                             </Frame>

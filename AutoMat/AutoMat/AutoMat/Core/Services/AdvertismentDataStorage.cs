@@ -41,11 +41,11 @@ namespace AutoMat.Core.Services
         public async Task<bool> DeleteItemAsync(string id)
         {
             var allAdvertisments = await GetItemsKeyValueAsync();
-            var toDeleteAdvertisment = allAdvertisments.Where(a => a.Value.Id == id).FirstOrDefault().Value;
+            var toDeleteAdvertisment = allAdvertisments.Where(a => a.Value.Id == id).FirstOrDefault();
 
             try
             {
-                await firebase.Child("advertisments").Child(toDeleteAdvertisment.Id).DeleteAsync();
+                await firebase.Child("advertisments").Child(toDeleteAdvertisment.Key).DeleteAsync();
             }
             catch (Exception)
             {
@@ -69,16 +69,16 @@ namespace AutoMat.Core.Services
             return JsonSerializer.Deserialize<Dictionary<string,Advertisement>>(responseBody);
         }
 
-        public async Task<bool> UpdateItemAsync(Dictionary<string,Advertisement> item)
+        public async Task<bool> UpdateItemAsync(Advertisement item)
         {
             var allAdvertisments = await GetItemsKeyValueAsync();
-            var toUpdateAdvertisment = allAdvertisments.Where(a => a.Key == item.FirstOrDefault().Key).FirstOrDefault().Value;
+            var toUpdateAdvertisment = allAdvertisments.Where(a => a.Value.Id == item.Id).FirstOrDefault();
 
             try
             {
                 await firebase
                       .Child("advertisments")
-                      .Child(item.Keys.FirstOrDefault())
+                      .Child(toUpdateAdvertisment.Key)
                       .PutAsync(item);
             }
             catch (Exception e)
@@ -90,11 +90,6 @@ namespace AutoMat.Core.Services
         }
 
         public Task<IEnumerable<Advertisement>> GetItemsAsync(bool forceReload)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task<bool> UpdateItemAsync(Advertisement item)
         {
             throw new NotImplementedException();
         }

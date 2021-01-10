@@ -28,15 +28,35 @@ namespace AutoMat.Core.Views
         {
             InitializeComponent();
             UserDataStore = DependencyService.Get<IDataStore<FirebaseUser>>() ?? new UserDataStore();
+            FirebaseUser = (FirebaseUser)JsonConvert.DeserializeObject(Preferences.Get("FirebaseUser", ""), typeof(FirebaseUser));
+            InitViewModel();
+            FirebaseUserViewModel = new FirebaseUserViewModel { FirebaseUser = this.FirebaseUser };
+            BindingContext = FirebaseUserViewModel;
+        }
+
+        public MyDashboardPage(FirebaseUser user)
+        {
+            InitializeComponent();
+            FirebaseUser = user;
+            UserDataStore = DependencyService.Get<IDataStore<FirebaseUser>>() ?? new UserDataStore();
+            InitViewModel();
+            FirebaseUserViewModel = new FirebaseUserViewModel { FirebaseUser = this.FirebaseUser };
+            BindingContext = FirebaseUserViewModel;
+            FabButton.IsVisible = false;
+            BottomButton.Text = "Pogledaj sve oglase";
+            BottomButton.Clicked -= Logout_Clicked;
+            BottomButton.Clicked += ViewAds_Clicked;
+        }
+
+        private void BottomButton_Clicked(object sender, EventArgs e)
+        {
+            throw new NotImplementedException();
         }
 
         protected override async void OnAppearing()
         {
             base.OnAppearing();
-            FirebaseUser = (FirebaseUser)JsonConvert.DeserializeObject(Preferences.Get("FirebaseUser", ""), typeof(FirebaseUser));
-            InitViewModel();
-            FirebaseUserViewModel = new FirebaseUserViewModel { FirebaseUser = this.FirebaseUser };
-            BindingContext = FirebaseUserViewModel;
+
         }
 
 
@@ -136,7 +156,7 @@ namespace AutoMat.Core.Views
 
         private async void ViewAds_Clicked(object sender, EventArgs e)
         {
-            await Navigation.PushAsync(new FavoritesPage("profile"));
+            await Navigation.PushAsync(new FavoritesPage("profile", this.FirebaseUser));
         }
 
         private async void NewProfilePicture_Clicked(object sender, EventArgs e)

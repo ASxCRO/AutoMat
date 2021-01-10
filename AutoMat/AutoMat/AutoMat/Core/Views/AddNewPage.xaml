@@ -11,6 +11,21 @@
     <ScrollView>
         <StackLayout Padding="15">
             <StackLayout HorizontalOptions="Center" VerticalOptions="StartAndExpand">
+                <CarouselView ItemsSource="{Binding ImageSourcesUri}" HeightRequest="320" x:Name="CarouselItems">
+                    <CarouselView.ItemsLayout>
+                        <LinearItemsLayout Orientation="Horizontal" />
+                    </CarouselView.ItemsLayout>
+                    <CarouselView.ItemTemplate>
+                        <DataTemplate>
+                            <StackLayout>
+                                <Image Source="{Binding .}"
+                                   Aspect="AspectFill"
+                                   HeightRequest="300"
+                                   HorizontalOptions="Center" />
+                            </StackLayout>
+                        </DataTemplate>
+                    </CarouselView.ItemTemplate>
+                </CarouselView>
                 <controls:ImageCarousel x:Name="imgSlider" HeightRequest="0" HorizontalOptions="StartAndExpand" />
             </StackLayout>
             <Button Text="Izaberi slike za oglas" Clicked="Button1_Clicked" />

@@ -10,6 +10,7 @@ using XF.Material.Forms.UI.Dialogs;
 using Xamarin.Essentials;
 using Firebase.Storage;
 using Newtonsoft.Json;
+using System.Threading.Tasks;
 
 namespace AutoMat.Core.Views
 {
@@ -24,24 +25,45 @@ namespace AutoMat.Core.Views
         public IDataStore<County> DataStoreCounties { get; set; }
         public IDataStore<Town> DataStoreTowns { get; set; }
 
+        public bool isFirstPost{ get; set; }
+
         public AddNewPage()
         {
-            InitializeComponent();
-            addNewViewModel = new AddNewViewModel();
 
-            //data storage initialize
-            DataStoreAdvertisment = DependencyService.Get<IDataStore<Advertisement>>() ?? new AdvertismentDataStorage();
-            DataStoreAdditionalEquipment = DependencyService.Get<IDataStore<AdditionalEquipment>>() ?? new AdditionalEquipmentDataStore();
-            DataStoreCarBrands = DependencyService.Get<IDataStore<CarBrand>>() ?? new BrandsDataStore();
-            DataStoreCarModels = DependencyService.Get<IDataStore<CarModel>>() ?? new ModelsDataStore();
-            DataStoreCounties = DependencyService.Get<IDataStore<County>>() ?? new CountiesDataStore();
-            DataStoreTowns = DependencyService.Get<IDataStore<Town>>() ?? new TownsDataStore();
+            InitializeComponent();
+            CarouselItems.IsVisible = false;
+            isFirstPost = true;
+            addNewViewModel = new AddNewViewModel();
+            InicijalnizirajDataStorage();
+        }
+
+
+        public AddNewPage(Advertisement advertisement)
+        {
+            using (MaterialDialog.Instance.LoadingDialogAsync(message: "Pričekajte..").Result)
+            {
+                addNewViewModel = new AddNewViewModel { Advertisement = advertisement };
+                isFirstPost = false;
+                //data storage initialize
+                InicijalnizirajDataStorage();
+                foreach (var imageUrl in addNewViewModel.Advertisement.PicturesURL)
+                {
+                    addNewViewModel.ImageSourcesUri.Add(ImageSource.FromUri(new Uri(imageUrl)));
+                }
+
+                BindingContext = addNewViewModel;
+                InitializeComponent();
+                CarouselItems.IsVisible = true;
+                SetUpEditView();
+            }
         }
 
         protected async override void OnAppearing()
         {
                 IsBusy = true;
-
+            //brand
+            using (await MaterialDialog.Instance.LoadingDialogAsync(message: "Inicijalniziram.."))
+            {
                 //data storages get items
                 addNewViewModel.additionalEquipment = await DataStoreAdditionalEquipment.GetItemAsync("0");
                 addNewViewModel.counties = await DataStoreCounties.GetItemsAsync(false);
@@ -49,8 +71,67 @@ namespace AutoMat.Core.Views
                 addNewViewModel.brands = await DataStoreCarBrands.GetItemsAsync(false);
                 addNewViewModel.models = await DataStoreCarModels.GetItemsAsync(false);
                 addNewViewModel.SetUpStringLists();
+            }
 
-                IsBusy = false;
+            IsBusy = false;
+        }
+
+
+        private async Task InicijalnizirajDataStorage()
+        {
+            using (await MaterialDialog.Instance.LoadingDialogAsync(message: "Inicijalniziram.."))
+            {
+                //data storage initialize
+                DataStoreAdvertisment = DependencyService.Get<IDataStore<Advertisement>>() ?? new AdvertismentDataStorage();
+                DataStoreAdditionalEquipment = DependencyService.Get<IDataStore<AdditionalEquipment>>() ?? new AdditionalEquipmentDataStore();
+                DataStoreCarBrands = DependencyService.Get<IDataStore<CarBrand>>() ?? new BrandsDataStore();
+                DataStoreCarModels = DependencyService.Get<IDataStore<CarModel>>() ?? new ModelsDataStore();
+                DataStoreCounties = DependencyService.Get<IDataStore<County>>() ?? new CountiesDataStore();
+                DataStoreTowns = DependencyService.Get<IDataStore<Town>>() ?? new TownsDataStore();
+            }
+        }
+
+        private void SetUpEditView()
+        {
+            Label.Text = addNewViewModel.Advertisement.Brand;
+            Label_1.Text = addNewViewModel.Advertisement.Model;
+            Label_2.Text = addNewViewModel.Advertisement.ProductionYear;
+            Label_3.Text = addNewViewModel.Advertisement.ModelYear;
+            Label_4.Text = addNewViewModel.Advertisement.OnRoadSince;
+            Label_6.Text = addNewViewModel.Advertisement.MotorType;
+            Label_7.Text = addNewViewModel.Advertisement.KM;
+            Label_8.Text = addNewViewModel.Advertisement.AverageFuel;
+            Label_9.Text = addNewViewModel.Advertisement.CO2;
+            Label_10.Text = addNewViewModel.Advertisement.Power;
+            Label_11.Text = addNewViewModel.Advertisement.ShiftType;
+            Label_12.Text = addNewViewModel.Advertisement.Shifts;
+
+
+            Label_13.Text = addNewViewModel.Advertisement.ChassisNumber;
+            Label_14.Text = addNewViewModel.Advertisement.Drive;
+            Label_15.Text = addNewViewModel.Advertisement.MotorVolume;
+            Label_16.Text = addNewViewModel.Advertisement.Doors;
+            Label_17.Text = addNewViewModel.Advertisement.Body;
+            Label_18.Text = addNewViewModel.Advertisement.Suspension;
+            Label_19.Text = addNewViewModel.Advertisement.Color;
+            Label_20.Text = addNewViewModel.Advertisement.EcoNorm;
+            Label_21.Text = addNewViewModel.Advertisement.Owner;
+            Label_22.Text = "Odabrano " + addNewViewModel.Advertisement.AdditionalEquipment.Count().ToString();
+            Label_23.Text = "Odabrano " + addNewViewModel.Advertisement.SafetyEquipment.Count().ToString();
+            Label_24.Text = "Odabrano " + addNewViewModel.Advertisement.ACEquipment.Count().ToString();
+            Label_25.Text = addNewViewModel.Advertisement.AirBags;
+            Label_26.Text = "Odabrano " + addNewViewModel.Advertisement.AntiSteal.Count().ToString();
+            Label_27.Text = "Odabrano " + addNewViewModel.Advertisement.RadioEquipment.Count().ToString();
+            Label_28.Text = "Odabrano " + addNewViewModel.Advertisement.ComfortEquipment.Count().ToString();
+            Label_29.Text = String.IsNullOrEmpty(addNewViewModel.Advertisement.Title) ? "Neupisano" : "Upisano";
+            Label_30.Text = String.IsNullOrEmpty(addNewViewModel.Advertisement.Description) ? "Neupisano" : "Upisano";
+            Label_31.Text = addNewViewModel.Advertisement.Price;
+            Label_32.Text = "Odabrano " + addNewViewModel.Advertisement.PayTypes.Count().ToString();
+            Label_33.Text = addNewViewModel.Advertisement.Availability;
+            Label_34.Text = addNewViewModel.Advertisement.County;
+            Label_35.Text = addNewViewModel.Advertisement.Town;
+            Label_36.Text = addNewViewModel.Advertisement.PhoneNumber;
+
         }
 
         async void Button1_Clicked(System.Object sender, System.EventArgs e)
@@ -68,6 +149,11 @@ namespace AutoMat.Core.Views
                 if (pickResult != null)
                 {
                     addNewViewModel.ImageSources.Clear();
+                    if(!isFirstPost)
+                    {
+                        addNewViewModel.ImageSourcesUri.Clear();
+                        CarouselItems.IsVisible = false;
+                    }
                     foreach (var image in pickResult)
                     {
                         addNewViewModel.ImageSources.Add(image.FullPath);
@@ -559,40 +645,73 @@ choices: AdvertismentConstants.availabilityStrings, "Dalje", "Odustani", Adverti
 
         private async void PostAdverisment_Clicked(object sender, EventArgs e)
         {
+            IsBusy = true;
+            var firebaseStorage = new FirebaseStorage("automat-29cec.appspot.com");
+            bool isSuccessful = false;
+            var user = JsonConvert.DeserializeObject<FirebaseUser>(Preferences.Get("FirebaseUser", ""));
+
             using (await MaterialDialog.Instance.LoadingDialogAsync(message: "Pričekajte.."))
             {
-                IsBusy = true;
-                var firebaseStorage = new FirebaseStorage("automat-29cec.appspot.com");
-                foreach (var imageStream in addNewViewModel.imagesByteArrays)
+                if (isFirstPost)
                 {
-                    var nazivSlike = Guid.NewGuid().ToString();
+                    foreach (var imageStream in addNewViewModel.imagesByteArrays)
+                    {
+                        var nazivSlike = Guid.NewGuid().ToString();
 
-                    var task = await firebaseStorage
-                        .Child("data")
-                        .Child(nazivSlike + ".png")
-                        .PutAsync(imageStream);
+                        var task = await firebaseStorage
+                            .Child("data")
+                            .Child(nazivSlike + ".png")
+                            .PutAsync(imageStream);
 
-                    var urlSlike = await firebaseStorage
-                        .Child("data")
-                        .Child(nazivSlike + ".png")
-                        .GetDownloadUrlAsync();
+                        var urlSlike = await firebaseStorage
+                            .Child("data")
+                            .Child(nazivSlike + ".png")
+                            .GetDownloadUrlAsync();
 
-                    addNewViewModel.Advertisement.PicturesURL.Add(urlSlike);
+                        addNewViewModel.Advertisement.PicturesURL.Add(urlSlike);
+
+                    }
+
+                    addNewViewModel.Advertisement.Date = DateTime.Now;
+
+                    addNewViewModel.Advertisement.Id = Guid.NewGuid().ToString();
+                    addNewViewModel.Advertisement.UserId = user.Username;
+                    isSuccessful = await DataStoreAdvertisment.AddItemAsync(addNewViewModel.Advertisement);
+                }
+                else
+                {
+                    if(addNewViewModel.imagesByteArrays.Count() > 0)
+                    {
+                        addNewViewModel.Advertisement.PicturesURL.Clear();
+                        foreach (var imageStream in addNewViewModel.imagesByteArrays)
+                        {
+                            var nazivSlike = Guid.NewGuid().ToString();
+
+                            var task = await firebaseStorage
+                                .Child("data")
+                                .Child(nazivSlike + ".png")
+                                .PutAsync(imageStream);
+
+                            var urlSlike = await firebaseStorage
+                                .Child("data")
+                                .Child(nazivSlike + ".png")
+                                .GetDownloadUrlAsync();
+
+                            addNewViewModel.Advertisement.PicturesURL.Add(urlSlike);
+                        }
+
+                    }
+                    isSuccessful = await DataStoreAdvertisment.UpdateItemAsync(addNewViewModel.Advertisement);
 
                 }
-
-                addNewViewModel.Advertisement.Date = DateTime.Now;
-
-                var user = JsonConvert.DeserializeObject<FirebaseUser>(Preferences.Get("FirebaseUser", ""));
-                addNewViewModel.Advertisement.UserId = user.Username;
-                bool isSuccessful = await DataStoreAdvertisment.AddItemAsync(addNewViewModel.Advertisement);
-
-                if (isSuccessful)
-                    await MaterialDialog.Instance.SnackbarAsync(message: "Oglas uspješno objavljen");
-                else
-                    await MaterialDialog.Instance.SnackbarAsync(message: "Došlo je do pogreške. Provjerite internet vezu.");
-                IsBusy = false;
             }
+
+
+            if (isSuccessful)
+                await MaterialDialog.Instance.SnackbarAsync(message: "Oglas uspješno objavljen");
+            else
+                await MaterialDialog.Instance.SnackbarAsync(message: "Došlo je do pogreške. Provjerite internet vezu.");
+            IsBusy = false;
         }
     }
 }

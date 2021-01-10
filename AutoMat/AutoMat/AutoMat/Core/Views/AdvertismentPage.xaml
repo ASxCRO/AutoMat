@@ -2,7 +2,9 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="AutoMat.Core.Views.AdvertismentPage"
-              xmlns:controls="clr-namespace:Xamd.ImageCarousel.Forms.Plugin.Abstractions;assembly=Xamd.ImageCarousel.Forms.Plugin.Abstractions">
+              xmlns:controls="clr-namespace:Xamd.ImageCarousel.Forms.Plugin.Abstractions;assembly=Xamd.ImageCarousel.Forms.Plugin.Abstractions"
+             Title="{Binding Advertisment.Title}"
+             xmlns:material="clr-namespace:XF.Material.Forms.UI;assembly=XF.Material">
     <ScrollView>
 
         <StackLayout>
@@ -62,7 +64,7 @@
                 <Label Grid.Column="1" Grid.Row="3" Text="{Binding Advertisment.MotorType}" HorizontalOptions="Fill"  Padding="10" BackgroundColor="white" HorizontalTextAlignment="Center" Margin="5"></Label>
                 <Label Grid.Column="1" Grid.Row="4" Text="{Binding Advertisment.ProductionYear}" HorizontalOptions="Fill"  Padding="10" BackgroundColor="white" HorizontalTextAlignment="Center" Margin="5"></Label>
                 <Label Grid.Column="1" Grid.Row="5" Text="{Binding Advertisment.Body}" HorizontalOptions="Fill"  Padding="10" BackgroundColor="white" HorizontalTextAlignment="Center" Margin="5"></Label>
-                <Label Grid.Column="1" Grid.Row="6" Text="{Binding Advertisment.Price,StringFormat='{0} €'}}" HorizontalOptions="Fill"  Padding="10" BackgroundColor="white" HorizontalTextAlignment="Center" Margin="5"></Label>
+                <Label Grid.Column="1" Grid.Row="6" Text="{Binding Advertisment.Price,StringFormat='{0} €'}" HorizontalOptions="Fill"  Padding="10" BackgroundColor="white" HorizontalTextAlignment="Center" Margin="5"></Label>
                 <Label Grid.Column="1" Grid.Row="7" Text="{Binding Advertisment.Power}" HorizontalOptions="Fill"  Padding="10" BackgroundColor="white" HorizontalTextAlignment="Center" Margin="5"></Label>
                 <Label Grid.Column="1" Grid.Row="8" Text="{Binding Advertisment.County}" HorizontalOptions="Fill"  Padding="10" BackgroundColor="white" HorizontalTextAlignment="Center" Margin="5"></Label>
                 <Frame OutlineColor="Black" Grid.Column="1" Grid.Row="9"  Padding="10" HorizontalOptions="Fill" BackgroundColor="white"  Margin="5">
@@ -274,7 +276,73 @@
 
 
             <Label Text="Dodatne informacije"  HorizontalOptions="Fill" BackgroundColor="gray" HorizontalTextAlignment="Center"  Padding="10" FontSize="30" TextColor="White"></Label>
-            <Label Text="Prodavač"  HorizontalOptions="Fill" BackgroundColor="gray" HorizontalTextAlignment="Center"  Padding="10" FontSize="30" TextColor="White"></Label>
+            <Grid Padding="25,10,25,0" RowSpacing="0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+
+
+
+                <!--Definicije redova-->
+                <Label Grid.Column="0" Grid.Row="0" Text="Ekonorma"  HorizontalOptions="Fill" BackgroundColor="LightGray" HorizontalTextAlignment="Center" Margin="1" Padding="10"></Label>
+                <Label Grid.Column="0" Grid.Row="1" Text="Godina modela" HorizontalOptions="Fill" BackgroundColor="LightGray" HorizontalTextAlignment="Center" Margin="1" Padding="10"></Label>
+                <Label Grid.Column="0" Grid.Row="2"  Text="Godina prve reg." HorizontalOptions="Fill" BackgroundColor="LightGray" HorizontalTextAlignment="Center" Margin="1" Padding="10"></Label>
+                <Label Grid.Column="0" Grid.Row="3" Text="Tip" HorizontalOptions="Fill" BackgroundColor="LightGray" HorizontalTextAlignment="Center" Margin="1" Padding="10"></Label>
+                <Label Grid.Column="0" Grid.Row="4"  Text="Servisna knjiga" HorizontalOptions="Fill" BackgroundColor="LightGray" HorizontalTextAlignment="Center" Margin="1" Padding="10"></Label>
+                <Label Grid.Column="0" Grid.Row="5" Text="Brzina" HorizontalOptions="Fill" BackgroundColor="LightGray" HorizontalTextAlignment="Center" Margin="1" Padding="10"></Label>
+                <Label Grid.Column="0" Grid.Row="6"  Text="Tip mjenjača" HorizontalOptions="Fill" BackgroundColor="LightGray" HorizontalTextAlignment="Center" Margin="1" Padding="10"></Label>
+                <Label Grid.Column="0" Grid.Row="7" Text="Broj šasije" HorizontalOptions="Fill" BackgroundColor="LightGray" HorizontalTextAlignment="Center" Margin="1" Padding="10"></Label>
+                <Label Grid.Column="0" Grid.Row="8"  Text="Dostupnost" HorizontalOptions="Fill" BackgroundColor="LightGray" HorizontalTextAlignment="Center" Margin="1" Padding="10"></Label>
+                <Label Grid.Column="0" Grid.Row="9" Text="CO2" HorizontalOptions="Fill" BackgroundColor="LightGray" HorizontalTextAlignment="Center" Margin="1" Padding="10"></Label>
+
+
+                <!--Podatci-->
+                <Label Grid.Column="1" Grid.Row="0" Text="{Binding Advertisment.EcoNorm}" HorizontalOptions="Fill"  Padding="10" BackgroundColor="white" HorizontalTextAlignment="Center" Margin="5" ></Label>
+                <Label Grid.Column="1" Grid.Row="1" Text="{Binding Advertisment.ModelYear}" HorizontalOptions="Fill"  Padding="10" BackgroundColor="white" HorizontalTextAlignment="Center" Margin="5"></Label>
+                <Label Grid.Column="1" Grid.Row="2" Text="{Binding Advertisment.OnRoadSince}" HorizontalOptions="Fill"  Padding="10" BackgroundColor="white" HorizontalTextAlignment="Center" Margin="5"></Label>
+                <Label Grid.Column="1" Grid.Row="3" Text="{Binding Advertisment.Type}" HorizontalOptions="Fill"  Padding="10" BackgroundColor="white" HorizontalTextAlignment="Center" Margin="5"></Label>
+                <Label Grid.Column="1" Grid.Row="4" Text="{Binding Advertisment.ServiceBook}" HorizontalOptions="Fill"  Padding="10" BackgroundColor="white" HorizontalTextAlignment="Center" Margin="5"></Label>
+                <Label Grid.Column="1" Grid.Row="5" Text="{Binding Advertisment.Shifts}" HorizontalOptions="Fill"  Padding="10" BackgroundColor="white" HorizontalTextAlignment="Center" Margin="5"></Label>
+                <Label Grid.Column="1" Grid.Row="6" Text="{Binding Advertisment.ShiftType}" HorizontalOptions="Fill"  Padding="10" BackgroundColor="white" HorizontalTextAlignment="Center" Margin="5"></Label>
+                <Label Grid.Column="1" Grid.Row="7" Text="{Binding Advertisment.ChassisNumber}" HorizontalOptions="Fill"  Padding="10" BackgroundColor="white" HorizontalTextAlignment="Center" Margin="5"></Label>
+                <Label Grid.Column="1" Grid.Row="8" Text="{Binding Advertisment.Available}" HorizontalOptions="Fill"  Padding="10" BackgroundColor="white" HorizontalTextAlignment="Center" Margin="5"></Label>
+                <Frame OutlineColor="Black" Grid.Column="1" Grid.Row="9"  Padding="10" HorizontalOptions="Fill" BackgroundColor="white"  Margin="5">
+                    <Label  HorizontalTextAlignment="Center" Text="{Binding Advertisment.CO2}" ></Label>
+                </Frame>
+
+            </Grid>
+            <Label Text="Automat"  HorizontalOptions="Fill" BackgroundColor="gray" HorizontalTextAlignment="Center"  Padding="10" FontSize="30" TextColor="White"></Label>
+            <material:MaterialCard 
+            CornerRadius="10" 
+            Elevation="5" 
+            HeightRequest="80" 
+            HorizontalOptions="FillAndExpand" 
+            BackgroundColor="White"
+            IsClickable="True"
+            Padding="10"
+            Margin="0,20,0,0"
+            BorderColor="#071b5e">
+                <StackLayout Orientation="Vertical">
+                    <StackLayout Orientation="Horizontal">
+                        <material:MaterialChip BackgroundColor="IndianRed"  Text="{Binding FirebaseUser.Username}" TextColor="White"  FontSize="15" />
+                        <material:MaterialLabel Text="{Binding FullName}" HorizontalOptions="EndAndExpand" FontSize="Title" TextColor="Black" x:Name="Label_1"/>
+                    </StackLayout>
+                    <material:MaterialButton BackgroundColor="DarkGray" Clicked="ShowAutomat_Clicked"  Text="Prikaži profil automata" TextColor="White" VerticalOptions="FillAndExpand" />
+                </StackLayout>
+            </material:MaterialCard>
         </StackLayout>
     </ScrollView>
 </ContentPage>

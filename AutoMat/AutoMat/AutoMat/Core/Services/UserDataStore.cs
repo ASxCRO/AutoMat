@@ -57,8 +57,9 @@ namespace AutoMat.Core.Services
 
         public async Task<FirebaseUser> GetItemAsync(string id)
         {
-            var allPersons = await GetItemsAsync(false);
-            return allPersons.Where(a => a.Username == id).FirstOrDefault();
+            return (await firebase
+              .Child("users")
+              .OnceAsync<FirebaseUser>()).Where(a => a.Object.Username == id).FirstOrDefault().Object;
         }
 
         public async Task<IEnumerable<FirebaseUser>> GetItemsAsync(bool forceReload)

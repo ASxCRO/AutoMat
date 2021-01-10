@@ -25,7 +25,6 @@ namespace AutoMat.Droid
             global::Xamarin.Auth.Presenters.XamarinAndroid.AuthenticationConfiguration.Init(this, savedInstanceState);
             CustomTabsConfiguration.CustomTabsClosingMessage = null;
 
-
             LoadApplication(new App());
 
         }

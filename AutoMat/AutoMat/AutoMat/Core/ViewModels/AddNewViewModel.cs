@@ -17,6 +17,17 @@ namespace AutoMat.Core.ViewModels
             Init();
         }
 
+        public ObservableCollection<ImageSource> _imageSourcesUri;
+        public ObservableCollection<ImageSource> ImageSourcesUri
+        {
+            get { return _imageSourcesUri; }
+            set
+            {
+                _imageSourcesUri = value;
+                OnPropertyChanged();
+            }
+        }
+
         public void Init()
         {
             //string lists
@@ -32,6 +43,9 @@ namespace AutoMat.Core.ViewModels
 
             _imageSources = new ObservableCollection<FileImageSource>();
             ImageSources = new ObservableCollection<FileImageSource>();
+            _imageSourcesUri = new ObservableCollection<ImageSource>();
+            ImageSourcesUri = new ObservableCollection<ImageSource>();
+
             additionalEquipment = new AdditionalEquipment();
             selectedCarBrand = new CarBrand();
             Advertisement = new Advertisement();

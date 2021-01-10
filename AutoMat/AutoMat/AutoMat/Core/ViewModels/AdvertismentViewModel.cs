@@ -17,6 +17,15 @@ namespace AutoMat.Core.ViewModels
         }
 
         public Advertisement Advertisment{ get; set; }
+        public FirebaseUser FirebaseUser{ get; set; }
+
+        public string FullName 
+        { 
+            get
+            {
+                return FirebaseUser.FirstName + " " + FirebaseUser.LastName;
+            }
+        }
 
         public int _currentImageIndex;
         public int CurrentImageIndex

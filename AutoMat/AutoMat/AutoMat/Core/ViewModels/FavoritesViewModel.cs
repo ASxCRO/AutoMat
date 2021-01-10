@@ -21,7 +21,7 @@ namespace AutoMat.Core.ViewModels
 
         public FavoritesViewModel()
         {
-            Title = "Browse";
+            Title = "Spremljeni/moji oglasi";
             Items = new ObservableCollection<Advertisement>();
         }
 

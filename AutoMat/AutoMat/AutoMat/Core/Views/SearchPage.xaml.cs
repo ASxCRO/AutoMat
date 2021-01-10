@@ -73,27 +73,30 @@ namespace AutoMat.Core.Views
 
         private async void SaveFavorite_Clicked(object sender, EventArgs e)
         {
-            string SelectedAdId = ((Button)sender).BindingContext as string;
-            var currentUserCached = (FirebaseUser)JsonConvert.DeserializeObject(Preferences.Get("FirebaseUser", ""), typeof(FirebaseUser));
-            var allUsers = await UserDataStore.GetItemsAsync(false);
-            var currentUserFirebase = allUsers.Where(u => u.Email == currentUserCached.Email).FirstOrDefault();
-            if(currentUserFirebase != null)
+            using (await MaterialDialog.Instance.LoadingDialogAsync(message: "Učitavanje.."))
             {
-                UserFavoriteAd favoriteAd = new UserFavoriteAd
+                string SelectedAdId = ((Button)sender).BindingContext as string;
+                var currentUserCached = (FirebaseUser)JsonConvert.DeserializeObject(Preferences.Get("FirebaseUser", ""), typeof(FirebaseUser));
+                var allUsers = await UserDataStore.GetItemsAsync(false);
+                var currentUserFirebase = allUsers.Where(u => u.Email == currentUserCached.Email).FirstOrDefault();
+                if (currentUserFirebase != null)
                 {
-                    Username = currentUserFirebase.Username,
-                    AdId = SelectedAdId
-                };
-                var allUserFavorites = await UserFavoriteAdsDataStore.GetItemsAsync(false);
-                var alreadyExists = allUserFavorites.Where(f => f.AdId == favoriteAd.AdId && f.Username == favoriteAd.Username).ToList();
-                if (alreadyExists.Count() > 0)
-                {
-                    await XF.Material.Forms.UI.Dialogs.MaterialDialog.Instance.AlertAsync(message: "Oglas je već bio spremljen!");
-                }
-                else
-                {
-                    await UserFavoriteAdsDataStore.AddItemAsync(favoriteAd);
-                    await XF.Material.Forms.UI.Dialogs.MaterialDialog.Instance.AlertAsync(message: "Uspješno ste spremili oglas!");
+                    UserFavoriteAd favoriteAd = new UserFavoriteAd
+                    {
+                        Username = currentUserFirebase.Username,
+                        AdId = SelectedAdId
+                    };
+                    var allUserFavorites = await UserFavoriteAdsDataStore.GetItemsAsync(false);
+                    var alreadyExists = allUserFavorites.Where(f => f.AdId == favoriteAd.AdId && f.Username == favoriteAd.Username).ToList();
+                    if (alreadyExists.Count() > 0)
+                    {
+                        await XF.Material.Forms.UI.Dialogs.MaterialDialog.Instance.AlertAsync(message: "Oglas je već bio spremljen!");
+                    }
+                    else
+                    {
+                        await UserFavoriteAdsDataStore.AddItemAsync(favoriteAd);
+                        await XF.Material.Forms.UI.Dialogs.MaterialDialog.Instance.AlertAsync(message: "Uspješno ste spremili oglas!");
+                    }
                 }
             }
         }

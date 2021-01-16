@@ -199,87 +199,101 @@ namespace AutoMat.Core.Views
 
         async void RegistrationButton_Clicked(System.Object sender, System.EventArgs e)
         {
-            try
+            if (
+                 String.IsNullOrEmpty(newuser_username.Text) ||
+                 String.IsNullOrEmpty(newuser_email.Text) ||
+                 String.IsNullOrEmpty(newuser_firstname.Text) ||
+                 String.IsNullOrEmpty(newuser_lastname.Text) ||
+                 String.IsNullOrEmpty(newuser_password.Text) ||
+                 String.IsNullOrEmpty(newuser_phonenumber.Text)
+                )
             {
-                bool isSuccessful = false;
-                FirebaseUser firebaseUser = new FirebaseUser();
-                User user = new User();
+                await App.Current.MainPage.DisplayAlert("Info", "Za registraciju potrebno je ispuniti sva polja", "OK");
+            }
+            else
+            {
 
-                using (await MaterialDialog.Instance.LoadingDialogAsync(message: "Dohvaćam podatke.."))
+                try
                 {
-                    var users = await UserDataStore.GetItemsAsync(false);
-                    var username_alreadyexists = users.Where(u => u.Username == newuser_username.Text).FirstOrDefault();
-                    var email_alreadyexists = users.Where(u => u.Email == newuser_email.Text).FirstOrDefault();
+                    bool isSuccessful = false;
+                    FirebaseUser firebaseUser = new FirebaseUser();
+                    User user = new User();
 
-                    if (username_alreadyexists != null)
+                    using (await MaterialDialog.Instance.LoadingDialogAsync(message: "Dohvaćam podatke.."))
                     {
-                        throw new FirebaseAuthException(null, null, null, null, reason: AuthErrorReason.UserNotFound);
-                    }
+                        var users = await UserDataStore.GetItemsAsync(false);
+                        var username_alreadyexists = users.Where(u => u.Username == newuser_username.Text).FirstOrDefault();
+                        var email_alreadyexists = users.Where(u => u.Email == newuser_email.Text).FirstOrDefault();
 
-                    if (email_alreadyexists != null)
-                    {
-                        throw new FirebaseAuthException(null, null, null, null, reason: AuthErrorReason.EmailExists);
-                    }
-
-
-                    var authProvider = new FirebaseAuthProvider(new FirebaseConfig("AIzaSyAg4riVkvSMtWwKZ6_UssK28-2K6xOndrg"));
-                    var auth = await authProvider.CreateUserWithEmailAndPasswordAsync(newuser_email.Text, newuser_password.Text, newuser_username.Text, true);
-                    user = await authProvider.GetUserAsync(auth.FirebaseToken);
-                }
-
-                if (!user.IsEmailVerified)
-                {
-                    var allFbUsers = await UserDataStore.GetItemsAsync(false);
-                    var fbUser = allFbUsers.Where(f => f.Email == user.Email).FirstOrDefault();
-                    firebaseUser = fbUser;
-                    if (firebaseUser != null)
-                    {
-                        isSuccessful = true;
-                    }
-                    else
-                    {
-                        firebaseUser = new FirebaseUser
+                        if (username_alreadyexists != null)
                         {
-                            Email = newuser_email.Text,
-                            Username = newuser_username.Text,
-                            Year = DateTime.Now.Year.ToString(),
-                            FirstName = newuser_firstname.Text,
-                            LastName = newuser_lastname.Text,
-                            PicturePath = "https://png.pngtree.com/png-vector/20190710/ourmid/pngtree-user-vector-avatar-png-image_1541962.jpg",
-                            PhoneNumber = newuser_phonenumber.Text
-                        };
+                            throw new FirebaseAuthException(null, null, null, null, reason: AuthErrorReason.UserNotFound);
+                        }
 
-                        isSuccessful = await UserDataStore.AddItemAsync(firebaseUser);
+                        if (email_alreadyexists != null)
+                        {
+                            throw new FirebaseAuthException(null, null, null, null, reason: AuthErrorReason.EmailExists);
+                        }
+
+
+                        var authProvider = new FirebaseAuthProvider(new FirebaseConfig("AIzaSyAg4riVkvSMtWwKZ6_UssK28-2K6xOndrg"));
+                        var auth = await authProvider.CreateUserWithEmailAndPasswordAsync(newuser_email.Text, newuser_password.Text, newuser_username.Text, true);
+                        user = await authProvider.GetUserAsync(auth.FirebaseToken);
                     }
-                    if (isSuccessful)
+
+                    if (!user.IsEmailVerified)
                     {
-                        await App.Current.MainPage.DisplayAlert("Uspješna registracija", "Potvrdite mail adresu kako bi nastavili koristiti aplikaciju.", "Ok");
-                        App.Current.MainPage = new NavigationPage(new UserPage());
-                    }
-                    else
-                    {
-                        await App.Current.MainPage.DisplayAlert("Greška", "Pokušajte ponovno ili se obratite korisničkoj podršci", "Ok");
+                        var allFbUsers = await UserDataStore.GetItemsAsync(false);
+                        var fbUser = allFbUsers.Where(f => f.Email == user.Email).FirstOrDefault();
+                        firebaseUser = fbUser;
+                        if (firebaseUser != null)
+                        {
+                            isSuccessful = true;
+                        }
+                        else
+                        {
+                            firebaseUser = new FirebaseUser
+                            {
+                                Email = newuser_email.Text,
+                                Username = newuser_username.Text,
+                                Year = DateTime.Now.Year.ToString(),
+                                FirstName = newuser_firstname.Text,
+                                LastName = newuser_lastname.Text,
+                                PicturePath = "https://png.pngtree.com/png-vector/20190710/ourmid/pngtree-user-vector-avatar-png-image_1541962.jpg",
+                                PhoneNumber = newuser_phonenumber.Text
+                            };
+
+                            isSuccessful = await UserDataStore.AddItemAsync(firebaseUser);
+                        }
+                        if (isSuccessful)
+                        {
+                            await App.Current.MainPage.DisplayAlert("Uspješna registracija", "Potvrdite mail adresu kako bi nastavili koristiti aplikaciju.", "Ok");
+                            App.Current.MainPage = new NavigationPage(new UserPage());
+                        }
+                        else
+                        {
+                            await App.Current.MainPage.DisplayAlert("Greška", "Pokušajte ponovno ili se obratite korisničkoj podršci", "Ok");
+                        }
                     }
                 }
+                catch (FirebaseAuthException ex)
+                {
+                    if (ex.Reason.Equals(Firebase.Auth.AuthErrorReason.EmailExists))
+                        await App.Current.MainPage.DisplayAlert("Upozorenje", "Račun sa ovom mail adresom već postoji. Pokušajte ponovno ili se prijavite sa google-om.", "OK");
+                    else if (ex.Reason.Equals(Firebase.Auth.AuthErrorReason.InvalidEmailAddress))
+                        await App.Current.MainPage.DisplayAlert("Upozorenje", "Email adresa nije valjana. Pokušajte ponovno ili upišite neku drugu email adresu.", "OK");
+                    else if (ex.Reason.Equals(Firebase.Auth.AuthErrorReason.WeakPassword))
+                        await App.Current.MainPage.DisplayAlert("Upozorenje", "Lozinka mora biti dugačka barem 7 znakova, mora se sastojati od kojih barem jedan mora biti znak i barem jedan broj.", "OK");
+                    else if (ex.Reason.Equals(Firebase.Auth.AuthErrorReason.UserNotFound))
+                        await App.Current.MainPage.DisplayAlert("Upozorenje", "Već postoji osoba s tim korisničkim imenom!", "OK");
+                    else if (ex.Reason.Equals(Firebase.Auth.AuthErrorReason.InvalidEmailAddress))
+                        await App.Current.MainPage.DisplayAlert("Upozorenje", "Neispravna mail adresa!", "OK");
+                    else if (ex.Reason.Equals(Firebase.Auth.AuthErrorReason.WrongPassword))
+                        await App.Current.MainPage.DisplayAlert("Upozorenje", "Neispravna lozinka!", "OK");
+                    else
+                        await App.Current.MainPage.DisplayAlert("Alert", ex.Message, "OK");
+                }
             }
-            catch (FirebaseAuthException ex)
-            {
-                if (ex.Reason.Equals(Firebase.Auth.AuthErrorReason.EmailExists))
-                    await App.Current.MainPage.DisplayAlert("Upozorenje", "Račun sa ovom mail adresom već postoji. Pokušajte ponovno ili se prijavite sa google-om.", "OK");
-                else if (ex.Reason.Equals(Firebase.Auth.AuthErrorReason.InvalidEmailAddress))
-                    await App.Current.MainPage.DisplayAlert("Upozorenje", "Email adresa nije valjana. Pokušajte ponovno ili upišite neku drugu email adresu.", "OK");
-                else if (ex.Reason.Equals(Firebase.Auth.AuthErrorReason.WeakPassword))
-                    await App.Current.MainPage.DisplayAlert("Upozorenje", "Lozinka mora biti dugačka barem 7 znakova, mora se sastojati od kojih barem jedan mora biti znak i barem jedan broj.", "OK");
-                else if (ex.Reason.Equals(Firebase.Auth.AuthErrorReason.UserNotFound))
-                    await App.Current.MainPage.DisplayAlert("Upozorenje", "Već postoji osoba s tim korisničkim imenom!", "OK");
-                else if (ex.Reason.Equals(Firebase.Auth.AuthErrorReason.InvalidEmailAddress))
-                    await App.Current.MainPage.DisplayAlert("Upozorenje", "Neispravna mail adresa!", "OK");
-                else if (ex.Reason.Equals(Firebase.Auth.AuthErrorReason.WrongPassword))
-                    await App.Current.MainPage.DisplayAlert("Upozorenje", "Neispravna lozinka!", "OK");
-                else
-                    await App.Current.MainPage.DisplayAlert("Alert", ex.Message, "OK");
-            }
-
         }
 
         private async void gotoLoginTab_Clicked(object sender, EventArgs e)

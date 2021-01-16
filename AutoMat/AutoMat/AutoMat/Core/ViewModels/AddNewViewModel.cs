@@ -48,6 +48,7 @@ namespace AutoMat.Core.ViewModels
 
             additionalEquipment = new AdditionalEquipment();
             selectedCarBrand = new CarBrand();
+            selectedCounty = new County();
             Advertisement = new Advertisement();
             additionalEquipment = new AdditionalEquipment();
         }
@@ -80,6 +81,8 @@ namespace AutoMat.Core.ViewModels
 
         public List<Stream> imagesByteArrays { get; set; } 
         public CarBrand selectedCarBrand { get; set; }
+        public County selectedCounty { get; set; }
+
         public IEnumerable<CarModel> filteredModels { get; set; }
 
         public Advertisement Advertisement { get; set; }
@@ -122,12 +125,6 @@ namespace AutoMat.Core.ViewModels
             foreach (var item in counties)
             {
                 countiesStrings.Add(item.Name);
-            }
-
-
-            foreach (var item in towns)
-            {
-                townsStrings.Add(item.Name);
             }
 
 

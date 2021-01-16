@@ -89,7 +89,7 @@ namespace AutoMat.Core.Constants
             ControlUnselectedColor = Color.White.MultiplyAlpha(0.6),
             TintColor = Color.White,
             TitleTextColor = Color.White,
-            TextColor = Color.FromHex("#DEFFFFFF")
+            TextColor = Color.FromHex("#DEFFFFFF"),
         };
     }
 }

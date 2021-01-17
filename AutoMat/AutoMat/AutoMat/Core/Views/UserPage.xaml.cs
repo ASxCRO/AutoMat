@@ -32,12 +32,19 @@ namespace AutoMat.Core.Views
         public UserPage()
         {
             InitializeComponent();
-            store = AccountStore.Create();
-            UserDataStore = DependencyService.Get<IDataStore<FirebaseUser>>() ?? new UserDataStore();
         }
 
-        protected override void OnAppearing()
+        protected override async void OnAppearing()
         {
+            var current = Connectivity.NetworkAccess;
+            while (current != NetworkAccess.Internet)
+            {
+                await DisplayAlert("Upozorenje", "Nema internet veze.", "OK");
+                current = Connectivity.NetworkAccess;
+            }
+            store = AccountStore.Create();
+            UserDataStore = DependencyService.Get<IDataStore<FirebaseUser>>() ?? new UserDataStore();
+
             this.IsVisible = false;
             base.OnAppearing();
             registerline.Opacity = 0;

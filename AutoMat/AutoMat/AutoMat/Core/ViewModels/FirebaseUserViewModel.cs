@@ -22,5 +22,8 @@ namespace AutoMat.Core.ViewModels
                     return $"Ime ne postoji";
             }
         }
+
+        public int NumberOfUserAds { get; set; }
+
     }
 }

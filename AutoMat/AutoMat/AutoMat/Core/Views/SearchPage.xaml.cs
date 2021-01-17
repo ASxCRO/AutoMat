@@ -260,5 +260,24 @@ namespace AutoMat.Core.Views
                 }
             }
         }
+
+        private void shareButton_Clicked(object sender, EventArgs e)
+        {
+            var ad = ((Button)sender).BindingContext as Advertisement;
+            var sharer = DependencyService.Get<IShareable>();
+            sharer.OpenShareIntent($"Pozdrav!" +
+                $"\nPogledaj automobil koji sam našao na Automatu!" +
+                $"\n\n Specifikacije: " +
+                $"\n\n Marka - {ad.Brand} \n " +
+                $"Model - {ad.Model} \n" +
+                $"Kilometri - {ad.KM} km\n" +
+                $"Snaga motora - {ad.Power} kW \n" +
+                $"Cijena - {ad.Price} € \n" +
+                $"Dostupnost - {ad.Availability} \n" +
+                $"\n\n Oglašivač: " +
+                $"\n Korisničko ime:  {ad.UserId}" +
+                $"\n Link:  https://automat.hr/oglas/" + $"{ad.Id}"
+                );
+        }
     }
 }

@@ -22,16 +22,29 @@ namespace AutoMat.Core.Views
     public partial class MyDashboardPage : ContentPage
     {
         public IDataStore<FirebaseUser> UserDataStore { get; set; }
+        public IDataStore<Advertisement> AdverismentDataStore { get; set; }
         public FirebaseUser FirebaseUser { get; set; }
         public FirebaseUserViewModel FirebaseUserViewModel { get; set; }
         public MyDashboardPage()
         {
             InitializeComponent();
             UserDataStore = DependencyService.Get<IDataStore<FirebaseUser>>() ?? new UserDataStore();
+            AdverismentDataStore = DependencyService.Get<IDataStore<Advertisement>>() ?? new AdvertismentDataStorage();
             FirebaseUser = (FirebaseUser)JsonConvert.DeserializeObject(Preferences.Get("FirebaseUser", ""), typeof(FirebaseUser));
             InitViewModel();
-            FirebaseUserViewModel = new FirebaseUserViewModel { FirebaseUser = this.FirebaseUser };
-            BindingContext = FirebaseUserViewModel;
+
+            Device.BeginInvokeOnMainThread(async () =>
+            {
+                var numberOfAds = await GetCurrentUserAdNumber();
+                FirebaseUserViewModel = new FirebaseUserViewModel { FirebaseUser = this.FirebaseUser, NumberOfUserAds = numberOfAds };
+                BindingContext = FirebaseUserViewModel;
+            });
+        }
+
+        public async Task<int> GetCurrentUserAdNumber()
+        {
+                var allAds = await AdverismentDataStore.GetItemsKeyValueAsync();
+                return allAds.Where(u => u.Value.UserId == FirebaseUser.Username).ToList().Count();
         }
 
         public MyDashboardPage(FirebaseUser user)
@@ -39,14 +52,19 @@ namespace AutoMat.Core.Views
             InitializeComponent();
             
             FirebaseUser = user;
+            AdverismentDataStore = DependencyService.Get<IDataStore<Advertisement>>() ?? new AdvertismentDataStorage();
             UserDataStore = DependencyService.Get<IDataStore<FirebaseUser>>() ?? new UserDataStore();
             InitViewModel();
-            FirebaseUserViewModel = new FirebaseUserViewModel { FirebaseUser = this.FirebaseUser };
-            BindingContext = FirebaseUserViewModel;
-            FabButton.IsVisible = false;
-            BottomButton.Text = "Pogledaj sve oglase";
-            BottomButton.Clicked -= Logout_Clicked;
-            BottomButton.Clicked += ViewAds_Clicked;
+            Device.BeginInvokeOnMainThread(async () =>
+            {
+                var numberOfAds = await GetCurrentUserAdNumber();
+                FirebaseUserViewModel = new FirebaseUserViewModel { FirebaseUser = this.FirebaseUser, NumberOfUserAds = numberOfAds };
+                BindingContext = FirebaseUserViewModel;
+                FabButton.IsVisible = false;
+                BottomButton.Text = "Pogledaj sve oglase";
+                BottomButton.Clicked -= Logout_Clicked;
+                BottomButton.Clicked += ViewAds_Clicked;
+            });
         }
 
         protected override async void OnAppearing()

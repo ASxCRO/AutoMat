@@ -19,7 +19,7 @@
         <Image Grid.Row="0" Source="{Binding FirebaseUser.PicturePath}" Aspect="AspectFill" x:Name="profilePicture"/>
 
 
-        <Grid Grid.Row="0" HorizontalOptions="End" RowSpacing="0">
+        <Grid Grid.Row="0" HorizontalOptions="End" RowSpacing="0" >
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
@@ -40,9 +40,9 @@
                 <!-- Blocks: 3 and 4 -->
                 <Grid Padding="25,10,25,0" RowSpacing="0">
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="*"/>
-                        <ColumnDefinition Width="*"/>
-                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="Auto"/>
                     </Grid.ColumnDefinitions>
                     <Grid.RowDefinitions>
                         <RowDefinition Height="Auto"/>
@@ -68,8 +68,7 @@
                     </Label>
                     <!--4. Contact information: Board inforation-->
                     <Label Grid.Row="3" Grid.Column="0" Text="Oglasa" Style="{StaticResource stlBoardTitle}" />
-                    <Label Grid.Row="4" Grid.Column="0" Text="3" Style="{StaticResource stlBoardDesc}"/>
-
+                    <Label Grid.Row="4" Grid.Column="0" Text="{Binding NumberOfUserAds}" Style="{StaticResource stlBoardDesc}"/>
                     <Label Grid.Row="3" Grid.Column="1" Text="Aktivan" Style="{StaticResource stlBoardTitle}"/>
                     <Label Grid.Row="4" Grid.Column="1" Text="Da" Style="{StaticResource stlBoardDesc}"/>
 

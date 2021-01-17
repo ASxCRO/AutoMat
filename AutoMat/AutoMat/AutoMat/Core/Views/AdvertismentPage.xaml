@@ -276,7 +276,7 @@
 
 
             <Label Text="Dodatne informacije"  HorizontalOptions="Fill" BackgroundColor="gray" HorizontalTextAlignment="Center"  Padding="10" FontSize="30" TextColor="White"></Label>
-            <Grid Padding="25,10,25,0" RowSpacing="0">
+            <Grid Padding="25,10,25,0" RowSpacing="0" >
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*"/>
                     <ColumnDefinition Width="*"/>

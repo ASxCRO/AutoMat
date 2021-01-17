@@ -3,6 +3,7 @@ using AutoMat.Core.Services;
 using AutoMat.Core.ViewModels;
 using AutoMat.Core.Views;
 using BottomBar.XamarinForms;
+using Java.Lang;
 using System;
 using Xamarin.Essentials;
 using Xamarin.Forms;
@@ -14,6 +15,11 @@ namespace AutoMat
         public MainPage()
         {
             InitializeComponent();
+        }
+
+        protected override async void OnAppearing()
+        {
+            base.OnAppearing();
         }
     }
 }

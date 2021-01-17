@@ -148,8 +148,11 @@ namespace AutoMat.Core.Views
 
                 if (pickResult != null)
                 {
+                    imgSlider.Images = new System.Collections.ObjectModel.ObservableCollection<FileImageSource>();
                     addNewViewModel.ImageSources.Clear();
-                    if(!isFirstPost)
+                    addNewViewModel.imagesByteArrays.Clear();
+                    imgSlider.HeightRequest = 0;
+                    if (!isFirstPost)
                     {
                         addNewViewModel.ImageSourcesUri.Clear();
                         CarouselItems.IsVisible = false;

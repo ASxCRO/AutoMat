@@ -177,7 +177,7 @@ namespace AutoMat.Core.Views
                 switch (typeOfAdsPage)
                 {
                     case "favorites":
-                        await XF.Material.Forms.UI.Dialogs.MaterialDialog.Instance.AlertAsync(message: "Ne možete urediti oglas koji nije vaš");
+                        await XF.Material.Forms.UI.Dialogs.MaterialDialog.Instance.AlertAsync(message: "Kako biste uredili oglas idite na \n\"Profil -> Pogledaj oglase\"");
                         break;
                     case "profile":
                         string SelectedAd = ((Button)sender).BindingContext as string;
@@ -192,7 +192,21 @@ namespace AutoMat.Core.Views
 
         private void ShareButton_Clicked(object sender, EventArgs e)
         {
-
+            var ad = ((Button)sender).BindingContext as Advertisement;
+            var sharer = DependencyService.Get<IShareable>();
+            sharer.OpenShareIntent($"Pozdrav!" +
+                $"\nPogledaj automobil koji sam našao na Automatu!" +
+                $"\n\n Specifikacije: " +
+                $"\n\n Marka - {ad.Brand} \n " +
+                $"Model - {ad.Model} \n" +
+                $"Kilometri - {ad.KM} km\n" +
+                $"Snaga motora - {ad.Power} kW \n" +
+                $"Cijena - {ad.Price} € \n" +
+                $"Dostupnost - {ad.Availability} \n" +
+                $"\n\n Oglašivač: " +
+                $"\n Korisničko ime:  {ad.UserId}" +
+                $"\n Link:  https://automat.hr/oglas/"+$"{ad.Id}"
+                );
         }
     }
 }

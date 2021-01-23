@@ -41,6 +41,8 @@ namespace AutoMat.Core.Views
             }
         }
 
+        
+
  
         private async void UpdateProfile_Clicked(object sender, System.EventArgs e)
         {
@@ -63,7 +65,7 @@ namespace AutoMat.Core.Views
 
             if(!hasErrors)
             {
-
+                                                                                                                                                                                                                
                 var oldUser = (FirebaseUser)JsonConvert.DeserializeObject(Preferences.Get("FirebaseUser", ""), typeof(FirebaseUser));
 
                 if (!oldUser.Equals(FirebaseUser))
@@ -80,7 +82,7 @@ namespace AutoMat.Core.Views
                         }
                         else
                         {
-                            await Navigation.PopAsync();
+                            await Navigation.PushAsync(new MyDashboardPage(),true);
                         }
                     }
                     else

@@ -740,7 +740,8 @@ choices: AdvertismentConstants.availabilityStrings, "Dalje", "Odustani", Adverti
                  String.IsNullOrEmpty(addNewViewModel.Advertisement.MotorType) ||
                  String.IsNullOrEmpty(addNewViewModel.Advertisement.Owner) ||
                  String.IsNullOrEmpty(addNewViewModel.Advertisement.Description) ||
-                 (addNewViewModel.ImageSources != null || addNewViewModel.ImageSourcesUri != null )
+                 (addNewViewModel.ImageSources == null && addNewViewModel.ImageSourcesUri == null ) ||
+                 (addNewViewModel.ImageSources.Count() <= 0 && addNewViewModel.ImageSourcesUri.Count() <= 0)
               )
             {
                 await MaterialDialog.Instance.SnackbarAsync(message: "Sve informacije osim dodatne opreme su neophodne!");

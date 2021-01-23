@@ -41,14 +41,15 @@ namespace AutoMat.Core.Views
         public FavoritesPage(string typeOfFavorites, FirebaseUser user)
         {
             InitializeComponent();
-            if (user != null)
+            var currentuser = (FirebaseUser)JsonConvert.DeserializeObject(Preferences.Get("FirebaseUser", ""), typeof(FirebaseUser));
+            if (user.Username != currentuser.Username)
             {
                 FirebaseUser = user;
                 Title = "Oglasi oglašivača";
             }
             else
             {
-                FirebaseUser = (FirebaseUser)JsonConvert.DeserializeObject(Preferences.Get("FirebaseUser", ""), typeof(FirebaseUser));
+                FirebaseUser = currentuser;
                 Title = "Moji oglasi";
             }
 
@@ -149,18 +150,26 @@ namespace AutoMat.Core.Views
                         break;
                     case "profile":
                         string SelectedAd = ((Button)sender).BindingContext as string;
-                        var hasConfirm = await XF.Material.Forms.UI.Dialogs.MaterialDialog.Instance.ConfirmAsync(message: "Jeste li sigurni?",
-                                                confirmingText: "Obriši", dismissiveText: "Odustani");
-                        if (hasConfirm != false && hasConfirm != null)
+                        if(Title == "Oglasi oglašivača")
                         {
-                            var hasDeleted = await AdverismentDataStore.DeleteItemAsync(SelectedAd);
-                            if (hasDeleted)
+                            await MaterialDialog.Instance.SnackbarAsync(message: "Nije moguće brisati tuđi oglas");
+                            ((Button)sender).IsEnabled = false;
+                        }
+                        else
+                        {
+                            var hasConfirm = await XF.Material.Forms.UI.Dialogs.MaterialDialog.Instance.ConfirmAsync(message: "Jeste li sigurni?",
+                                                    confirmingText: "Obriši", dismissiveText: "Odustani");
+                            if (hasConfirm != false && hasConfirm != null)
                             {
-                                await Task.WhenAny
-                                    (
-                                        GetCurrentUserAds(FirebaseUser),
-                                        Navigation.PopAsync()
-                                    );
+                                var hasDeleted = await AdverismentDataStore.DeleteItemAsync(SelectedAd);
+                                if (hasDeleted)
+                                {
+                                    await Task.WhenAny
+                                        (
+                                            GetCurrentUserAds(FirebaseUser),
+                                            Navigation.PopAsync(true)
+                                        );
+                                }
                             }
                         }
                         break;
@@ -180,9 +189,17 @@ namespace AutoMat.Core.Views
                         await XF.Material.Forms.UI.Dialogs.MaterialDialog.Instance.AlertAsync(message: "Kako biste uredili oglas idite na \n\"Profil -> Pogledaj oglase\"");
                         break;
                     case "profile":
-                        string SelectedAd = ((Button)sender).BindingContext as string;
-                        var ad = (await AdverismentDataStore.GetItemsKeyValueAsync()).Where(a => a.Value.Id == SelectedAd).FirstOrDefault().Value;
-                        await Navigation.PushAsync(new AddNewPage(ad));
+                        if (Title == "Oglasi oglašivača")
+                        {
+                            await MaterialDialog.Instance.SnackbarAsync(message: "Nije moguće uređivati tuđi oglas");
+                            ((Button)sender).IsEnabled = false;
+                        }
+                        else
+                        {
+                            string SelectedAd = ((Button)sender).BindingContext as string;
+                            var ad = (await AdverismentDataStore.GetItemsKeyValueAsync()).Where(a => a.Value.Id == SelectedAd).FirstOrDefault().Value;
+                            await Navigation.PushAsync(new AddNewPage(ad));
+                        }
                         break;
                     default:
                         break;

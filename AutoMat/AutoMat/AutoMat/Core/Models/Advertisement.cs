@@ -32,29 +32,15 @@ namespace AutoMat.Core.Models
         public string ProductionYear { get; set; }
         public string ModelYear { get; set; }
         public string KM { get; set; }
-
-        //new
         public string AverageFuel { get; set; }
-        //new
         public string Drive { get; set; }
-        //new
         public string Doors { get; set; }
-        //new
         public string Body { get; set; }
-
-        //new
         public string Suspension { get; set; }
-        //new
         public string Color { get; set; }
-        //new
         public string Price { get; set; }
-        //new
         public string Availability { get; set; }
-
-        //new
         public string PhoneNumber { get; set; }
-
-        //new 
         public string AirBags { get; set; }
         public string County { get; set; }
         public string Town { get; set; }

@@ -478,7 +478,7 @@ namespace AutoMat.Core.Views
             Label_22.Text = null;
             addNewViewModel.Advertisement.AdditionalEquipment.Clear();
             var general = await MaterialDialog.Instance.SelectChoicesAsync(title: "Dodatna oprema", choices: addNewViewModel.additionalEquipment.General, "Dalje", "Odustani", AdvertismentConstants.configChoice);
-            if (general.Length != 0)
+            if (general != null)
             {
                 foreach (var equip in general)
                 {
@@ -496,7 +496,7 @@ namespace AutoMat.Core.Views
             addNewViewModel.Advertisement.SafetyEquipment.Clear();
             var safety = await MaterialDialog.Instance.SelectChoicesAsync(title: "Sigurnost",
  choices: addNewViewModel.additionalEquipment.Safety, "Dalje", "Odustani", AdvertismentConstants.configChoice);
-            if (safety.Length != 0)
+            if (safety != null)
             {
                 foreach (var equip in safety)
                 {
@@ -513,7 +513,7 @@ namespace AutoMat.Core.Views
             Label_24.Text = null;
             addNewViewModel.Advertisement.ACEquipment.Clear();
             var ac = await MaterialDialog.Instance.SelectChoicesAsync(title: "Klimatizacija", choices: addNewViewModel.additionalEquipment.AirConditioner, "Dalje", "Odustani", AdvertismentConstants.configChoice);
-            if (ac.Length != 0)
+            if (ac != null)
             {
                 foreach (var equip in ac)
                 {
@@ -544,7 +544,7 @@ namespace AutoMat.Core.Views
             Label_26.Text = null;
             addNewViewModel.Advertisement.AntiSteal.Clear();
             var antiSteal = await MaterialDialog.Instance.SelectChoicesAsync(title: "Sigurnost protiv krađe", choices: addNewViewModel.additionalEquipment.AntiSteal, "Dalje", "Odustani", AdvertismentConstants.configChoice);
-            if (antiSteal.Length != 0)
+            if (antiSteal != null)
             {
                 foreach (var equip in antiSteal)
                 {
@@ -562,7 +562,7 @@ namespace AutoMat.Core.Views
             addNewViewModel.Advertisement.RadioEquipment.Clear();
             Label_27.Text = null;
             var radio = await MaterialDialog.Instance.SelectChoicesAsync(title: "Auto radio", choices: addNewViewModel.additionalEquipment.Radio, "Dalje", "Odustani", AdvertismentConstants.configChoice);
-            if (radio.Length != 0)
+            if (radio!= null)
             {
                 foreach (var equip in radio)
                 {
@@ -579,7 +579,7 @@ namespace AutoMat.Core.Views
             Label_28.Text = null;
             addNewViewModel.Advertisement.ComfortEquipment.Clear();
             var comfort = await MaterialDialog.Instance.SelectChoicesAsync(title: "Udobnost", choices: addNewViewModel.additionalEquipment.Comfort, "Dalje", "Odustani", AdvertismentConstants.configChoice);
-            if (comfort.Length != 0)
+            if (comfort != null)
             {
                 foreach (var equip in comfort)
                 {
@@ -630,7 +630,7 @@ namespace AutoMat.Core.Views
 
             var payType = await MaterialDialog.Instance.SelectChoicesAsync(title: "Mogućnost plaćanja",
     choices: AdvertismentConstants.payTypeStrings, "Dalje", "Odustani", AdvertismentConstants.configChoice);
-            if (payType.Length != 0)
+            if (payType != null)
             {
                 foreach (var type in payType)
                 {
@@ -736,7 +736,6 @@ choices: AdvertismentConstants.availabilityStrings, "Dalje", "Odustani", Adverti
                  String.IsNullOrEmpty(addNewViewModel.Advertisement.Shifts) ||
                  String.IsNullOrEmpty(addNewViewModel.Advertisement.ShiftType) ||
                  String.IsNullOrEmpty(addNewViewModel.Advertisement.Power) ||
-                 String.IsNullOrEmpty(addNewViewModel.Advertisement.Type) ||
                  String.IsNullOrEmpty(addNewViewModel.Advertisement.MotorType) ||
                  String.IsNullOrEmpty(addNewViewModel.Advertisement.Owner) ||
                  String.IsNullOrEmpty(addNewViewModel.Advertisement.Description) ||

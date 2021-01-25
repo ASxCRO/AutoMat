@@ -300,8 +300,8 @@
                 <Label Grid.Column="0" Grid.Row="0" Text="Ekonorma"  HorizontalOptions="Fill" BackgroundColor="LightGray" HorizontalTextAlignment="Center" Margin="1" Padding="10"></Label>
                 <Label Grid.Column="0" Grid.Row="1" Text="Godina modela" HorizontalOptions="Fill" BackgroundColor="LightGray" HorizontalTextAlignment="Center" Margin="1" Padding="10"></Label>
                 <Label Grid.Column="0" Grid.Row="2"  Text="Godina prve reg." HorizontalOptions="Fill" BackgroundColor="LightGray" HorizontalTextAlignment="Center" Margin="1" Padding="10"></Label>
-                <Label Grid.Column="0" Grid.Row="3" Text="Tip" HorizontalOptions="Fill" BackgroundColor="LightGray" HorizontalTextAlignment="Center" Margin="1" Padding="10"></Label>
-                <Label Grid.Column="0" Grid.Row="4"  Text="Servisna knjiga" HorizontalOptions="Fill" BackgroundColor="LightGray" HorizontalTextAlignment="Center" Margin="1" Padding="10"></Label>
+                <Label Grid.Column="0" Grid.Row="3" Text="Pogon" HorizontalOptions="Fill" BackgroundColor="LightGray" HorizontalTextAlignment="Center" Margin="1" Padding="10"></Label>
+                <Label Grid.Column="0" Grid.Row="4"  Text="Potr. goriva" HorizontalOptions="Fill" BackgroundColor="LightGray" HorizontalTextAlignment="Center" Margin="1" Padding="10"></Label>
                 <Label Grid.Column="0" Grid.Row="5" Text="Brzina" HorizontalOptions="Fill" BackgroundColor="LightGray" HorizontalTextAlignment="Center" Margin="1" Padding="10"></Label>
                 <Label Grid.Column="0" Grid.Row="6"  Text="Tip mjenjača" HorizontalOptions="Fill" BackgroundColor="LightGray" HorizontalTextAlignment="Center" Margin="1" Padding="10"></Label>
                 <Label Grid.Column="0" Grid.Row="7" Text="Broj šasije" HorizontalOptions="Fill" BackgroundColor="LightGray" HorizontalTextAlignment="Center" Margin="1" Padding="10"></Label>
@@ -313,12 +313,12 @@
                 <Label Grid.Column="1" Grid.Row="0" Text="{Binding Advertisment.EcoNorm}" HorizontalOptions="Fill"  Padding="10" BackgroundColor="white" HorizontalTextAlignment="Center" Margin="5" ></Label>
                 <Label Grid.Column="1" Grid.Row="1" Text="{Binding Advertisment.ModelYear}" HorizontalOptions="Fill"  Padding="10" BackgroundColor="white" HorizontalTextAlignment="Center" Margin="5"></Label>
                 <Label Grid.Column="1" Grid.Row="2" Text="{Binding Advertisment.OnRoadSince}" HorizontalOptions="Fill"  Padding="10" BackgroundColor="white" HorizontalTextAlignment="Center" Margin="5"></Label>
-                <Label Grid.Column="1" Grid.Row="3" Text="{Binding Advertisment.Type}" HorizontalOptions="Fill"  Padding="10" BackgroundColor="white" HorizontalTextAlignment="Center" Margin="5"></Label>
-                <Label Grid.Column="1" Grid.Row="4" Text="{Binding Advertisment.ServiceBook}" HorizontalOptions="Fill"  Padding="10" BackgroundColor="white" HorizontalTextAlignment="Center" Margin="5"></Label>
+                <Label Grid.Column="1" Grid.Row="3" Text="{Binding Advertisment.Drive}" HorizontalOptions="Fill"  Padding="10" BackgroundColor="white" HorizontalTextAlignment="Center" Margin="5"></Label>
+                <Label Grid.Column="1" Grid.Row="4" Text="{Binding Advertisment.AverageFuel}" HorizontalOptions="Fill"  Padding="10" BackgroundColor="white" HorizontalTextAlignment="Center" Margin="5"></Label>
                 <Label Grid.Column="1" Grid.Row="5" Text="{Binding Advertisment.Shifts}" HorizontalOptions="Fill"  Padding="10" BackgroundColor="white" HorizontalTextAlignment="Center" Margin="5"></Label>
                 <Label Grid.Column="1" Grid.Row="6" Text="{Binding Advertisment.ShiftType}" HorizontalOptions="Fill"  Padding="10" BackgroundColor="white" HorizontalTextAlignment="Center" Margin="5"></Label>
                 <Label Grid.Column="1" Grid.Row="7" Text="{Binding Advertisment.ChassisNumber}" HorizontalOptions="Fill"  Padding="10" BackgroundColor="white" HorizontalTextAlignment="Center" Margin="5"></Label>
-                <Label Grid.Column="1" Grid.Row="8" Text="{Binding Advertisment.Available}" HorizontalOptions="Fill"  Padding="10" BackgroundColor="white" HorizontalTextAlignment="Center" Margin="5"></Label>
+                <Label Grid.Column="1" Grid.Row="8" Text="{Binding Advertisment.Availability}" HorizontalOptions="Fill"  Padding="10" BackgroundColor="white" HorizontalTextAlignment="Center" Margin="5"></Label>
                 <Frame OutlineColor="Black" Grid.Column="1" Grid.Row="9"  Padding="10" HorizontalOptions="Fill" BackgroundColor="white"  Margin="5">
                     <Label  HorizontalTextAlignment="Center" Text="{Binding Advertisment.CO2}" ></Label>
                 </Frame>
